@@ -1,0 +1,465 @@
+\documentclass[aspectratio=43]{beamer}
+\usepackage{../../resources/agdsncourse} 
+
+\title[Linux Essentials  - Kapitel 5 - Suchen und Finden]{Linux Essentials}
+\subtitle{Kapitel 5 - Suchen und Finden}
+\author{Hagen Eckert}
+\date{16. Mai 2013}
+
+
+\begin{document}
+
+% Start Folie
+\logoframe
+
+%Title
+\frame{\titlepage}
+
+%Gliederung
+\setcounter{tocdepth}{1}
+\section[Gliederung]{}
+\frame{\tableofcontents}
+
+% Inhalt
+%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Reguläre Ausdrücke}
+\subsection{Syntax}
+\begin{frame} 
+	\begin{block}{Syntax} 
+	\begin{itemize}
+	\item \textbf{Literale} normaler Text
+	\newline  das Zeichen m steht eben für ein m 
+	\item \textbf{Metazeichen} Zeichen besonderer Bedeutung, 
+	\newline ? oder .
+	\item \textbf{Positonszeiger} für die genaue Position, an der ein Zeichen gesucht wird
+	\newline  $\hat{\;}\;$ \$
+	\item \textbf{Zeichenfolge} Menge von Zeichen, die gefunden werden soll
+	\newline  [abcde] [a-e] [0­-9] [$\;\hat{}\;$Negation]
+	\item \textbf{Quantifizierer} modifizieren die Anzahl an Zeichen, die gefunden wird.
+	\newline  ? . + * \{n,m\}
+	\end{itemize}
+	\end{block}
+
+
+\end{frame}
+
+
+\subsection{grep}
+\begin{frame} 
+	\begin{exampleblock}{Beispiel I}
+	\co{egrep '\textbackslash$<$[0-­9]\{5\}\textbackslash$>$'}
+	\end{exampleblock}
+
+	\begin{block}{Postleitzahlen finden} 
+Dieser Ausdruck sucht nach fünfstelligen Zahlen, wie zum Beispiel Postleitzahlen. \\
+\co{[0-­9]} findet eine Ziffer zwischen 0 und 9. \\
+Durch den Quantifizierer \co{\{5\}} dahinter muss etwas 5x hintereinander gefunden werden. \\
+Die Wortgrenzen \co{\textbackslash$<$} und \co{\textbackslash$>$} sorgen schließlich dafür, dass nichts herum stehen darf.
+	\end{block}	
+\end{frame}
+
+\begin{frame} 
+	\begin{exampleblock}{Beispiel II}
+	\co{egrep '[$\hat{\;}$\textbackslash b]\textbackslash @[$\hat{\;}$\textbackslash b]'}
+	\end{exampleblock}
+
+	\begin{block}{E­-Mail­-Adressen finden} 
+Ausdruck zum Aufspüren von E­-Mail­-Adressen. \\
+\textbackslash b bedeutet Wortanfang oder ­-ende. \\
+Durch das $\hat{\;}$ zu Beginn der eckigen Klammern wird es verneint. 
+\\So wird von obigem Ausdruck alles gefunden, was aus einem @ besteht, das links und rechts von mindestens einem Wortzeichen umrahmt wird. 
+	\end{block}	
+\end{frame}
+
+\begin{frame} 
+	\begin{exampleblock}{Beispiel III}
+	\co{egrep '([0-­9]\{3\}\textbackslash .)\{3\}[0­-9]\{3\}'}
+	\end{exampleblock}
+
+	\begin{block}{IP­-Adressen finden} 
+Ausdruck für einen einfachen IP-­Adressen-­Finder.\\
+Es wird nach vier dreistelligen Zahlen die durch Punkte getrennt sind.
+	\end{block}	
+\end{frame}
+
+\begin{frame} 
+	\begin{exampleblock}{Beispiel IV}
+	\co{egrep} \tiny\co{'\textbackslash$<$((([01]?[0­-9]\{1,2\})|(2[0­-4][0­-9])|(25[0-­5]))\textbackslash.)\{3\}(([01]?[0-­9]\{1,2\})|(2[0-­4][0-­9])|(25[0­-5]))\textbackslash$>$'}
+	\end{exampleblock}
+
+	\begin{block}{IP­-Adressen finden (jetzt echt)} 
+Die Optimierung: Es wurden\textbackslash$<$und \textbackslash$>$ ergänzt, damit beispielsweise ag1234.122.33.4.012sd9 nicht gefunden wird. Anschließend wurde das [0­-9]\{3\} durch eine präzisere Variante ersetzt. Sie besteht aus drei Alternativen: [01]?[0-­9]\{1,2\} findet alle ein­ und zweistelligen Zahlen und dreistellige, die mit 1 beginnen. Jeweils eingeschlossen sind auch die Entsprechungen mit führenden Nullen (auffüllend bis drei Stellen). Es sind jetzt also alle Zahlen von 0 bis 199 abgedeckt. 2[0­-4]\{0­-9\} findet alle Zahlen von 200 bis 249. 25[0-­5] alle von 250 bis 255. Damit ist die Suche komplett.
+	\end{block}	
+\end{frame}
+
+\begin{frame} 
+	\begin{exampleblock}{Beispiel V}
+	\co{egrep -i '\textbackslash b([a-z]+) +\textbackslash 1\textbackslash b'}\\
+	\end{exampleblock}
+
+	\begin{block}{Doppelte Worte finden} 
+Mit dem Schalter \co{-i} sucht grep per 'ignore case'.\\
+grep merkt sich den ersten gefundenen Ausdruck in der Klammer.\\
+Nach der Klammer kommt  mindestens ein Leerzeichen ( +) und dann die Metasequenz die auf das gefundene Wort passt \textbackslash 1 danach die Wortgrenze \textbackslash b.
+	\end{block}	
+\end{frame}
+
+\subsection{sed}
+\begin{frame} 
+
+	\begin{block}{sed} 
+	\begin{itemize}
+	\item ein stream editor
+	\item eigentlich wie vi nur ohne Interaktion
+	\item es werden Zeile für Zeile Anweisungen am Text ausgeführt 
+	\end{itemize}
+	\end{block}
+
+\end{frame}
+
+\section{Standardkanäle und Filterkomandos}
+\subsection{Umleitung}
+\begin{frame} 
+
+	\begin{block}{Kanäle} 
+	\begin{itemize}
+	\item 0 Standard-Eingabe \co{stdin}
+	\item 1 Standard-Ausgabe \co{stdout}
+	\item 2 Standard-Fehlerausgabe \co{stderr}
+	\end{itemize}
+	\end{block}
+
+	\begin{exampleblock}{Umleitung} 
+	\begin{itemize}
+	\item \co{>} \co{stdout} umleiten  in eine Datei
+	\item \co{>>} \co{stdout} umleiten  in eine Datei aber anhängen
+	\item \co{1>} mit einer Zahl wird ein bestimmter Kanal angesprochen
+	\item \co{2>\&1}  \co{stderr} nach \co{stdout} umleiten
+	\item \co{|} Pipe verbindet \co{stdout} eines Prozesses mit dem \co{stdin} eines anderen
+	\item \co{tee} gibt sein \co{stdin} als Datei und als \co{stdout} wieder
+	\end{itemize}
+	\end{exampleblock}
+
+
+
+\end{frame}
+
+\subsection{Befehlsammlung}
+\begin{frame} 
+	\begin{block}{\co{cat}} 
+        Dateien aneinanderhängen und zur Standardausgabe schreiben
+	\end{block}
+	\begin{block}{USAGE} 
+        \co{cat [OPTION] [DATEI]...}
+	\end{block}
+	\begin{exampleblock}{Optionen} 
+	\begin{itemize}
+	\item \co{-b, --number-nonblank} Nummeriere alle Zeilen, die nicht NULL sind
+	\item \co{-n, --number} Nummeriere alle Zeilen
+	\item \co{-t} zeige alle \taste{$\leftrightharpoons\quad$}  als $\,\hat{}$\,I
+	\item \co{-s, --squeeze-blank} nie mehr als eine Leerzeile in der Ausgabe
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{block}{\co{tac}} 
+        Dateien umkehren und aneinandergehängt ausgeben
+	\end{block}
+	\begin{block}{USAGE} 
+        \co{tac [OPTION] [DATEI]...}
+	\end{block}
+	\begin{exampleblock}{Optionen} 
+	\begin{itemize}
+	\item \co{ -s, --separator=ZEICHENKETTE}  
+	\newline ZEICHENKETTE als Trennzeichen statt Zeilenumbruch benutzen
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{block}{\co{head}} 
+        den ersten Teil von Dateien ausgeben
+	\end{block}
+	\begin{block}{USAGE} 
+        \co{head [OPTION] [DATEI]...}
+	\end{block}
+	\begin{exampleblock}{Optionen} 
+	\begin{itemize}
+	\item \co{-c, --bytes=[-]N} die ersten \co{N} Bytes jeder Datei ausgeben; mit führendem Minus, alle außer den letzten \co{N} Bytes jeder Datei	
+	\item \co{-n, --lines=[-]N} wie \co{-c} nur mit Zeilenanzahl \co{N}
+	\end{itemize}
+	
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{block}{\co{tail}} 
+        den letzten Teil von Dateien ausgeben
+	\end{block}
+	\begin{block}{USAGE} 
+        \co{tail [OPTION] [DATEI]...}
+	\end{block}
+	\begin{exampleblock}{Optionen} 
+	\begin{itemize}
+	\item \co{ -f, --follow[=\{name\}]}  Angefügte Daten ausgeben,  wahrend  die  Datei  wächst	
+	\item \co{--retry}  Weiterhin  versuchen, eine Datei zu öffnen, selbst wenn sie beim
+              Start oder später nicht verfügbar ist
+	\end{itemize}
+	
+	\end{exampleblock}
+\end{frame}
+
+
+\begin{frame} 
+	\begin{block}{\co{hexdump}} 
+        		ASCII, decimal, hexadecimal, octal dump
+	\end{block}
+	\begin{block}{USAGE} 
+        		\co{hexdump [-bcCdovx] [-e formatstring]  [-f formatfile]}\\
+        		\hspace{1.4cm}\co{ [-n length] [-s skip] file ...}
+	
+	\end{block}
+
+	\begin{exampleblock}{Optionen} 
+	\begin{itemize}
+	\item \co{-b} One-byte octal \co{-o} Two-byte octal 
+	\item \co{-c} One-byte character 
+	\item \co{-C} Canonical hex+ASCII  
+	\item \co{-d} Two-byte decimal 
+	\item \co{-x} Two-byte hexadecimal 
+	\end{itemize}
+	
+	\end{exampleblock}
+
+
+
+\end{frame}
+
+\begin{frame} 
+	\begin{block}{\co{tr}} 
+        Zeichen umwandeln oder löschen
+	\end{block}
+	\begin{block}{USAGE} 
+        \co{tr [OPTION]... MENGE1 [MENGE2]}
+	\end{block}
+	\begin{exampleblock}{Optionen} 
+	\begin{itemize}
+	\item \co{-d, --delete} Zeichen aus \co{MENGE1} loschen, nicht umwandeln
+	\item \co{-s, --squeeze-repeats} Jede Eingabe-Sequenz mit sich wiederholenden Zeichen aus  \text{MENGE1}
+              durch ein einziges Vorkommen dieses Zeichens ersetzen
+	\end{itemize}
+	
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{block}{\co{expand}} 
+        Tabulatoren in Leerzeichen umwandeln
+	\end{block}
+	\begin{block}{USAGE} 
+        \co{expand [OPTION]... [DATEI]...}
+	\end{block}
+	\begin{exampleblock}{Optionen} 
+	\begin{itemize}
+		\item \co{-t, --tabs=ZAHL} Tabulatoren entsprechen \co{ZAHL} Zeichen, nicht 8
+	\item \co{-t, --tabs=LISTE} Durch  Komma  getrennte LISTE von expliziten Tabulatorpositionen verwenden
+	\item \co{-i, --initial} Tabulatoren nicht nach  Nicht-Freiraumzeichen umwandeln
+	\end{itemize}
+	
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{block}{\co{unexpand}} 
+        Leerzeichen in Tabulatoren umwandeln
+	\end{block}
+	\begin{block}{USAGE} 
+        \co{unexpand [OPTION]... [DATEI]...}
+	\end{block}
+	\begin{exampleblock}{Optionen} 
+	\begin{itemize}
+	\item \co{-a, --all} Alle Leerzeichen umwandeln, statt nur der führenden
+	\item \co{--first-only} Nur führende Leerzeichen umwandeln (überschreibt -a)
+	\item \co{-t, --tabs=N} Tabulatoren haben einzeln \co{N} Zeichen, statt 8 (schaltet -a ein).
+	\item \co{-t, --tabs=LISTE} Durch Kommata getrennte Liste von Tabulatorpositionen  verwenden (schaltet -a ein).
+	\end{itemize}
+	
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{block}{\co{fmt}} 
+        einfacher optimaler Textformatierer
+	\end{block}
+	\begin{block}{USAGE} 
+        \co{fmt [-BREITE] [OPTION]... [DATEI]...}
+	\end{block}
+	\begin{exampleblock}{Optionen} 
+	\begin{itemize}
+	\item \co{-u, --uniform-spacing} Ein Leerzeichen zwischen Wörtern, zwei nach Sätzen
+	\item \co{-s, --split-only} Lange Zeilen aufteilen, aber nicht auffüllen
+	\end{itemize}
+	
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{block}{\co{pr}} 
+        Textdateien fur Druckausgabe umwandeln
+	\end{block}
+	\begin{block}{USAGE} 
+        \co{pr [OPTION]... [DATEI]...}
+	\end{block}
+	\begin{exampleblock}{Optionen} 
+	\begin{itemize}
+	\item \co{-h --header=KOPF}   \co{KOPF}   als   zentrierten  Seitenkopf  anstelle  des  Dateinamens   benutzen. 
+	\item \co{-l, --length=SEITENLAENGE} Seitenlange auf \co{SEITENLAENGE}  (66)  Zeilen  setzen  
+	\item \co{-o, --indent=MARGIN} Versetzt  jede  Zeile  um  \co{MARGIN}  (0) Leerzeichen
+	\end{itemize}
+	
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{block}{\co{nl}} 
+        Zeilen von Dateien nummerieren
+	\end{block}
+	\begin{block}{USAGE} 
+        \co{nl [OPTION]... [DATEI]...}
+	\end{block}
+	\begin{exampleblock}{Optionen} 
+	\begin{itemize}
+	\item \co{-h / -b / -f} Setzten von Header / Body / Footer-Stil auf \co{a, t} oder \co{n}
+	\item \co{a} Nummeriere alle Zeilen
+	\item \co{t} Nummeriere nur nicht-leere Zeilen
+	\item \co{n} Nummeriere nicht
+	\item \co{-w, --number-width=ANZAHL  ANZAHL} Spalten für Zeilennummern benutzen
+	
+	\end{itemize}
+	
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{block}{\co{wc}} 
+         Anzahl der Zeilen, Wörter und Byte für jede Datei ausgeben
+	\end{block}
+	\begin{block}{USAGE} 
+        \co{wc [OPTION]... [DATEI]...}
+	\end{block}
+	\begin{exampleblock}{Optionen} 
+	\begin{itemize}
+	\item \co{-c, --bytes}  Anzahl der Byte ausgeben
+	\item \co{-m, --chars} Anzahl der Zeichen ausgeben
+	\item \co{-l, --lines} Anzahl der Zeilen ausgeben
+	
+	\end{itemize}
+	
+	\end{exampleblock}
+\end{frame}
+
+
+\begin{frame} 
+	\begin{block}{\co{sort}} 
+        Zeilen von Textdateien sortieren
+	\end{block}
+	\begin{block}{USAGE} 
+        \co{sort [OPTION]... [DATEI]...}
+	\end{block}
+	\begin{exampleblock}{Optionen} 
+	\begin{itemize}
+	\item \co{-b, --ignore-leading-blanks} Führende Leerzeichen ignorieren
+	\item \co{-f, --ignore-case} Klein- als Großbuchstaben behandeln
+	\item \co{-i, --ignore-nonprinting} Nur druckbare Zeichen berücksichtigen
+	\item \co{-r, --reverse} Das Ergebnis der Vergleiche umkehren
+	\item \co{-n, --numeric-sort} Numerischen Werts der Zeichenkette vergleichen
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{block}{\co{uniq}} 
+        doppelte aufeinanderfolgende Zeilen berichten oder entfernen
+	\end{block}
+	\begin{block}{USAGE} 
+        \co{uniq [OPTION]... [EINGABE [AUSGABE]]}
+	\end{block}
+	\begin{exampleblock}{Optionen} 
+	\vspace{-0.3cm}
+	\begin{itemize}
+	\item \co{-c, --count} Den Zeilen die Häufigkeit des Vorkommens voranstellen
+	\item \co{-s, --skip-chars=N}   Die ersten \co{N} Zeichen nicht vergleichen
+	\item \co{-i, --ignore-case} Klein- als Großbuchstaben behandeln
+	\item \co{-f, --skip-fields=N} Die ersten \co{N} Felder nicht vergleichen
+	\item \co{-s, --skip-chars=N} Die ersten \co{N} Zeichen nicht vergleichen
+	\item \co{-u, --unique} Nur einmal auftretende Zeilen ausgeben	
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{block}{\co{cut}} 
+       Teile jeder Zeile aus Dateien ausgeben
+	\end{block}
+	\begin{block}{USAGE} 
+        \co{cut OPTION... [DATEI]...}
+	\end{block}
+	\begin{exampleblock}{Optionen} 
+	\begin{itemize}
+	\item \co{-b, --bytes=LISTE} Nur diese Bytes auswählen
+	\item \co{-c, --characters=LISTE} Nur diese Zeichen auswählen
+	\item \co{-d, --delimiter=TRENNER} \co{TRENNER} anstelle des Tabulators als Feldtrennzeichen benutzen
+	\item \co{-f, --fields=LISTE} Nur  diese  Felder  auswählen; außerdem jede Zeile ausgeben, die kein Trennzeichen enthält,  es  sei  denn,  die  Option  \co{-s}  ist angegeben
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{block}{\co{join}} 
+        Zeilen von zwei Dateien über ein gemeinsames Feld verbinden
+	\end{block}
+	\begin{block}{USAGE} 
+        \co{join [OPTION]... DATEI1 DATEI2}
+	\end{block}
+	\begin{exampleblock}{Optionen} 
+	\begin{itemize}
+	\item \co{-j1 FELDNUM} Verknüpft die Dateien nach \co{FELDNUM} in \co{DATEI1}
+	\item \co{-j2 FELDNUM} Verknüpft die Dateien nach \co{FELDNUM} in \co{DATEI2}
+	\item \co{-j FELDNUM} Verknüpft die Dateien nach \co{FELDNUM}, in beiden Dateien vorhanden
+	\item \co{-t ZEICHEN}  \co{ZEICHEN} als Trennzeichen für Ein- und Ausgabefelder nehmen
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{block}{\co{paste}} 
+        Zeilen von Dateien zusammenfugen
+	\end{block}
+	\begin{block}{USAGE} 
+        \co{paste [OPTION]... [DATEI]..}
+	\end{block}
+	\begin{exampleblock}{Optionen} 
+	\begin{itemize}
+	\item \co{-d, --delimiters=LISTE} Zeichen aus \co{LISTE} statt Tabulatoren benutzen
+	\item \co{-s, --serial} Eine Datei nach der anderen statt parallel ausgeben
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+
+\begin{frame}[plain]
+\begin{alertblock}{Nächste Vorlesung}
+\textbf{Termin:} Donnerstag, den 02.05.2013 18:30-20:00 Uhr\\
+\textbf{Thema:} Kapitel 6 - Mehr Shell \\
+\textbf{Vorbereitung:} 
+\begin{itemize}
+\item LXES 9 Mehr über die Shell
+\end{itemize}
+\end{alertblock}
+\end{frame}
+
+\materialframe
+
+\end{document}

@@ -1,0 +1,447 @@
+\documentclass[aspectratio=43]{beamer}
+\usepackage{../../resources/agdsncourse} 
+
+\title[Linux Essentials  - Kapitel 1 - Einführung]{Linux Essentials}
+\subtitle{Kapitel 1 - Einführung}
+\author{Hagen Eckert}
+\date{11. April 2013}
+
+
+\begin{document}
+
+% Start Folie
+\logoframe
+
+%Title
+\frame{\titlepage}
+
+%Gliederung
+\setcounter{tocdepth}{1}
+\section[Gliederung]{}
+\frame{\tableofcontents}
+
+
+%%%%%%%%%%%%%%%
+\section{Organisatorisches}
+\subsection{Ziele \& Vorlesende}
+\begin{frame} 
+
+	\begin{block}{Ziele} 
+	\begin{itemize}
+	\item Grundwissen zur kompetenten Benutzung von Linux
+	\item Einblicke in freie Software
+	\item Aufbau und Zusammenspiel der Komponenten von Linux
+	\item Grundlagen zur Benutzung der Kommandozeile
+	\item Einführung in die Systemadministration
+	\end{itemize}
+	\end{block}
+	
+	\begin{block}{Vorlesende} 
+	\begin{itemize}
+	\item Alexander Köhler
+	\item Hagen Eckert
+	\end{itemize}
+	\end{block}
+
+\end{frame}
+
+\subsection{LPI}
+\begin{frame} 
+
+	\begin{block}{LPI} 
+	\begin{itemize}
+	\item LPI $\rightarrow$ \textbf{L}inux \textbf{P}rofessional \textbf{I}nstitute
+	\item Weltweit größtes Zertifizierungsprogramm der Linux-Gemeinschaft
+	\item Distributionsunabhängig
+	\end{itemize}
+	\end{block}
+	
+	\begin{block}{LPI AAP} 
+	\begin{itemize}
+	\item Die AG DSN ist \textbf{A}pproved \textbf{A}cadamic \textbf{P}artner
+	\item Bald auch privates Prüfungscenter
+	\end{itemize}
+	\end{block}
+\end{frame}
+
+\subsection{Vorlesung}
+\begin{frame} 
+	\begin{block}{Vorlesung} 
+	\begin{itemize}
+	\item immer Donnerstag
+	\item Uhrzeit entweder 18:30 - 20:00 Uhr (jetzt)
+	\newline oder 16:40 - 18:10 Uhr
+	\item 10x Vorlesung
+	\item Wiederholung + Prüfung
+	\end{itemize}
+	\end{block}
+	
+	\begin{block}{Prüfung} 
+	\begin{itemize}
+	\item Computer basierte Prüfung 
+	\item Sofortige Rückmeldung zum Ergebnis 
+	\item Kosten für die Zertifizierung sind 50 EUR
+	\item Aktive AG DSN Mitglieder werden mit 30 EUR subventioniert
+	\end{itemize}
+	\end{block}
+\end{frame}
+
+\subsection{Lehrstuhl}
+
+\begin{frame}
+	\begin{block}{Lehrstuhl} 
+	\begin{itemize}
+	\item Materialwissenschaft und Nanotechnik  
+	\item Prof. Cuniberti
+	\item Fokus: Konzepte, quantitative Methoden und Experimente um Phänomene im Nanometerbereich zu verstehen und zu beherrschen
+	\item Für die Lösung vieler Fragen werden Hochleistungsrechner eingesetzt  $\rightarrow$ 94\% der Hochleistungsrechner laufen unter Linux
+	\end{itemize}
+	\end{block}
+	
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%
+\section{Der Computer}
+\subsection{Geschichte}
+\begin{frame} 
+
+	\begin{block}{Geschichte} 
+	\begin{itemize}
+	\item Beginn schwer abzugrenzen
+	\item Antike Rechenhilfen und mathematische Methoden bilden dir Grundlage der Entwicklung hin zum modernen Computer
+	\item Im 17. Jahrhundert kommen erste mechanische Rechner auf
+	\item Das binäre Zahlensystem wird 1703 von Leibniz entwickelt
+	\item Lochkarten erlauben das \textit{programmieren}
+	\newline (1890 US-Volkszählung)
+	\item 1941 ist die Zuse Z3 die erste Maschine die beliebige Algorithmen automatisch ausführen konnte.
+	\end{itemize}
+	\end{block}
+
+
+\end{frame}
+
+\subsection{Hardware}
+\begin{frame} 
+
+	\begin{block}{Prozessor} 
+	\begin{itemize}
+	\item \textbf{C}entral \textbf{P}rocessing \textbf{U}nit
+	\item Besteht aus:
+	\begin{itemize}
+	 \item Arimethrisch-logische Einheit (ALU)
+	 \item Steuerwerk
+	 \item Register
+	 \item Speichermanager (MMU)
+	
+	\end{itemize}
+	\item Verschiedene Architekturen wie X86-64, ARM
+	\end{itemize}
+	\end{block}
+
+	\begin{block}{RAM} 
+	\begin{itemize}
+	\item \textbf{R}andom-\textbf{A}ccess \textbf{M}emory
+	\item Programmcode und zu verarbeitende Daten werden hier gespeichert
+	\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame} 
+
+	\begin{block}{Coprozessor} 
+	\begin{itemize}
+	\item Sollen die CPU von verschiedenen Aufgaben entlasten
+	\item Effizienter durch Spezialisierung 
+	\item Grafikkarten, Soundkarten, IO-Erweiterungen, ...
+	\item auch allgemein gehaltene Prozessoren möglich
+	\end{itemize}
+	\end{block}
+
+	\begin{block}{Mainboard} 
+	\begin{itemize}
+	\item Bildet die Infrastruktur für die restliche Hardware
+	\item Stellt Datenverbindungen zwischen den Komponenten her
+	\item Verteilt Strom
+	\item Besitzt eigenen Chips insbesondere für IO-Aufgaben
+	\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame} 
+
+	\begin{block}{Speicher} 
+	\begin{itemize}
+	\item Dauerhafter Datenspeicher
+	\item Für hohe Kapazität immer noch Festplatten am wichtigsten
+	\item Durch die mechanischen Teile jedoch einige Nachteile
+	\item Solid State Disk werden immer wichtiger, insbesondere wenn schnelle Obertragungs - und Zugriffsgeschwindigkeiten nötig sind
+	\item Denoch um Größenordungen langsamer als der RAM 
+	\begin{itemize}
+	 \item[RAM] 6$\cdot10^{-8}$ s
+	\item[SSD] 2,5$\cdot10^{-4}$ s
+	\item[HD] $10^{-2}$ s
+	\end{itemize}
+
+	
+	\end{itemize}
+	\end{block}
+
+\end{frame}
+
+
+\begin{frame} 
+
+	\begin{block}{Optische Laufwerke} 
+	\begin{itemize}
+	\item CD, DVD, Blu-ray
+	\item Daten werden mit Laser gelesen $\rightarrow$ optisch
+	\item verlieren stark an Bedeutung durch USB-Sticks und Breitband Internet
+	\end{itemize}
+	\end{block}
+
+	\begin{block}{Netzwerk} 
+	\begin{itemize}
+	\item Verschiedene Schnittstellen möglich
+	\item Von 10BASE BNC bis 10Gbit/s Glasfaser möglich
+	\item Meistens ist Gigabit-Ethernet über Kupfer oder verschiedene WLAN-Varianten anzutreffen
+	\item Glasfaser meist nur für Backbones und Server verwendet
+	\end{itemize}
+	\end{block}
+\end{frame}
+
+\subsection{Betriebssysteme}
+
+
+\begin{frame} 
+
+	\begin{block}{Windows} 
+	\begin{itemize}
+	\item Marktanteil um 82 \% (Internet)
+	\item 1985 als grafischer Aufsatz für MS-DOS gestartet
+	\item Seit Windows NT eigenständiges Betriebssysteme
+	\end{itemize}
+	\end{block}
+	
+	\begin{block}{OS X} 
+	\begin{itemize}
+	\item Von Grundsystem näher an Linux
+	\item Vor allem durch GNU Programme
+	\item Abstammung ebenfalls von UNIX durch  BSD 
+	\end{itemize}
+	\end{block}
+
+\end{frame}
+
+\begin{frame} 
+
+	\begin{block}{Linux} 
+	\begin{itemize}
+	\item Linux stellt genau genommen nur ein Betriebssystems Kern dar
+	\item Es wird dennoch als Sammelbegriff für das gesamte System genutzt
+	\newline Nur selten wird GNU/Linux im allgemeinen Sprachgebrauch genutzt
+	\item Entwicklung geht auf Linus Torvalds zurück
+	\item 1991 als Hobby Projekt begonnen
+	\item Nachbildung des Minix Systems
+	\item Kombiniert mit den GNU Programmen entstand ein komplettes Betriebssystem 
+	\end{itemize}
+	\end{block}
+
+\end{frame}
+
+\begin{frame} 
+
+	\begin{block}{Linux} 
+	\begin{itemize}
+	\item Linux 2.0 war sehr wichtig da Mehrkernprozessoren und das dynamische Laden von Modulen erlaubt
+	\item Ständige Weiterentwicklung bis heute
+	\item Portiert auf fast alles was \textit{rechnen} kann
+	\item Im allgemeinem PC Markt nie besonders erfolgreich
+	\newline Erfolge eher im Bereich Embedded Systeme, Mobile Anwendungen, Server, Wissenschaftliche Anwendung
+	\end{itemize}
+	\end{block}
+
+\end{frame}
+
+\section{Software}
+\subsection{Distributionen}
+\begin{frame} 
+
+	\begin{block}{Distributionen} 
+	\begin{itemize}
+	\item Stellen komplette Softwareumgebungen bereit
+	\item Kommandozeilenwerkzeuge, Arbeitsumgebung, Officeprogramme, Spiele, ...
+	\item Viele verschiedene, angepasst an unterschiedliche Bedürfnisse und Philosophien 
+	\end{itemize}
+	\end{block}
+
+	\begin{block}{Red Hat} 
+	\begin{itemize}
+	\item Gegründet 1993, aufkauf der Red Hat Distribution 1995
+	\item Wohl größte Firma auf Basis von Linux und Open Source
+	\item Verdient ihr Geld mit Support und speziellen Updateservices
+	\item Eigene \textit{Testumgebung} Fedora
+	\item Nachbauten wie CentOS
+	\end{itemize}
+	\end{block}
+
+	
+\end{frame}
+
+\begin{frame} 
+
+	\begin{block}{SUSE} 
+	\begin{itemize}
+	\item Basiert auf der ersten Linux-Disto SLS
+	\item Bedeutend im deutschsprachigen Raum
+	\item Wie Red Hat spezielle Enterprise Edition
+	\item openSUSE für Endkunden
+	\item Besonderheit ist YaST
+	\end{itemize}
+	\end{block}
+
+	\begin{block}{Debian} 
+	\begin{itemize}
+	\item Ohne Firma im Hintergrund
+	\item Begonnen 1993
+	\item Strenge Regeln was freie Software ist
+	\item Dient häufig als Grundlage anderer Projekte
+	\end{itemize}
+	\end{block}
+
+	
+\end{frame}
+
+\begin{frame} 
+
+	\begin{block}{Ubuntu} 
+	\begin{itemize}
+	\item Basiert auf Debian unstable
+	\item Kürzere Erscheinungszyklen als Debian
+	\item Mit den LTS-Versionen soll Konkurrenz zu etablierten Server Systemen geschaffen werden
+	\item Unterstützt durch Canonical Ltd.
+	\end{itemize}
+	\end{block}
+
+	\begin{block}{Weiter Distributionen} 
+	\begin{itemize}
+	\item Gentoo Linux $\rightarrow$ Quellcode
+	\item Archlinux
+	\item \textit{Android}
+	\end{itemize}
+	\end{block}
+
+	
+\end{frame}
+\subsection{Anwendungsprogramme}
+\begin{frame} 
+
+	\begin{block}{Büroprogramme} 
+	\begin{itemize}
+	\item OpenOffice.org 
+	\begin{itemize}
+	 \item Schon viele Jahre bedeutendste freie Büropacket
+	 \item Über SUN und Oracle bei der Apache Software Foundation gelandet
+	\end{itemize}
+	\item LibreOffice
+	\begin{itemize}
+	 \item Abspaltung von OpenOffice
+	 \item Gilt als Innovativer und Aufgeräumter
+	\end{itemize}
+
+
+	\end{itemize}
+	\end{block}
+
+	\begin{block}{Internet} 
+	\begin{itemize}
+	\item Firefox
+	\item Thunderbird
+	\item Chromium
+	\end{itemize}
+	\end{block}
+
+	
+\end{frame}
+
+\begin{frame} 
+
+	\begin{block}{Multimedia} 
+	\begin{itemize}
+	\item The GIMP
+	\newline Bildbearbeitung (Photoshop)
+	\item Inkscape
+	\newline Vektorbasiertes Grafikprogramm (Illustrator)
+	\item ImageMagick
+	\newline Kommandlinetool um Bilder zu verändern (\textit{unvergleichlich})
+	\item Audacity
+	\newline Audioeditor (Soundbooth)
+	\item Cinelerra / KDenlive / OpenShot
+	\newline Videoeditor (Premiere)
+	\item Blender
+	\newline 3d Animationstool (Maya) 
+	\end{itemize}
+
+	\end{block}
+	
+\end{frame}
+
+\begin{frame} 
+
+	\begin{block}{Server} 
+	\begin{itemize}
+	\item Apache / lighttpd / ...
+	\newline Ausliefern von Webseiten
+	\item MySQL / PostgreSQL / ...
+	\newline Datenbank Server
+	\item Postfix
+	\newline E-Mail Server
+	\item Samba / NFS
+	\newline Windows / Linux Datenfreigabe
+	\item OpenLDAP / Kerberos
+	\newline Verzeichnissdienst, Authentifizierung
+	\item DNS (Bind) / DHCP
+	\newline Namesauflösung / Versorgung mit IP-Adressen
+	\end{itemize}
+
+	\end{block}
+	
+\end{frame}
+
+\begin{frame} 
+
+	\begin{block}{Programmieren und Entwickeln} 
+	\begin{itemize}
+	\item Allein durch die GNU-Compiler sind viele Programmiersprachen möglich
+	\newline C, C++, Objective C, JAve, Fortran, Ada
+	\item Sogut wie alle Skriptsprachen sind verfügbar:
+	\newline Python, Perl, Ruby, Lua, PHP, ...
+	\item Verschieden Entwicklungsstiele möglich
+	\newline Von Eclipse bis vi
+	\item Natürlich sind auch Versionsverwaltungsprogramme vorhanden
+	\newline SVN, Git, Mercurial, ...
+	\end{itemize}
+
+	\end{block}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[plain]
+\begin{alertblock}{Nächste Vorlesung}
+\textbf{Termin:} Donnerstag, den 18.04.2013 18:30-20:00 Uhr\\
+\textbf{Thema:} Kapitel 2 - Erste Schritte mit Linux \\
+\textbf{Vorbereitung:} 
+\begin{itemize}
+\item LXES 1 Computer, Software und Betriebssysteme
+\item LXES 2 Linux und freie Software
+\item LXES 3 Erste Schritte mit Linux
+\end{itemize}
+\end{alertblock}
+\end{frame}
+
+\materialframe
+
+\end{document}

@@ -1,0 +1,99 @@
+% Helper style for the LPI course presentations. 
+
+% Relativ call of images is not optimal but necessary for out of the box compatibility with 
+% standart GUI LaTeX tools. Main goal is to avoid duplicate code and files in the git 
+% repository.
+
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{agdsncourse}
+  [2015/10/02 v0.01 LaTeX package for LPI course]
+
+% List of required packages
+\RequirePackage{beamerthemesplit}
+\RequirePackage{hyperref}
+\usetheme{Luebeck} 
+\RequirePackage[utf8x]{inputenc}
+\RequirePackage{tikz}
+\usetikzlibrary{shadows}
+\setbeamertemplate{navigation symbols}{} 
+
+% How to type commands
+\newcommand{\co}[1]{\texttt{#1}}
+
+% Plots a keyboard button with the selected key
+\newcommand*\taste[1]{%
+  \tikz[baseline=(key.base)]
+    \node[%
+      draw,
+      fill=white,
+      drop shadow={shadow xshift=0.25ex,shadow yshift=-0.25ex,fill=black,opacity=0.75},
+      rectangle,
+      rounded corners=2pt,
+      inner sep=1pt,
+      line width=0.5pt,
+      minimum height=0.4cm,
+      minimum width=0.5cm,
+      font=\scriptsize\sffamily
+    ](key) {\;#1\strut\;}
+  ;
+}
+
+% Stich together the logos of the involved groups as pre start slide
+\newcommand*\logoframe{
+  \begin{frame}[plain]
+  \begin{center}
+    \vspace{1cm}
+    \hspace{-2.5cm}
+    \begin{minipage}{10cm}
+    \begin{center}
+      \includegraphics[height=2.75cm]{../../resources/agdsn}
+      \hspace*{0.2cm}
+      \includegraphics[height=2.6cm]{../../resources/lpiaap}
+    \end{center}
+    \end{minipage}
+  \end{center}
+   
+  \vspace{1cm}
+  \hspace{-0.8cm}
+  {\large In Kooperation mit:}
+    
+  \begin{minipage}{10cm}
+    \vspace{0.3cm}
+    \hspace{-0.8cm}
+    $\vcenter{\hbox{\includegraphics[width=4cm]{../../resources/nano} }}$
+    \hspace*{0.0cm}
+    \begin{minipage}{7.5cm}
+      \small \href{https://nano.tu-dresden.de}{Lehrstuhl für Materialwissenschaft und Nanotechnik} \\(IfWW, TU Dresden) 
+    \end{minipage}
+  \end{minipage}
+    
+  \begin{minipage}{10cm}
+    \vspace{0.3cm}
+    \hspace{-0.4cm}
+    $\vcenter{\hbox{\includegraphics[width=3cm]{../../resources/hzdr} }}$
+    \hspace*{0.6cm}
+    \begin{minipage}{8cm}
+      \small \href{https://www.hzdr.de/db/Cms?pNid=132&pLang=de}{Institut für Strahlenphysik}\\ (Helmholtz-Zentrum Dresden-Rossendorf)
+    \end{minipage}
+  \end{minipage}
+  \end{frame}
+}
+
+% Slide with link to the course material (Need switch option for future courses like LPIC1) 
+\newcommand*\materialframe{
+  \begin{frame}[plain]
+  \begin{center}
+    \href{http://shop-download.linupfront.de/cc/lxes-de-manual-cc.pdf}{\includegraphics[height=3.5cm]{../../resources/qrcode_liexde}}\\
+    \Large
+    \url{http://shop-download.linupfront.de/cc/lxes-de-manual-cc.pdf}
+    \end{center}
+\end{frame}
+}
+
+\def\hi{Hello, I help with the agdsn courses}
+\let\myDate\date
+\newcommand\GoodBye[1][\bfseries]{{#1Done}}
+
+\endinput
+%%
+%% End of file `agdsncourse.sty'.

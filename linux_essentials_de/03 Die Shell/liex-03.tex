@@ -1,0 +1,372 @@
+\documentclass[aspectratio=43]{beamer}
+\usepackage{../../resources/agdsncourse} 
+
+\title[Linux Essentials  - Kapitel 3 - Die Shell]{Linux Essentials}
+\subtitle{Kapitel 3 - Die Shell}
+\author{Hagen Eckert}
+\date{25. April 2013}
+
+
+\begin{document}
+
+% Start Folie
+\logoframe
+
+%Title
+\frame{\titlepage}
+
+%Gliederung
+\setcounter{tocdepth}{1}
+\section[Gliederung]{}
+\frame{\tableofcontents}
+
+
+% Inhalt
+%%%%%%%%%%%%%%%
+\section{Shell Grundlagen}
+\subsection{Was ist die Shell?}
+\begin{frame} 
+	\begin{block}{shell} 
+	\begin{itemize}
+	\item Oberfläche des (Linux)-Computers
+	\item durch Texteingaben werden Aktionen ausgelöst und deren Ergebnisse angezeigt
+	\item an sich Programm wie viele andere
+	\end{itemize}
+	\end{block}
+
+	
+
+
+\end{frame}
+
+\begin{frame} 
+
+	\begin{exampleblock}{Beispiele} 
+	\begin{itemize}
+	\item \co{sh} für die klassische Bourne-\textbf{Sh}ell (\co{sh} eigentlich \co{dash})
+	\item \co{bash} für die \textbf{B}ourne-\textbf{A}gain-\textbf{Sh}ell 
+	\item \co{ksh} für die \textbf{K}orn-\textbf{Sh}ell
+	\item \co{csh} für die \textbf{C}-\textbf{Sh}ell (\co{csh} oft \co{tcsh})
+	\item \co{tcsh} für die \textbf{T}enex-\textbf{C}-\textbf{Sh}ell, eine weiterentwickelte C-Shell
+	\item \co{exit} verlässt die aktuelle Shell
+	\item \co{echo \$0} liefert die aktuelle Shell zurück
+	\item \co{echo \$0 --version} liefert die Version der Shell zurück
+	\end{itemize}
+	\end{exampleblock}
+
+
+\end{frame}
+
+
+\subsection{Kommandos}
+\begin{frame} 
+
+  \begin{block}{Kommandos} 
+  \begin{itemize}
+  \item Shell interpretiert die Eingabe nach Wörter getrennt
+  \item erstes Wort in der Regel \textit{Kommando}
+  \item Wörter mit führendem \co{-} \textit{Optionen}
+  \item Wörter ohne führendem \co{-} \textit{Argumente}
+  \end{itemize}
+  \end{block}
+
+  \begin{block}{Optionen}
+  \begin{itemize}
+  \item \co{-v -l -t} wirken in der Regel wie Schalter die eine Option aktivieren
+  \item \co{--verbose --long --tree} sind die Langformen zur besseren Verständlichkeit  bei sehr vielen Optionen
+  \end{itemize}
+  \end{block}
+
+\end{frame}
+
+
+
+\begin{frame} 
+
+  \begin{exampleblock}{Beispiele} 
+  \begin{itemize}
+    \item  \textit{Kommando}: Was wird gemacht
+    \item \textit{Optionen}: Wie wird es gemacht 
+    \item \textit{Argumente}: Womit wird es gemacht
+  \end{itemize}
+  \end{exampleblock}
+
+\end{frame}
+
+\begin{frame}
+
+	\begin{block}{Kommando Arten} 
+	\begin{itemize}
+	\item Interne Kommandos
+	\begin{itemize}
+		\item um die 30 Befehle
+		\item beeinflussen oft die Shell selbst
+		\item sehr schnell
+		\item z.B. \co{echo}, \co{kill}, ... 
+	\end{itemize}
+	
+	\item Externe Kommandos
+	\begin{itemize}
+		\item werden durch ausführbare Dateien zur Verfügung gestellt
+		\item z.B. in \co{/bin}, \co{/sbin}, ...
+	\end{itemize}
+	
+	\end{itemize}
+	\end{block}
+
+\end{frame}
+
+\begin{frame}
+	
+	\begin{exampleblock}{Beispiele} 
+	\begin{itemize}
+	\item  \co{type echo}
+	\item  \co{type date}
+	\item  \co{type top}
+	\item  \co{type kill}
+	\item  \co{type help}
+	\item  \co{type info}
+	\item  \co{type man}
+	\end{itemize}
+	\end{exampleblock}
+
+\end{frame}
+
+\subsection{Shell-Variablen \& Umgebung}
+\begin{frame} 
+
+	\begin{block}{Variablen} 
+	\begin{itemize}
+	\item Bash $\approx$ Programmiersprache 
+	\item Texte und numerische Werte können gespeichert werden
+	\item Variablen dienen auch zur Steuerung der Shell
+	\end{itemize}
+	\end{block}
+
+\begin{block}{Umgebung}
+\begin{itemize}
+\item Shellvariablen sind nur innerhalb der Shell vorhanden 
+\item um auch für Programme verfügbar zu sein muss exportiert werden (\co{export bla})
+\item \co{set}  zeigt alle - \co{env} oder \co{export} nur exportierte
+\end{itemize}
+
+\end{block}
+\end{frame}
+
+\begin{frame} 
+
+	\begin{exampleblock}{Beispiele} 
+	\begin{itemize}
+	\item \co{echo bla}
+	\item \co{bla=foo}
+	\item \co{echo \$bla}
+	\item \co{echo \$PS1}
+	\item \co{unset bla}
+	\item \co{echo \$RANDOM}
+	\item \co{declare}
+	\item \co{shopt}
+	\end{itemize}
+	\end{exampleblock}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%
+\section{Shell alias Werkzeugkoffer}
+\subsection{Ein Kommando - date}
+\begin{frame} 
+
+
+	\begin{block}{\co{date}} 
+	\begin{itemize}
+	\item wichtiges Tool wenn es um Zeit geht
+	\item kann die Softwareuhr setzen (root)
+	\item unterschiedlichste Layouts
+	\item Zeitzonen 
+	\end{itemize}
+	\end{block}
+
+\end{frame}
+
+\begin{frame} 
+
+
+	\begin{exampleblock}{Beispiele} 
+	\begin{itemize}
+	\item \co{date}
+	\item \co{export TZ=Europe/London}
+	\item \co{tzselect}
+	\item \co{date +'\%d. \%B \%Y'}
+	\item \co{date +'Tag Nr. \%j'}
+	\item \co{date +'KW Nr. \%V'}
+	\end{itemize}
+	\end{exampleblock}
+
+\end{frame}
+
+\subsection{Autovervollständigung}
+\begin{frame} 
+
+	\begin{block}{Autovervollständigung} 
+	\begin{itemize}
+	\item \taste{$\leftrightharpoons\quad$}  vervollständigt Eingaben
+	\item sowohl Befehle im \co{PATH}
+	\item als auch Speicherorte 
+	\item 2x \taste{$\leftrightharpoons\quad$} macht Vorschläge
+	\item alternativ \taste{esc}\taste{?} Kommandos und \taste{esc}\taste{/} Orte
+	\end{itemize}
+	\end{block}
+
+\end{frame}
+
+\subsection{History}
+\begin{frame} 
+
+	\begin{block}{History} 
+	\begin{itemize}
+	\item \taste{$\;\uparrow\;$} \taste{$\;\downarrow\;$}  blättert durch die History
+	\item \taste{ctrl}\taste{r} inkrementell durchsuchen
+	\item \co{history} gibt alle alten Befehle aus
+	\item \co{!} erlaubt Zugriff auf einzelne Befehle 
+	\end{itemize}
+	\end{block}
+
+\end{frame}
+
+\begin{frame} 
+
+	\begin{exampleblock}{Beispiele} 
+	\begin{itemize}
+	\item \co{!!}
+	\item \co{!-2}
+	\item \co{!echo}
+	\item \co{!?echo}
+	\item \co{!-2:0-}
+	\item \co{!-3:1-2}
+	\item \co{!-3:1*}
+	\end{itemize}
+	\end{exampleblock}
+
+\end{frame}
+
+\subsection{Befehlsketten}
+\begin{frame} 
+
+	\begin{block}{Befehlsketten} 
+	\begin{itemize}
+	\item Befehle können mit \co{;} getrennt werden
+	\item \co{\&\&} wie \co{;} wenn exitcode == 0
+	\item \co{||} wie \co{;} wenn exitcode != 0
+	\end{itemize}
+	\end{block}
+
+\end{frame}
+
+
+\begin{frame} 
+
+	\begin{exampleblock}{Beispiele} 
+	\begin{itemize}
+	\item \co{echo 'Heute ist der ' ; date +\%d.\%m.\%Y}
+       \item \co{echo 'Heute ist der ' \&\& date +\%d.\%m.\%Y}
+       \item \co{echo 'Heute ist der ' || date +\%d.\%m.\%Y}
+	\end{itemize}
+	\end{exampleblock}
+
+\end{frame}
+
+\section{Hilfe}
+\subsection{Übersicht}
+\begin{frame} 
+
+	\begin{block}{\co{help}} 
+	\begin{itemize}
+	\item \co{help} ist die interne Hilfe der \co{bash}
+	\item Gibt Informationen über die eingebauten Funktionen
+	\end{itemize}
+	\end{block}
+
+	\begin{block}{\co{info}} 
+	\begin{itemize}
+	\item Sehr ausführlich 
+	\item Aufbau wie eine Webseite
+	\end{itemize}
+	\end{block}
+	
+	\begin{block}{\co{man}} 
+	\begin{itemize}
+	\item Klassische Hilfe Seiten
+	\item Aufgeteilt in Kategorien  
+	\end{itemize}
+	\end{block}
+
+\end{frame}
+
+\subsection{help}
+\begin{frame} 
+
+	\begin{exampleblock}{Beispiele \co{help}} 
+	\begin{itemize}
+	\item \co{help}
+	\item \co{help help}
+	\item \co{help echo}
+	\item \co{help kill}
+	\item \co{help for}
+	\item \co{help date}
+	\end{itemize}
+	\end{exampleblock}
+
+\end{frame}
+\subsection{info}
+\begin{frame} 
+
+
+
+	\begin{exampleblock}{Beispiele \co{info}} 
+	\begin{itemize}
+	\item \co{info date}
+	\item \co{info}
+	\item \co{info dhcp}
+	\end{itemize}
+	\end{exampleblock}
+	
+	\begin{block}{\co{info} Tasten} 
+	\begin{itemize}
+	\item \taste{q} Beenden
+	\item \taste{h} Hilfe
+	\item \taste{n} Nächster Knoten
+	\item \taste{p} Vorheriger Knoten
+	\item \taste{u} Übergeordneter Knoten
+	\end{itemize}
+	\end{block}
+
+\end{frame}
+
+\begin{frame} 
+	\begin{exampleblock}{Beispiele \co{info}} 
+	\begin{itemize}
+	\item \co{man date}
+	\item \co{man info}
+	\item \co{man dhcp}
+	\item \co{man -k dhcp}
+	\end{itemize}
+	\end{exampleblock}
+	
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[plain]
+\begin{alertblock}{Nächste Vorlesung}
+\textbf{Termin:} Donnerstag, den 02.05.2013 18:30-20:00 Uhr\\
+\textbf{Thema:} Kapitel 4 - Dateien \\
+\textbf{Vorbereitung:} 
+\begin{itemize}
+\item LXES 6 Datein: Aufzucht und Pflege
+\end{itemize}
+\end{alertblock}
+\end{frame}
+
+\materialframe
+
+\end{document}

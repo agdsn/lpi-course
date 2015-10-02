@@ -1,0 +1,203 @@
+\documentclass[aspectratio=43]{beamer}
+\usepackage{../../resources/agdsncourse} 
+
+\title[Linux Essentials  - Kapitel 7 - Archivieren]{Linux Essentials}
+\subtitle{Kapitel 7 - Archivieren}
+\author{Hagen Eckert}
+\date{16. Mai 2013}
+
+
+\begin{document}
+
+% Start Folie
+\logoframe
+
+%Title
+\frame{\titlepage}
+
+%Gliederung
+\setcounter{tocdepth}{1}
+\section[Gliederung]{}
+\frame{\tableofcontents}
+
+% Inhalt
+%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Archivieren}
+\subsection{Übersicht}
+\begin{frame} 
+	\begin{block}{Übersicht} 
+	\begin{itemize}
+	\item Zusammenfassung von Datenstrukturen
+	\item Damit geeignet für lineare Speichermedien wie Bänder 
+	\item Neben dem eigentlichen Inhalt werden auch Metadaten abgelegt  (Pfad, Datum, ...)
+	\item Zusätzlich kann eine Komprimierung erfolgen
+	\end{itemize}
+	\end{block}
+
+
+\end{frame}
+
+
+\subsection{tar}
+\begin{frame} 
+	\begin{block}{\co{tar}} 
+	\begin{itemize}
+	\item Bedeutet \textbf{t}ape \textbf{ar}chive
+	\item Ist auf fast jedem Linux/Unix zu finden
+	\item Kann auch das gesamte Archive verdichten
+	\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame} 
+	\begin{exampleblock}{Usage}
+	\co{tar <Option> <Datei>|<Verzeichnis>}
+	\end{exampleblock}
+
+	\begin{exampleblock}{Options I}
+	\begin{itemize}
+	\item[-c] erzeugt (\textbf{c}reate) ein neues Archiv
+	\item[-f] Datei erzeugt oder liest das Archiv von einer Datei|Gerät
+	\item[-M] bearbeitet ein tar -Archiv, das sich über mehrere Datenträger erstreckt (\textbf{m}ulti-volume archive)
+	\item[-r] hängt Dateien an das Archiv an (nicht für Magnetbänder)
+	\item[-t]  zeigt den Inhalt (\textbf{t}able of contents) des Archivs
+	\item[-u] ersetzt Dateien, die neuer als eine bereits archivierte Version sind oder fügt sie hinzu
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{exampleblock}{Options II}
+	\begin{itemize}
+
+	\item[-v] ausführlicher Modus (\textbf{v}erbose, geschwätzig); zeigt auf dem Bildschirm an,
+was gerade geschieht
+	\item[-x]
+ Auslesen (\textbf{e}xtract) der gesicherten Dateien
+	\item[-z] komprimiert oder dekomprimiert das Archiv mit gzip
+\item[-Z] komprimiert oder dekomprimiert das Archiv mit compress (unter Linux normalerweise nicht vorhanden)
+\item[-j] komprimiert oder dekomprimiert das Archiv mit bzip2
+	\end{itemize}
+	\end{exampleblock}
+
+	
+\end{frame}
+
+
+\subsection{gzip}
+\begin{frame} 
+	\begin{block}{\co{gzip}} 
+	\begin{itemize}
+	\item Kurz für \textbf{G}NU \textbf{zip}
+	\item Bündelt datein nicht sondern komprimiert nur
+	\item Nicht direkt zip der Windowswelt zu vergleichen
+	\item Nutzt den DEFLATE Algorithmus
+	\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame} 
+	\begin{exampleblock}{Usage}
+	\co{gzip <Option> <Datei>
+	}
+	\end{exampleblock}
+
+	\begin{exampleblock}{Options I}
+	\begin{itemize}
+	\item[-c] schreibt die komprimierte Datei auf die Standardausgabe, anstatt die Datei zu ersetzen
+	\item[-d] dekomprimiert die Datei (gunzip arbeitet wie gzip -d )
+	\item[-l] zeigt (\textbf{l}ist) wichtige Verwaltungsinformationen der komprimierten Datei, wie Dateiname, ursprüngliche und gepackte Größe an
+
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{exampleblock}{Options II}
+	\begin{itemize}
+	\item[-r] packt auch Dateien in darunterliegenden Verzeichnissen (\textbf{r}ecursive)
+	\item[-S] verwendet anstelle von .gz die angegebene Endung (\textbf{S}uffix)
+	\item[-v] gibt den Namen und den Kompressionsfaktor für jede Datei aus 
+	\item[-n] $n= 1...9$ gibt einen Kompressionsfaktor an
+	\newline \co{-1} (oder \co{--fast} ) arbeitet am schnellsten, komprimiert aber nicht so gründlich
+	\newline \co{-9} (oder \co{--best}) die beste Komprimierung um den Preis höherer Laufzeit liefert
+	\newline voreingestellt ist \co{-6}
+	\end{itemize}
+	\end{exampleblock}
+
+	
+\end{frame}
+
+
+\subsection{bzip2}
+\begin{frame} 
+	\begin{block}{\co{gzip}} 
+	\begin{itemize}
+	\item Noch ein wenig Platzsparender
+	\item Verwendet eine Burrows-Wheeler-Transformation
+	\item Gleiche Optionen wie \co{gzip}
+	\item Aber: Zahlen geben die Blockgröße und nicht die Qualität an 
+	\newline Default: \co{-9} entspricht 900 KB 
+	\end{itemize}
+	\end{block}
+\end{frame}
+
+\subsection{zip}
+\begin{frame} 
+	\begin{block}{\co{zip}} 
+	\begin{itemize}
+	\item Das bekannte ZIP aus der Windowswelt
+	\item Sehr vielfältig
+	\item Hinweis: \co{unzip} ist ein eigenständiges Programm
+	\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame} 
+	\begin{exampleblock}{Usage}
+	\co{zip <Optionen> <Archiv> <Dateien>\&|<Verzeichnis>}
+	\end{exampleblock}
+
+	\begin{exampleblock}{Options I}
+	\begin{itemize}
+	\item[-r] packt auch Dateien in darunterliegenden Verzeichnissen (\textbf{r}ecursive)
+	\item[-@] ließt die Dateinamen von der Kommandozeile (StdIn)
+	\item[-0] nicht komprimiert
+	\item[-h2] ausführliche Hilfe
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{exampleblock}{Usage}
+	\co{unzip <Optionen>  <Archiv> <Dateien>\&|<Verzeichnis>}
+	\end{exampleblock}
+
+	\begin{exampleblock}{Options I}
+	\begin{itemize}
+	\item[-v] Details zum Archive anzeigen
+	\item[-d] Verzeichnis zum entpacken angeben (\textbf{d}irectory)
+	\item[-x] folgende Inhalte nicht entpacken
+	\item[-o] überschreiben von vorhandenen Dateien (\textbf{o}verride)
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+
+
+\begin{frame}[plain]
+\begin{alertblock}{Nächste Vorlesung}
+\textbf{Termin:} Donnerstag, den 02.05.2013 18:30-20:00 Uhr\\
+\textbf{Thema:} Kapitel 6 - Mehr Shell \\
+\textbf{Vorbereitung:} 
+\begin{itemize}
+\item LXES 9 Mehr über die Shell
+\end{itemize}
+\end{alertblock}
+\end{frame}
+
+\materialframe
+
+
+\end{document}

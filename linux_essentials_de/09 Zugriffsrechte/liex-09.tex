@@ -1,0 +1,237 @@
+\documentclass[aspectratio=43]{beamer}
+\usepackage{../../resources/agdsncourse} 
+
+\title[Linux Essentials  - Kapitel 9 - Zugriffsrechte]{Linux Essentials}
+\subtitle{Kapitel 9 - Zugriffsrechte}
+\author{Hagen Eckert}
+\date{20. Juni 2013}
+
+
+\begin{document}
+
+% Start Folie
+\logoframe
+
+%Title
+\frame{\titlepage}
+
+%Gliederung
+\setcounter{tocdepth}{1}
+\section[Gliederung]{}
+\frame{\tableofcontents}
+% Inhalt
+%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Zugriffsrechte}
+\subsection{Konzept}
+\begin{frame} 
+	\begin{block}{Konzept} 
+	\begin{itemize}
+	\item Mehrbenutzersystem
+	\item Abgrenzung zwischen normalen Benutzern und Administratoren
+	\item Abschottung der Daten einzelner Nutzer untereinander
+	\item Unterstützung von Gruppen und allgemeinen Rechten
+	\end{itemize}
+	\end{block}
+
+
+\end{frame}
+
+\subsection{Rechtematrix}
+
+\begin{frame} 
+	\begin{block}{Rechtematrix} 
+ \begin{align}
+\bordermatrix{
+ &r	& w   & x      \cr
+u & 1 & 1 & 1  \cr
+g & 1 & 0 & 1  \cr
+o & 1 & 0 & 0  \cr
+}\qquad
+\bordermatrix{
+ &r	& w   & x      \cr
+u & 4 & 2 & 1  \cr
+g & 4 & 0 & 1  \cr
+o & 4 & 0 & 0  \cr
+}\nonumber
+ \end{align}
+	\begin{itemize}
+	\item Nutzer (U), Gruppe (G), Andere (O)
+	\item Lese- (r), Schreib- (w), Ausführungsrecht (x)
+	\end{itemize}
+	\end{block}
+
+
+\end{frame}
+
+
+\begin{frame} 
+	\begin{block}{Rechtematrix anzeigen und ändern}
+	\begin{itemize}
+	\item \co{ls}
+	\item \co{chmod}
+	\end{itemize}
+	\end{block}
+	\begin{exampleblock}{}
+	\begin{itemize}
+	\item \co{ls -l}
+	\item \co{chmod u+x <file>}
+	\item \co{chmod ug=rw,o=r <file>}
+	\item \co{chmod 644 <file>}
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\subsection{Eigentümer}
+\begin{frame} 
+	\begin{block}{Eigentümer}
+	\begin{itemize}
+	\item \co{ls}
+	\item \co{chown}
+	\item \co{chgrp}
+	\end{itemize}
+	\end{block}
+	\begin{exampleblock}{}
+	\begin{itemize}
+	\item \co{ls -l}
+	\item \co{chown <user> <file>}
+	\item \co{chown <user>:<group> <file>}
+	\item \co{chown :<group> <file>}
+	\item \co{chgrp <group> <file>}
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+\subsection{Prozesse}
+
+\begin{frame} 
+	\begin{block}{Prozesse}
+	\begin{itemize}
+	\item Auch Prozesse haben eine Besitzer
+	\item In der Regel durch den Ausführenden bestimmt
+	\item Prozesse von root (SUID) können ihren Besitzer ändern
+	\end{itemize}
+	\end{block}
+	\begin{exampleblock}{}
+	\begin{itemize}
+	\item \co{ps -ua}
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+
+\subsection{Besonderheiten}
+	\begin{block}{Besonderheiten}
+	\begin{itemize}
+	\item Prozesse können auch dem Eigentümer ihrer Datei gehören
+	\item Dies wird mit dem Set-UID und Set-GID Bit umgesetzt
+	\item In der Octaldarstellung 4 (SUID) oder 2 (SGID) an 0. Stelle
+	\end{itemize}
+	\end{block}
+	\begin{exampleblock}{}
+	\begin{itemize}
+	\item \co{chmod 2664 <file>}
+	\item \co{chmod u+s <file>}
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+
+\begin{frame} 
+
+\subsection{Besonderheiten}
+	\begin{block}{Besonderheiten}
+	\begin{itemize}
+	\item Bei einem Verzeichnis erzwingt ein gesetztes SGID das alle neu erstellten Dateien Unterverzeichnisse  der Gruppe des Verzeichnisses gehören
+	\item Eine weiter Besonderheit ist das StickyBit
+	\item In der Octaldarstellung hat es eine 1 (0. Stelle) und in als Abkürzung  $\pm$t
+	\end{itemize}
+	\end{block}
+
+\end{frame}
+\section{Netzwerk}
+\begin{frame} 
+\subsection{Protokolle}
+	\begin{block}{Protokolle}
+	\begin{itemize}
+	\item 3 Hauptebenen:
+	\begin{itemize}
+	\item Übertragungsprotokolle (Ethernet, IEEE 802.11,...)
+	\item Kommunikationsprotokolle (TCP/IP, UDP, ICMP, ... )
+	\item Anwendunksprotokolle (http, pop3, dns, sip, ...)
+	\end{itemize}
+	\item Detaillierter Schichtsystem ISO/OSI (7 Ebenen)
+	\end{itemize}
+	\end{block}
+	
+\end{frame}
+\subsection{Adresse und Routing}
+\begin{frame} 
+
+	\begin{block}{Adresse}
+	\begin{itemize}
+	\item In der Regel IPv4
+	\item 4 Oktette 255.255.255.255
+	\item Die IP muss nicht konstant bleiben und ein Gerät hat in der Regel mehrere gleichzeitig 
+	\item Spezielle Bereiche wie 10.0.0.0/8
+	\item Vergabe früher direkt in Blöcken (9.0.0.0/8 IBM) heute über lokale Ausgabestellen
+	\end{itemize}
+	\end{block}
+	
+\end{frame}
+
+\begin{frame} 
+
+	\begin{block}{Routing}
+	\begin{itemize}
+	\item Freie Wegfindung
+	\item Wenn ein Paket nicht direkt zugestellt werden kann wird es weitergereicht (Default-Route)
+	\item Jedes Paket kann einen anderen Weg nehmen
+	\item Ermöglicht Loadbalancing
+	\end{itemize}
+	\end{block}
+	
+\end{frame}
+
+\subsection{DNS}
+\begin{frame} 
+
+	\begin{block}{DNS}
+	\begin{itemize}
+	\item Umwandlung leicht zu merkender Namen in IP-Adressen
+	\item Zusätzliche Einträge wie Mailserver einer Domain möglich
+	\item Auch eine Reverse-Anfrage ist möglich
+	\item Schichtweiser Aufbau
+	\end{itemize}
+	\end{block}
+	
+\end{frame}
+
+\subsection{IPv6}
+\begin{frame} 
+	\begin{block}{\co{IPv6}} 
+	\begin{itemize}
+	\item \textcolor{red}{2001:0db8}:\textcolor{green!50!black}{85a3}:\textcolor{blue}{08}\textcolor{orange}{d3}:\textcolor{purple}{1319:8a2e:0370:7347}
+	\item Präfix: \textcolor{red}{2001:0db8:85a3:08d3}::
+	\item Interface Identifier \textcolor{purple}{1319:8a2e:0370:7347}
+	\item Provider Präfix \textcolor{green!50!black}{2001:0db8::/32}
+	\item Endkunde Präfix    \textcolor{blue}{2001:0db8:85a3::/48} oder nur \textcolor{orange}{2001:0db8:85a3:0800::/56} 
+	\end{itemize}
+	\end{block}
+\end{frame}
+
+
+\begin{frame}[plain]
+\begin{alertblock}{Nächste Vorlesung}
+\textbf{Termin:} Donnerstag, den 27.06.2013 18:30-20:00 Uhr\\
+\textbf{Thema:} Kapitel 10 - Mehr Netzwerk \\
+\textbf{Vorbereitung:} 
+\begin{itemize}
+\item LXES 15 Linux im Netz 
+\end{itemize}
+\end{alertblock}
+\end{frame}
+
+\materialframe
+
+\end{document}
