@@ -1,0 +1,535 @@
+\documentclass[aspectratio=43]{beamer}
+\usepackage{../../resources/agdsncourse} 
+
+\title[Linux Essentials  - Kapitel 4 - Dateien]{Linux Essentials}
+\subtitle{Kapitel 4 - Dateien}
+\author{Alexander Köhler}
+\date{18. Oktober 2015}
+\setbeamertemplate{navigation symbols}{} 
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% Start Folie
+\logoframe
+
+%Title
+\frame{\titlepage}
+
+%Gliederung
+\setcounter{tocdepth}{1}
+\section[Gliederung]{}
+\frame{\tableofcontents}
+
+
+%%%%%%%%%%%%%%%
+\section{Dateien und Verzeichnisse}
+\subsection{Dateinamen}
+\begin{frame}{Dateinamen}
+%   \begin{block}{Dateinamen}
+    \begin{itemize}
+      \item Dateien sind zusammengehörende Daten, die auf einem Speichermedium unter einem
+        Namen (Dateinamen) gespeichert sind
+      \item jede Datei besitzt eine eindeutige Nummer für ihr Dateisystem (Inode-Nr.)
+      \item Zeichen in Dateinamen:
+      \begin{itemize}
+        \item Alles erlaubt, außer "`/"' und Nullbyte (ASCII-Wert 0)\\
+          $\rightarrow$"`/"' ist Trenner in Pfadnamen
+        \item Unterscheidung zwischen Groß-/Kleinschreibung
+        \item Sonderzeichen (\$, \textasteriskcentered, Umlaute, Leerzeichen) durch "`\textbackslash"'oder 
+        Anführungszeichen vor der Shell verstecken
+        \item Umlaute hängen vom System ab (s. \co{convmv})
+        \item Typische Obergrenze: 255 Zeichen
+      \item Endungen (z.B. \co{.txt}) sind fakultativ
+      \end{itemize}
+      \item Versteckte Dateien beginnen mit "`."'
+    \end{itemize}
+%   \end{block}
+\end{frame}
+
+\subsection{Verzeichnisse}
+\begin{frame}{Verzeichnisse}
+  \begin{block}{Grundlagen zu Verzeichnissen unter Linux}
+  \begin{itemize}
+    \item Gruppieren Dateien hierarchisch zum besseren Überblick
+    \item Gleiche Regeln für Verzeichnisnamen wie bei Dateinamen
+    \item Können andere Verzeichnisse enthalten \\
+      $\rightarrow$ Verzeichnisbaum
+    \item Wurzel des Verzeichnisbaums ist das Wurzelverzeichnis (root~directory)
+          und wird mit "`/"' bezeichnet
+  \end{itemize}
+  \end{block}
+  \begin{block}{Konvention der Verzeichnishierarchie}
+    $\rightarrow$ Siehe Kapitel 10 Linux Essentials
+  \end{block}
+
+\end{frame}
+
+\subsection{Pfadangaben}
+\begin{frame}{Pfadangaben: Der Weg zur Datei durch das Dateisystem}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Absolute Pfadangaben}
+        \begin{itemize}
+          \item Beginnen mit "`/"' und 
+          \item Beschreiben Weg zur Datei ausgehend vom Wurzelverzeichnis
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Relative Pfadangaben}
+        \begin{itemize}
+          \item Beginnen nicht mit "`/"'
+          \item Beschreiben einen Weg, der im aktuellen Verzeichnis beginnt
+        \end{itemize}    
+      \end{block}
+    \end{column}
+  \end{columns}
+  \begin{block}{Wichtige Namen für Spezialverzeichnisse}
+  \begin{description}
+    \item["`.."'] Übergeordnetes Verzeichnis
+    \item["`."'] Aktuelles Verzeichnis (Nützlich für \co{./prog})
+    \item["`\textasciitilde"'] Heimatverzeichnis des aktuellen Nutzers
+  \end{description}
+  \end{block}
+\end{frame}
+
+
+\section{Arbeiten mit und in Verzeichnissen}
+\subsection{Bewegen in Verzeichnissen}
+\begin{frame}{Bewegen in Verzeichnissen}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Das aktuelle Verzeichnis}
+        \begin{itemize}
+          \item Wichtig für relative Pfade
+          \item Wird an Prozesse vererbt
+          \item Ermittelbar über: \\ \co{\$ pwd} \\(print working dir)
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+       \begin{block}{Arbeitsverzeichnis wechseln}
+            \co{cd} (change directory):
+            \begin{itemize}
+              \item \co{\$ cd verzeichnis}
+              \item \co{\$ cd}
+              \item \co{\$ cd -}
+              \item Ist interner Shell-Befehl
+              \item Vgl. \co{dirs}, \co{popd},\co{pushd}
+            \end{itemize}
+        \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{Verzeichnisinhalte anzeigen}
+\begin{frame}{Verzeichnisinhalte anzeigen}
+  \begin{block}{Befehl}
+    \co{\$ ls} (list) \\
+    $\rightarrow$ zeigt Inhalt des aktuellen Verzeichnisses in Tabellenform farbig an
+  \end{block}
+  \begin{block}{Markierungen der Dateitypen}
+    \begin{tabular}{lccc}
+      Dateityp                  & Farbe         & Zeichen \co{-F} & Kennung \co{-l} \\
+      \hline
+      normale Datei             & schwarz       & keins & \co{-} \\
+      ausführbare Datei         & grün          & * & \co{-} \\
+      Verzeichnis               & blau          & / & \co{d} \\
+      Link                      & cyan          & @ & \co{l} \\
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}{Optionen zum Anzeigen von Verzeichnisinhalten mit \co{ls}}
+  \begin{block}{Allgemeine }
+    \begin{tabular}{p{0.38\textwidth}p{0.6\textwidth}}
+      \co{-a} oder \co{--all}           & auch versteckte Dateien anzeigen \\
+      \co{-i} oder \co{--inode}         & eindeutige Dateinummer (Inode-Nr.)\\
+      \co{-l} oder \co{--format=long}   & zusätzliche Informationen\\
+      \co{--color=no}                   & keine Farbcodierung nach Dateityp \\
+      \co{-p} oder \co{-F}              & Dateityp durch Sonderzeichen \\
+      \co{-R} oder \co{--recursive}     & Unterverzeichnisse durchsuchen \\
+    \end{tabular}
+  \end{block}
+  \begin{block}{Sortieroptionen}
+    \begin{tabular}{ll}
+      \co{-r} oder \co{--reverse}       & Sortierreihenfolge umkehren \\
+      \co{-S} oder \co{--sort=size}     & nach Dateigröße  (groß $\rightarrow$ klein) \\
+      \co{-t} oder \co{--sort=time}     & nach Zeit (neu $\rightarrow$ alt) \\
+      \co{-x} oder \co{--sort=extension}       & nach Dateityp \\
+    \end{tabular}
+  \end{block}
+  $\rightarrow$ Wichtig für die Prüfung
+\end{frame}
+
+\subsection{Verzeichnisse erstellen und löschen}
+\begin{frame}{Verzeichnisse erstellen und löschen}
+  \begin{block}{Verzeichnisse anlegen mit \co{mkdir}}
+    \begin{itemize}
+      \item "`make directory"': \co{mkdir}
+      \item \co{\$ mkdir Verzeichnis}
+      \item Option \co{-p}: übergeordnete Verzeichnisse mit erzeugen
+    \end{itemize}
+  \end{block}
+  \begin{block}{Verzeichnisse löschen mit \co{rmdir}}
+    \begin{itemize}
+      \item "`remove directory"': \co{rmdir}
+      \item Option \co{-p}: übergeordnete Verzeichnisse löschen
+      \item Verzeichnisse dürfen keine Dateien enthalten
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\section{Suchmuster für Dateien}
+\subsection{Einfache Suchmuster}
+\begin{frame}{Suchmuster und Shell-Expansion}
+%   \begin{block}{Grundlegendes}
+    \begin{itemize}
+      \item \emph{Expansion ist eine Leistung der Shell}
+      \item erlauben ein einfaches Auswählen von vielen ähnlichen Dateien ohne explizite Eingabe
+      \item Frage: Was geschieht, wenn eine Datei mit einem Minus "`\co{-}"' beginnt?
+      \item Wenn die Expansion fehl schlägt: Ausdruck unverändert an das Programm übergeben
+      \item \co{*}: Passt auf beliebig viele Zeichen (auch kein Zeichen)
+      \item \co{?}: Passt auf genau ein beliebiges Zeichen
+      \item beide passen auf alle Zeichen außer \co{/}
+      \item versteckte Dateien müssen explizit ausgewählt werden (z.B.: \co{.*})
+    \end{itemize}
+%   \end{block}
+\end{frame}
+
+\subsection{Zeichenklassen}
+\begin{frame}
+  \begin{block}{Zeichenklassen}
+    \begin{itemize}
+      \item genau ein Zeichen, die mit \co{[} und \co{]} eingeschlossen sind
+      \item Angabe direkt (\co{[abcdef]}) oder durch Bereiche (\co{[a-f]})
+      \item Bereiche erstrecken sich über den ASCII-Tabelle
+      \item Problem Umlaute: können nicht über \co{[a-z]} ausgewählt werden 
+        $\rightarrow$ explizite Angabe
+      \item Ausschluss von Zeichen mit \co{!}, z.B. \co{prog[!A-Z].cpp}
+    \end{itemize}
+  \end{block}
+  \begin{block}{Beispiele}
+    \begin{itemize}
+      \item \co{[abc]-text.txt} passt auf die Dateien \co{a-text.txt}, \co{b-text.txt} und \co{c-text.txt}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\subsection{Geschweite Klammern}
+\begin{frame}{Geschweifte Klammern -- Das kartesische Produkt}
+  \begin{block}{Das kartesische Produkt}
+    \begin{itemize}
+      \item Unabhängig von der Existenz als Dateinamen
+      \item Generiert auf textuelle Basis Wörter
+      \item Bereiche über ``\co{..}'' angebbar
+      \item Bsp.: 
+      \begin{tabular}{p{9.55em}p{0.55em}l}
+        \co{\{rot,blau,gelb\}.txt}& $\rightarrow$ & \co{rot.txt blau.txt gelb.txt}\\
+        \co{\{a,b\}\{1,2\}}        & $\rightarrow$ & \co{a1 a2 b1 b2} \\
+        \co{\{a..d\}.txt}          & $\rightarrow$ & \co{a.txt b.txt c.txt d.txt}\\
+        \co{\{a..f..2\}.txt}       & $\rightarrow$ & \co{a.txt c.txt e.txt}\\
+      \end{tabular}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+\section{Arbeiten mit Dateien}
+\subsection{Kopieren, Verschieben, Löschen}
+\begin{frame}{Kopieren, Verschieben, Löschen}
+  \begin{block}{Kopieren ("`copy"')}
+    \begin{itemize}
+      \item Erzeugen einer neuen Datei als Kopie einer alten Datei
+      \item \co{\$ cp original kopie} \\ 
+          $\rightarrow$ erzeugt 1:1 Kopie vom Original
+      \item \co{\$ cp original zielverzeichnis/ } \\ 
+          $\rightarrow$ erzeugt 1:1 Kopie im Verzeichnis
+      \item \co{\$ cp quelle1 quelle2 \dots ~zielverzeichnis/ } \\ 
+          $\rightarrow$ erzeugt 1:1 Kopien der Dateien im Verzeichnis
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{}
+  \begin{block}{Verschieben und Umbenennen ("`move"')}
+    \begin{itemize}
+      \item Befehl \co{mv} analog wie \co{cp}
+      \item Verschieben einer Datei von einem Ort zu einem anderen
+      \item im einfachsten Fall wird die Datei umbenannt
+      \item Datei wird nur in neues Verzeichnis eingeordnet 
+    \end{itemize}
+  \end{block}
+  \begin{block}{Löschen ("`remove"')}
+    \begin{itemize}
+      \item \co{\$ rm datei}
+        $\rightarrow$ löscht die Datei "`datei"'
+      \item \emph{Löschen ist endgültig!}
+      \item Verzeichnis und Unterverzeichnisse mit Dateien löschen: \co{-rf}
+      \item Frage: Was macht \co{rm -rf /}  ?
+      \item Vorsichtiger Umgang mit Wildcards (\co{\textasteriskcentered}, \dots)!
+    \end{itemize}
+  \end{block}
+\end{frame}
+\begin{frame}{}
+  \begin{block}{Allgemeine Arbeitsweise beim Kopieren, Verschieben,\dots}
+    \begin{itemize}
+      \item i.Allg. werden die Dateioperationen ohne Nachfrage ausgeführt\\
+        $\rightarrow$ Dateien können ungefragt überschrieben werden
+      \item Entscheidend sind die Berechtigungen in den jeweiligen Verzeichnissen 
+        und nicht die der Dateien
+    \end{itemize}
+  \end{block}
+  \begin{block}{Allgemeine Optionen für \co{cp}, \co{mv} und \co{rm}}
+    \begin{tabular}{p{1.0em}p{0.2\textwidth}p{0.66\textwidth}}
+%       \co{-b}   & (backup)      & Sicherungskopien ($\sim$) von existierenden Zieldateien \\
+      \co{-f}   & (force)       & Aktion ohne Rückfrage erzwingen \\
+      \co{-i}   & (interactive) & nachfragen für jede Aktion\\
+      \co{-v}   & (verbose)     & ausführliche Ausgabe aller Aktionen \\
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}{Weitere Optionen}
+  \begin{block}{Spezielle Optionen bei vorhandenen Dateien (\co{cp}, \co{mv})}
+    \begin{tabular}{p{1.0em}p{0.19\textwidth}p{0.75\textwidth}}
+      \co{-b}   & (backup)      & Sicherungskopien (\textasciitilde) von vorhandenen Zieldateien \\
+      \co{-u}   &  (update)     & nur mit neueren Dateien überschreiben\\
+    \end{tabular}
+  \end{block}
+  \begin{block}{Weitere spezielle Optionen}
+    \begin{tabular}{p{1.0em}p{0.19\textwidth}p{0.66\textwidth}}
+      \co{-p}   & (preserve)      & Dateiattribute behalten (cp) \\
+      \co{-r}   & (recursive)     & rekursives Abarbeiten von Verzeichnissen (\co{cp}, \co{rm} ) \\
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\subsection{Verknüpfungen von Dateien}
+\begin{frame}{Verknüpfungen zu Dateien}
+  \begin{block}{Harte Verknüpfungen}
+    \begin{itemize}
+      \item \co{\$ ln datei hardlink}\\
+        $\rightarrow$ "`datei"' und "`hardlink"' verweisen auf die gleiche Datei
+        \item Verweisen auf die Inode-Nr. (Vgl. \co{ls -i})
+        \item "`datei"' und "`hardlink"' sind ein und der selbe Name für die gleiche Datei
+        \item Zweite Spalte von \co{ls -l} gibt Anzahl der Referenzen ($\ge 1$) an
+        \item Beide Namen sind gleichwertig und ununterscheidbar
+        \item Verknüpfung nur auf Dateien im selben Dateisystem möglich
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Verknüpfungen zu Dateien und Verzeichnisse}
+  \begin{block}{Symbolische (weiche) Verknüpfungen}
+    \begin{itemize}
+      \item \co{\$ ln -s datei softlink}
+      \item Verweist auf den Namen der Zieldatei
+      \item Verknüpfung auf Dateien und Verzeichnisse möglich
+    \end{itemize}
+  \end{block}
+  \begin{block}{Weitere Optionen für \co{ln}}
+    Optionen \co{-b}, \co{-f}, \co{-i} und \co{-v} wie bei \co{cp}
+  \end{block}
+\end{frame}
+
+
+\subsection{Inhalte von Dateien anzeigen lassen}
+\begin{frame}%{Textdateien lesen}
+  \begin{columns}
+    \begin{column}{0.34\textwidth}
+%         \begin{block}{Mehr lesen mit \co{more}}
+        \begin{block}{Mögliche Programme}
+        \begin{itemize}
+%           \item Rückwärtsbewegung im Text nicht möglich
+          \item  \co{more}:   unkomfortabel
+          \item Weniger ist mehr:\\ \co{less}\\
+          $\rightarrow$ besser bedienbar
+        \end{itemize}
+      \end{block}
+%         \begin{block}{Weniger ist mehr -- \co{less}}
+% %           \begin{itemize}
+% %             \item 
+%             Textnavigation auch mit Pfeiltasten
+% %           \end{itemize}
+%         \end{block}
+%         \flushbottom
+%         \begin{block}{}
+%           \begin{tabular}{ll}
+%           \end{tabular}
+%         \end{block}
+    \end{column}
+    \begin{column}{0.71\textwidth}
+        \begin{block}{Tastaturbefehle für \co{less}}
+          \begin{tabular}{cl}
+            \taste{$\hookleftarrow$} od. \taste{j}  & nächste Zeile (Pfeiltasten) \\
+            \taste{ } od. \taste{f}   & nächste Seite \\
+            \taste{y} od. \taste{k}  & vorherige Zeile \\
+            \taste{b}   & Seite zurück \\
+            \taste{h}   & Hilfetext \\
+            \taste{q}   & beenden \\
+            \taste{!}\co{befehl} \taste{$\hookleftarrow$}   & \co{befehl} ausführen \\
+            \taste{v}   & Editor öffnen\\
+            \taste{Strg} \taste{l}  & Bildschirm neuzeichnen\\
+            \taste{p}\co{zahl}  \taste{$\hookleftarrow$}  & gehe zu \co{zahl}\% des Textes\\
+            \taste{/}\co{wort} \taste{$\hookleftarrow$}   & sucht \co{wort} abwärts\\
+            \taste{?}\co{wort} \taste{$\hookleftarrow$}   & aufwärts suchen\\
+            \taste{n}   & abwärts weitersuchen \\
+            \taste{N}   & aufwärts weitersuchen \\
+          \end{tabular}
+        \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{Dateien suchen und finden}
+\begin{frame}{Suchen und Finden im Verzeichnisbaum}
+  \begin{block}{Rekursives Suchen mit \co{find}}
+    Allgemeiner Syntax:\\
+    \co{find startverzeichnis kriterium aktion}
+    \begin{itemize}
+%       \item \co{find startverzeichnis kriterium aktion}
+      \item alle als \co{startverzeichnis} angegebene Verzeichnisse werden rekursiv durchsucht
+      \item \co{kriterium} beschreibt die Bedingungen, die erfüllt sein müssen
+      \item \co{aktion} legt fest, was mit einem Treffer geschieht
+    \end{itemize}
+  \end{block}
+\end{frame}
+\begin{frame}{Suchkriterien}
+        \begin{tabular}{lp{.8\textwidth}}
+          \co{-name}        & Name muss auf das Muster passen\\
+          \co{-iname}        & Groß-/Kleinschreibung ignorieren\\
+          \co{-user}        & Eigentümer stimmt überein\\
+          \co{-group}        & Gruppe\\
+          \co{-type}        & bestimmter Dateityp\\
+          \co{-size}        & Dateigröße in 512 B (c für Byte,k für kiB, Mindestwert mit Pluszeichen, Maximalwert mit Minuszeichen)\\
+          \co{-atime}        & Zeit des letzten Zugriffs in Tagen\\
+          \co{-amin}        & Zeit des letzten Zugriffs in Minuten\\
+          \co{-mtime}        & Zeit der letzten Änderung\\
+          \co{-ctime}        & Zeit der letzten Änderung am Inode\\
+          \co{-perm}        & Zugriffsberechtigungen als Oktalzahl\\
+          \co{-links}        & Anzahl Referenzen\\
+          \co{-inum}        & Inode-Nummer\\
+        \end{tabular}
+\end{frame}
+
+\begin{frame}{Mehrere Suchkriterien logisch verknüpfen}
+       \begin{block}{Verknüpfen von Kriterien}
+        \begin{itemize}
+          \item mehrere Kriterien automatisch UND-Verknüpft
+          \item logische Operatoren:
+          \begin{description}
+           \item[Und:]  \co{-a}
+           \item[Oder:] \co{-o}
+           \item[Nicht:] \co{!}
+          \end{description}
+          \item Zusammenfassen durch runde Klammern: \\
+                \co{\textbackslash ( krit1 -o krit2 \textbackslash )}\\
+		(Klammern vor Shell mit Rückstrichen maskiert)
+        \end{itemize}
+      \end{block}
+\end{frame}
+
+
+\begin{frame}{Funde verarbeiten}
+  \begin{block}{Aktionen}
+    Aktionen, die mit einem gefundenen Dateinamen ausgeführt werden\\
+    \begin{tabular}{ll}
+      \co{-print}     & Funde ausgeben\\
+      \co{-exec}     & Befehl ausführen\\
+      \co{-ok}     & nach Zustimmung Befehl ausführen\\
+    \end{tabular}
+
+  \end{block}
+  \begin{block}{Dateinamen sammeln mit \co{xarg}}
+      \co{\$ find . -user nobody | xarg -r rm -i}\\
+      $\rightarrow$ \co{xarg} sammelt Namen und gibt sie dann an \co{rm} zusammen weiter
+  \end{block}
+
+\end{frame}
+
+\begin{frame}{Schneller Suchen dank Datenbanken}
+  \begin{block}{\co{locate}}
+    \begin{itemize}
+%       \item nicht standardmäßig installiert
+      \item sucht in Datenbank nach passenden Einträgen\\
+        $\rightarrow$ Erneuern der Datenbank mit \co{updatedb} (langsam)
+        \begin{itemize}
+          \item meist automatisch über Programme (\co{cron}) im Hintergrund
+          \item Auswahl der Verzeichnisse über Konfigurationsdateien der Distribution
+          (z.B. \co{/etc/updatedb.conf})
+        \end{itemize}
+      \item Sicherheitsproblem: updatedb speichert keine Berechtigungen
+      \item Alternative \co{slocate} berücksichtig Zugriffsberechtigungen
+      \item \co{\$ locate 'suchmuster'} \\
+          \co{suchmuster} kann ein Teil innerhalb des kompletten Pfades sein oder 
+          ein Suchmuster wie in der Shell (komplette Übereinstimmung)
+    \end{itemize}
+  \end{block}
+  \begin{block}{\co{slocate}}
+    Berücksichtig Eigentümer und Zugriffsberechtigungen beim Suchen
+  \end{block}
+\end{frame}
+% 
+% \begin{frame}{}
+%   \begin{block}{}
+%     \begin{itemize}
+%       \item 
+%     \end{itemize}
+%   \end{block}
+% \end{frame}
+% 
+
+
+\begin{frame}{Prüfungsziele I}
+  \begin{alertblock}{2.3 Verzeichnisse und Protokolldateien nutzen}
+    \begin{description}
+      \item[Gewicht]  2
+      \item[Beschreibung] Navigieren in Home- und Systemverzeichnissen und Protokolldateien an versch. Orten
+    \end{description}
+       Wissensgebiete\\ 
+        \begin{itemize}
+          \item Dateien, Verzeichnisse
+          \item Versteckte Dateien und Verzeichnisse
+          \item Benutzerverzeichnisse
+          \item Absolute und relative Pfade
+          \item \co{ls}, \co{cd}, \co{HOME} und \co{-}
+          \item \co{.} und \co{..}
+        \end{itemize}
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{Prüfungsziele II}
+  \begin{alertblock}{2.4 Erstellen, Verschieben und Löschen von Dateien}
+    \begin{description}
+      \item[Gewicht]  2
+      \item[Beschreibung] Erstellen, Verschieben und Löschen von Dateien und Verzeichnissen im eigenen Verzeichnis
+    \end{description}
+       Wissensgebiete\\ 
+        \begin{itemize}
+          \item Dateien, Verzeichnisse
+          \item Groß- und Kleinschreibung
+          \item einfaches Globbing und Quoting
+          \item \co{mv}, \co{cp}, \co{rm}, \co{touch}
+          \item \co{mkdir}, \co{rmdir}
+        \end{itemize}
+  \end{alertblock}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%% next time...
+\begin{frame}[plain]
+  \begin{alertblock}{Nächste Vorlesung}
+    \textbf{Termin:} Donnerstag, den 09.05.2013 18:30-20:00 Uhr\\
+    \textbf{Thema:} Kapitel 5 - Suchen und Finden \\
+    \textbf{Vorbereitung:} 
+    \begin{itemize}
+      \item LXES 7 Reguläre Ausdrücke
+      \item LXES 8 Standardkanäle und Filterkommandos
+    \end{itemize}
+  \end{alertblock}
+\end{frame}
+
+\materialframe
+
+\end{document}

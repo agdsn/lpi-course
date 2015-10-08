@@ -1,0 +1,381 @@
+\documentclass[aspectratio=43]{beamer}
+\usepackage{../../resources/agdsncourse} 
+
+\title[Linux Essentials  - Kapitel 10 - Linux im Netz]{Linux Essentials}
+\subtitle{Kapitel 10 - Linux im Netz}
+\author{Alexander Köhler}
+\date{25. Oktober 2015}
+\setbeamertemplate{navigation symbols}{} 
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%5
+% Start Folie
+\logoframe
+
+%Title
+\frame{\titlepage}
+
+
+
+%Gliederung
+\setcounter{tocdepth}{1}
+\section[Gliederung]{}
+\frame{\tableofcontents}
+
+
+%%%%%%%%%%%%%%% der Inhalt
+\section{Benutzerverwaltung -- Teil II}
+\subsection{Dateien zur Gruppenverwaltung}
+\begin{frame}{\co{/etc/shadow}}
+  \begin{center}
+    \colorbox{yellow}{\co{Name:Kennwort:Änderung:Min:Max:Warn:Frist:Sperre:Reserve}}
+  \end{center}
+  \begin{block}{}
+    \begin{description}
+      \item[Name]        Textueller Nutzername, Login
+      \item[Kennwort]    \dots
+      \item[Änderung]    Datum der letzten Passwortänderung
+      \item[Min]         Mindestalter in Tagen
+      \item[Max]         Höchstalter in Tagen
+      \item[Warn]        Tage vor Max für Aufforderung zum Ändern 
+      \item[Frist]       Tage nach Max, Sperrung bei Überschreitung
+      \item[Sperre]      Datum für Ablauf des Accounts
+    \end{description}
+  \end{block}
+\end{frame}
+\begin{frame}{\co{/etc/group}}
+  \begin{center}
+    \colorbox{yellow}{\co{Gruppenname:Kennwort:GID:Mitglieder}}
+  \end{center}
+  \begin{block}{}
+    \begin{description}
+      \item[Gruppenname] Textueller Name der Gruppe
+      \item[Kennwort]    Wird beim Wechseln der Gruppe mit \co{newgrp} abgefragt, \co{*} und \co{x} wie bei \co{passwd} 
+      \item[GID]         Numerische Gruppenkennung
+      \item[Mitglieder]  Durch Komma getrennte Liste der Mitglieder (Sekundäre Gruppenmitglieder)
+    \end{description}
+  \end{block}
+    Kennwort und Mitglieder sind optional
+\end{frame}
+\begin{frame}{\co{/etc/gshadow}}
+%   \co{}
+  \begin{block}{Gruppenpasswörter}
+    \begin{itemize}
+      \item werden im Allgemeinen nicht verwendet
+      \item \co{/etc/gshadow}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\subsection{Benutzerkonten erstellen}
+\begin{frame}{Überblick: Neuen Nutzer anlegen}
+%   $\rightarrow$ Aufgabe als root
+
+  \begin{block}{Aufgaben beim Anlegen neuer Benutzer}
+    \begin{enumerate}
+      \item Einträge in \co{/etc/\{passwd,shadow\}} anlegen
+      \item Ggf. Eintrag in \co{/etc/group} anlegen
+      \item Heimatverzeichnis erzeugen und Grundausstattung mitgeben
+      \item Ggf. weitere Dateien ändern (z.B. Plattenkontigente, Zugriffsberechtigungen)
+    \end{enumerate}
+  \end{block}
+  $\rightarrow$ Bearbeiten der Textdateien von Hand möglich, aber z.B. Tippfehler möglich\\
+  $\rightarrow$ Elegantere Methode: Programm \co{useradd}
+\end{frame}
+
+\begin{frame}{Einen neuen Nutzer anlegen}
+  \begin{center}
+    \colorbox{yellow}{\co{\# useradd [Optionen] Nutzername}}
+  \end{center}
+  \begin{block}{Optionen}
+    \begin{description}
+      \item[-c Kommentar] Eintrag im GECOS-Feld
+      \item[-d Heimatverzeichnis] sonst wird \co{/home/Nutzername} verwendet
+      \item[-e Datum] Sperrdatum, Format: "`JJJJ-MM-DD"'
+      \item[-g Gruppe] Primäre Gruppe
+      \item[-G Gruppe,\dots] Sekundäre Gruppen
+      \item[-s Shell] Login-Shell
+      \item[-u UID] Numerische Nutzerkennung
+      \item[-m] Heimatverzeichnis mit Grundausstattung erstellen
+      \item[-k Skel-Verzeichnis] Angabe des Skeleton-Verzeichnisses (\co{/etc/skel})
+    \end{description}
+  \end{block}
+\end{frame}
+\begin{frame}{Hinweise zu \co{useradd}}
+  \begin{block}{Voreingestellte Werte anzeigen und ändern}
+    \begin{itemize}
+      \item Anzeigen: \co{\#~useradd~-D} {\color{gray} (bei openSUSE \co{--show-defaults})}
+      \item Ändern: durch Anhängen der Optionen
+    \end{itemize}
+  \end{block}
+  \begin{block}{Weitere Hinweise}
+    \begin{itemize}
+      \item relativ niedriger Administrationslevel \\
+            $\rightarrow$ ggf. eigenes Shellskript für umfangreichere Konfiguration
+      \item Distributionseigene Varianten!
+      \item Neues Konto noch ohne gültiges Passwort / Login
+      \item Ohne Option "`-m"' auch kein existierentes Heimatverzeichnis
+    \end{itemize}
+  \end{block}
+\end{frame}
+\begin{frame}{Passwörter mit \co{passwd} einrichten}
+  \begin{center}
+    \colorbox{yellow}{\co{\$~passwd~[Optionen]~[Nutzername]}}
+  \end{center}
+  \begin{block}{Ohne Optionen}
+    \begin{itemize}
+      \item Änderung des Passwort des (angemeldeten) Nutzers
+      \item Zuvor Abfrage des alten Passworts (außer bei root)
+    \end{itemize}
+  \end{block}
+  \begin{block}{Optionen}
+    \begin{description}
+      \item[-S] Passwort-Verwaltungsdaten anzeigen
+      \item[-l] Sperren
+      \item[-u] Entsperren
+      \item[\dots]
+    \end{description}
+  \end{block}
+\end{frame}
+\begin{frame}{Feinere Passwort-Einstellungen mit \co{chage}}
+  \begin{center}
+    \colorbox{yellow}{\co{\#~chage~[Optionen]~Nutzername}}
+  \end{center}
+  \begin{block}{Hinweise zu den Optionen}
+    \begin{itemize}
+      \item Ohne Optionen: interaktive Abfrage aller Werte
+      \item Alle Einstellungen in \co{/etc/shadow} änderbar, nicht nur die durch \co{passwd} verändert werden können
+      {\color{gray} \item Optionen nicht mit denen von \co{passwd} kompatibel}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Passwort vergessen -- Was tun?}
+    \begin{itemize}
+      \item Passwort immer nur verschlüsselt gespeichert \\
+      $\rightarrow$ Direktes Auslesen des Passworts in Klartext technisch unmöglich
+      \item Passwort durch root mit \co{passwd} neu setzen
+      \item root-Passwort durch Booten mit einer Live-CD ändern / löschen
+    \end{itemize}
+\end{frame}
+
+\subsection{Benutzerkonten löschen}
+\begin{frame}{Benutzerkonten löschen}
+  \begin{block}{Konto löschen}
+    \begin{itemize}
+      \item \co{\#~userdel~Nutzer} \\
+      $\rightarrow$ entfernt Einträge in \co{/etc/\{passwd,shadow\}}
+      \item Option \co{-r} entfernt auch Heimatverzeichnis und Mailbox (\co{/var/mail})
+    \end{itemize}
+  \end{block}
+  \begin{alertblock}{Weitere Hinweise}
+    Dateien an anderen Orten müssen explizit gelöscht werden\\
+    $\rightarrow$ \co{find~/~-uid~UID~-delete}
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{Benutzerkonten ändern}
+  \begin{block}{Konto ändern mit \co{usermod}}
+    \begin{center}
+      \colorbox{yellow}{\co{\$~usermod~Optionen~Nutzername}}
+    \end{center}
+    $\rightarrow$ Optionen wie bei \co{useradd}
+  \end{block}
+  \begin{block}{UID verändern}
+    \begin{itemize}
+      \item Möglich durch direkte Änderung des Feldes in \co{passwd}
+      \item Dateien werden nicht automatisch übertragen!\\
+        $\rightarrow$ Übertragen der Eigentümerschaft mit \\
+        \co{\# chown~-R~Verzeichnis}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Hinzufügen, Bearbeiten, Löschen}
+  \begin{block}{Gruppe hinzufügen}
+    \co{\#~groupadd~Gruppenname}\\
+    $\rightarrow$ Option "`-g GID"' legt GID fest 
+%     (System: 0\dots99, Normale Gruppen: 100\dots)
+  \end{block}
+  \begin{block}{Gruppe bearbeiten}
+    \co{\#~groupmod~[-g~GID][-n~Name]~Gruppenname} 
+  \end{block}
+  \begin{block}{Gruppe löschen}
+    \co{\#~groupdel~Gruppenname}\\
+    $\rightarrow$ Dateien der Gruppe werden zurückgelassen\\
+    $\rightarrow$ \co{chgr}
+  \end{block}
+\end{frame}
+\begin{frame}{Einstellungen zum Gruppenzugang ändern}
+  \begin{block}{\co{gpasswd}}
+    \co{\#~gpasswd~[Optionen]~Gruppenname}\\
+    $\rightarrow$ Ändert Gruppenpasswort
+    \begin{description}
+      \item[-a~Nutzer] Nutzer zu Gruppe hinzufügen
+      \item[-d~Nutzer] Nutzer aus Gruppe entfernen
+      \item[-A~Nutzer] Gruppenadministrator hinzufügen
+    \end{description}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Einstellungen direkt über Texteditor ändern}
+  \begin{itemize}
+    \item Bearbeitung durch direkten Aufruf eines Texteditors möglich\\
+    $\rightarrow$ Problem: Datei nicht gesperrt und Änderungen können überschrieben werden
+    \item \co{vipw} bzw. \co{vigr} öffnen und sperren \co{/etc/\{passwd,group\}} \\
+    $\rightarrow$ Geschützt vor einem Überschreiben
+    \item Mit "`-s"' werden die entsprechenden Schattenpasswort-Dateien genutzt
+    \item Editor meistens \co{vi}, einstellbar über Umgebungsvariablen \co{VISUAL} bzw. \co{EDITOR}
+  \end{itemize}
+\end{frame}
+
+
+\section{Linux im Netz -- Teil II}
+\subsection{Linux als Client im Netzwerk}
+\begin{frame}{}
+  \begin{alertblock}{Nötige Informationen zum Netzanschluss}
+    \begin{itemize}
+      \item IP-Adresse (für den Rechner)
+      \item Netzwerkadresse und -maske
+      \item IP-Adresse des Default-Gateways
+      \item ein oder zwei IP-Adressen von DNS-Servern
+    \end{itemize}
+  \end{alertblock}
+  \begin{exampleblock}{Idealfall}
+    Automatische Konfiguration über DHCP oder ggf. beim Starten des Systems durch Startskripte\\[.7em]
+    {\color{gray}(siehe \co{/etc/network/interfaces/} und \co{/etc/sysconfig/network\{,-scripts\}/})}
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Temporäre Konfigurationsmöglichkeiten}
+  \hspace*{-2em}
+  \begin{block}{Netz}
+    \co{\#~ifconfig~eth0~192.168.178.11~netmask~255.255.255.128}\\
+  \end{block}
+  \begin{block}{Route}
+    \co{\#~route~add~-net~default~gw~192.168.178.1}\\
+  \end{block}
+  \begin{block}{DNS Einstellungen in \co{/etc/resolv.conf}}
+    \begin{description}
+      \item[search~server.com ] Std.-Erweiterung bei Namen ohne "`."'
+      \item[nameserver~IP-Addr] DNS-Server Adresse (1\dots 3)
+    \end{description}
+    $\rightarrow$ Datei kann von anderen Programmen überschrieben werden!
+  \end{block}
+\end{frame}
+
+\subsection{Fehlersuche}
+
+\begin{frame}{Mit \co{ping} die Erreichbarkeit prüfen}
+  \begin{block}{Grundlagen}
+    \begin{itemize}
+      \item Versendet ICMP-Pakete an Ziel-IP
+      \item Voraussetzung: Quell- und Zielrechner können Pakete voneinander empfangen
+      \item Mgl. Problem: ICMP-Pakete von Firewall geblockt
+    \end{itemize}
+  \end{block}
+  \begin{block}{Überprüfen der Erreichbarkeiten}
+    \begin{enumerate}
+      \item Loopback-Schnittstelle (127.0.0.1)
+      \item Lokale Schnittstelle
+      \item Default-Gateway
+      \item Jenseits des Gateways (Internet)
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Namensauflösung kontrollieren mit \co{dig}}
+  \begin{block}{Testen der Namensauflösung}
+    \co{\$~dig~[@DNSserver]~name~[Typ]}
+    \begin{itemize}
+      \item \co{dig~www.tu-dresden.de}
+      \item \co{dig~-x~8.8.8.8}
+      \item Option "`+trace"': Gesamten Suchkette ausgeben
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Mit \co{netstat} mehr über die Netzanbindung herausfinden}
+  \begin{block}{Allgemeines zu \co{netstat}}
+    \begin{itemize}
+      \item Ohne Optionen: Listet alle Verbindungen auf (Unix-Domain-Sockets, TCP und UDP)
+      \item Nur offene TCP-Verbindungen: \co{netstat~-tl}
+%           $\rightarrow$ alle 
+      \item Liste der Portnummern: \co{/etc/services}
+    \end{itemize}
+  \end{block}
+  \begin{block}{Weitere Anzeigeoptionen}
+    \begin{itemize}
+      \item Statistikinformationen: "`-s"'
+      \item Routen: "`-r"'
+      \item Netzwerkschnittstellen: "`-i"'
+      \item Aktualisierte Anzeige: "`-c"'
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Prüfungsziele}
+  \begin{alertblock}{5.1 Grundlegende Sicherheit und Identifizierung von Benutzertypen}
+    \begin{description}
+      \item[Gewicht]  2
+      \item[Beschreibung] Verschiedene Benutzertypen in einem Linux-System
+    \end{description}
+       Wissensgebiete\\ 
+        \begin{itemize}
+          \item Root, unprivilegierte Nutzer, Systemnutzer
+          \item \co{/etc/passwd}, \co{/etc/group}
+          \item \co{id}, \co{who}, \co{w}
+          \item \co{sudo}
+        \end{itemize}
+  \end{alertblock}
+\end{frame}
+\begin{frame}{Prüfungsziele}
+  \begin{alertblock}{5.2 Benutzer und Gruppen erstellen}
+    \begin{description}
+      \item[Gewicht]  2
+      \item[Beschreibung] Benutzer und Gruppen in einem Linuxsystem erstellen
+    \end{description}
+       Wissensgebiete\\ 
+        \begin{itemize}
+          \item Befehle zu Nutzern und Gruppen
+          \item UIDs
+          \item \co{/etc/passwd}, \co{/etc/shadow}, \co{/etc/group}
+          \item \co{id}, \co{last}
+          \item \co{useradd}, \co{groupadd}, \co{passwd}
+        \end{itemize}
+  \end{alertblock}
+\end{frame}
+\begin{frame}{Prüfungsziele}
+  \begin{alertblock}{4.4 Den Computer ins Netz einbinden}
+    \begin{description}
+      \item[Gewicht]  2
+      \item[Beschreibung] Abfragen wesentlicher Netzwerkeinstellungen und Bestimmen der 
+              Grundvoraussetzungen für einen Computer in einem LAN
+    \end{description}
+       Wissensgebiete\\ 
+        \begin{itemize}
+          \item Netzwerkeinstellungen, DNS, Internet
+          \item IPv4, IPv6
+          \item \co{ifconfig}, \co{route}, \co{resolv.conv}
+          \item \co{netstat}, \co{dig}, \co{ping}
+        \end{itemize}
+  \end{alertblock}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%% next time...
+\begin{frame}[plain]
+  \begin{alertblock}{Nächste Vorlesung}
+    \textbf{Termin:} Donnerstag, den 04.07.2013 18:30-20:00 Uhr\\
+    \textbf{Thema:} Kapitel 11 - Wiederholung\\
+    \textbf{Vorbereitung:} 
+    \begin{itemize}
+%       \item 
+      \item Gedanken und Fragen zur Vorlesung machen
+    \end{itemize}
+  \end{alertblock}
+\end{frame}
+
+
+
+\materialframe
+
+\end{document}

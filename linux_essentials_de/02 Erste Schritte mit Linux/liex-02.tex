@@ -1,0 +1,591 @@
+\documentclass[aspectratio=43]{beamer}
+\usepackage{../../resources/agdsncourse}
+
+
+\title[Linux Essentials  - Kapitel 2 - Erste Schritte mit Linux]{Linux Essentials}
+\subtitle{Kapitel 2 - Erste Schritte mit Linux}
+\author{Alexander Köhler}
+\date{17. Oktober 2015}
+\setbeamertemplate{navigation symbols}{} 
+\begin{document}
+
+% Start Folie
+\logoframe
+
+%Title
+\frame{\titlepage}
+
+
+%Gliederung
+\setcounter{tocdepth}{1}
+\section[Gliederung]{}
+\frame{\tableofcontents}
+
+
+%%%%%%%%%%%%%%%
+\section{Open-Source-Software und Lizenzen}
+\subsection{Begriffserklärungen}
+
+\begin{frame}{Geistiges Eigentum}
+  \begin{block}{Urheberrecht}
+    \begin{itemize}
+      \item automatisch übertragen
+      \item konkrete Umsetzung einer Idee
+      \item Verwertungsrecht
+      \item Recht, als "`Schöpfer"' des Werkes genannt zu werden (nicht abtretbar)
+    \end{itemize}
+  \end{block}
+  \begin{columns}
+    \begin{column}{.3\textwidth}
+      \begin{block}{Patent}
+        \begin{itemize}
+          \item Idee/Erfindung
+          \item eintragbar
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{.7\textwidth}
+      \begin{block}{Markenzeichen/-recht}
+        \begin{itemize}
+          \item Name (Zeichen)
+          \item eintragbar oder durch lange Verwendung (öffentlich anerkannt)
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% \subsection{Lizenzen}
+\begin{frame}{Warum gibt es Lizenzen?}
+  \begin{itemize}
+    \item Besitzer (Käufer, rechtmäßiger Herunterlader) einer Software darf sie installieren und ausführen 
+    \item Urheberrecht: Werk (Programm, Softwarepaket) nicht ohne ausdrückliches Einverständnis des Urhebers vervielfältigbar
+    \item Lizenz = eine Erlaubnis, Dinge zu tun, die ohne diese verboten sind
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Freie Software -- Die vier Freiheiten}
+  \begin{block}{Free Software Foundation (FSF)}
+        ``free as in speech, not as in beer''\\
+    Freie Software muss:
+    \begin{enumerate}
+      \item[0] für alles benutzbar
+      \item[1] lesbar/verstehbar und anpassbar für eigene Zwecke 
+      \item[2] Weitergabe erlauben
+      \item[3] Verbesserungen erlaubt und dürfen der Allgemeinheit veröffentlicht werden
+    \end{enumerate}
+    $\rightarrow$ \textbf{Vier Freiheiten der Free Software Foundation}
+        \flushright \includegraphics[width=0.45\textwidth]{pix/fsf-logo}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Offene Software -- Open Source}
+  \begin{block}{Open Source Initiative (OSI)}
+    \begin{itemize}
+      \item Definition Open Source ähnlich freier Software
+      \item für FSF zu aufgeweicht
+    \end{itemize}
+    \flushright \includegraphics[width=.12\textwidth]{pix/osi-logo}
+  \end{block}
+  \begin{block}{Allg. Zusammenfassung}
+    \begin{itemize}
+      \item FOSS = free and open-source software
+      \item FLOSS = free, libre and open-source software
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{}
+  \begin{block}{Der Gegenpol -- proprietäre Software}
+    \begin{itemize}
+      \item proprietär (lat.: Eigentum) ist Gegenteil zu frei
+      \item allg. für Eigenentwicklungen (Protokolle, Software, \dots)
+      \item EULA (End-user license agreement)
+      \item Unveränderlichkeit der Software durch Dritte
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+
+\begin{frame}{Geld verdienen mit freier Software}
+  \begin{columns}
+    \begin{column}{0.7\textwidth}
+      \begin{block}{Geschäftsmodelle}
+        \begin{itemize}
+          \item Zusatzleistungen (Unterstützung, Dokumentation, Training) kostenpflichtig anbieten
+          \item kundenspezifische Weiterentwicklungen oder Erweiterungen auf Anfrage erstellen
+          \item Softwarepaket zweimal anbieten: als FOSS-Version mit nur Grundfunktionalität und als 
+              kostenpflichtige, proprietäre Version mit allen Extras
+          \item \dots
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.2\textwidth}
+      \includegraphics[width=\textwidth]{pix/linup_front}\\
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+\subsection{General Public License (GPL)}
+\begin{frame}
+  \begin{block}{General Public License (GPL)}
+    \begin{itemize}
+      \item Copyleft-Lizenz (Software bleibt unter dieser Lizenz)
+      \begin{itemize}
+        \item Quellcode verfügbar und für bel. Zwecke nutzbar
+        \item Veränderungen und Weitergabe dieser und des Originalcodes erlaubt, wenn der Empfänger die GPL einhält
+        \item bei Weitergabe in ausführbarer Form (auch Verkauf) muss der Quellcode zugänglich sein
+        \item abgeleitetes Werk: Programm, dass Teile von GPL-Programmen enthält muss ebenfalls 
+              unter GPL stehen
+      \end{itemize}
+      $\rightarrow$ Weitergabe und Veränderung der Software
+      \item Linux-Kernel zu Teilen unter GPLv2
+    \end{itemize}
+  \end{block}
+  \begin{block}{GPLv3}
+    Präzisiert Softwarepatente, Kompatibilität mit anderen freien Lizenzen
+  \end{block}
+\end{frame}
+
+\subsection{Weitere Lizenzen}
+\begin{frame}{Weitere Lizenzen I}
+  \begin{block}{BSD-Lizenz (Berkeley Software Distribution)}
+    \begin{itemize}
+      \item Haftung wird ausgeschlossen
+      \item Empfänger darf mit der Software machen, was er will; muss sich aber vom 
+            ursprünglichen Author distanzieren
+      \item keine Copyleft-Lizenz
+      \item Quellcode muss nicht in der Öffentlichkeit verbleiben\\
+      $\rightarrow$ kann Closed Source werden
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Weitere Lizenzen II}
+\begin{block}{Apache-Lizenz}
+  \begin{itemize}
+    \item ähnlich BSD keine Copyleft-Lizenz
+    \item Klauseln zur Nutzung von Patenten und Markenzeichen
+    \item z.B.: Apache-Webserver, Android
+  \end{itemize}
+\end{block}
+\begin{block}{Mozilla Public License (MPL)}
+  \begin{itemize}
+    \item  Mischung von GPL und BSD-Lizenz
+    \item  "`schwache Copyleft-Lizenz"': MPL-Code bleibt unter MPL, 
+          neuer Code auch unter anderer Lizenz\\
+    $\rightarrow$ Mehrfachlizenzierung
+    \item z.B.: Firefox und Thunderbird von Mozilla
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Lizenzen für alles außer Software}
+\begin{block}{}
+  \begin{itemize}
+    \item Creative-Commons-Lizenzen
+    \begin{itemize}
+      \item Bücher, Bilder, Musik, Filme, \dots
+      \item Urheber legt Rahmenbedingungen fest: kommerzielle Nutzung, Änderungen
+    \end{itemize}
+    \item Public Domain (gemeinfrei):
+    \begin{itemize}
+      \item 70 Jahre nach Ableben des Urhebers
+      \item in Deutschland nicht direkt zugänglich, aber im Angelsächsischen
+    \end{itemize}
+    \item Mehrfachlizenzierung durch Author z.B. für Programmbibliotheken
+  \end{itemize}
+\end{block}
+\end{frame}
+
+% \section{Prüfungsziele}
+\begin{frame}{Prüfungsziele}
+  \begin{alertblock}{1.3 Open-Source-Software und Lizenzen verstehen}
+    \begin{description}
+      \item[Gewicht]  1
+      \item[Beschreibung] Open-Souce-Communities und die Lizenzierung freier und Open-Source-Software
+    \end{description}
+       Wissensgebiete\\ 
+        \begin{itemize}
+          \item Lizenzen (GPL, BSD, CC)
+          \item Free Software Foundation, Open Source Initiative
+          \item Free Software, Open Software, FOSS, FLOSS
+          \item Open-Source-Geschäftsmodelle
+        \end{itemize}
+  \end{alertblock}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%
+\section{Erste Schritte mit Linux}
+\subsection{Login and Logout}
+\begin{frame}
+  \begin{block}{Graphische An- und Abmeldung}
+    \begin{itemize}
+      \item intuitiv
+      \item automatische Anmeldung sicherheitskritisch
+    \end{itemize}
+  \end{block}
+  \begin{block}{An- und Abmelden auf der Textkonsole (Terminal)}
+    \begin{itemize}
+      \item z.B. lokal an virtuellen Terminal (über \taste{Strg}+ \taste{Alt}+ \taste{F1} \dots \taste{F6})
+      \item Anmeldeprompt:\\
+        \texttt{rechnername login:\_ }\\
+        \texttt{Password:\_}\\
+      \item Abmelden\\
+        \texttt{\$ logout}\\
+        (oder durch \taste{Strg}+ \taste{d})
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\subsection{Die graphische Oberfläche}
+\begin{frame}{Die graphische Oberfläche}
+  \begin{block}{Arbeitsumgebungen}
+    \begin{itemize}
+      \item große Desktopumgebungen: KDE und GNOME
+      \item kleinere Alternativen: LXDE und XFCE
+      \item reine Fenstermanager: Enlightenment, awesome, Blackbox, Openbox, Fluxbox, IceWM, \dots
+    \end{itemize}
+  \end{block}
+  \begin{block}{Allgemeine Merkmale}
+    \begin{itemize}
+      \item Steuerleiste, Panel, Menüleiste, Startknopf
+      \item Dateimanager (Dolphin, Nautilus)
+      \item mehrere virtuelle Arbeitsflächen
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Programme der graphischen Oberfläche}
+  \begin{block}{Browser}
+    \begin{itemize}
+      \item Firefox bzw. Iceweasel (Debian GNU Linux)
+      \item Google Chrome (Open-Source-Variante von Chromium)
+      \item zu finden im Menü unter "`Internet"'
+    \end{itemize}
+  \end{block}
+  \begin{block}{Terminal \& Shell}
+    \begin{itemize}
+      \item Standardshell: Bash (Prüfung und Vorlesung)
+      \item KDE: Konsole
+      \item zu finden im Menü unter "`System"'
+    \end{itemize}
+  \end{block}
+\end{frame}
+\subsection{Textdateien anlegen und bearbeiten}
+\begin{frame}{Vielfalt der Editoren}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+        \begin{block}{Graphische Texteditoren}
+    \begin{itemize}
+      \item Kate (KDE), gedit (Gnome)
+      \item selbsterklärend
+    \end{itemize}
+  \end{block}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \begin{block}{Textbasierte Editoren}
+        \begin{itemize}
+          \item Vi bzw. Vim (LPIC 1)
+          \item Emacs, Ed, JED, mcedit, elvis, \dots 
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \begin{block}{nano}
+    \begin{itemize}
+      \item Klon des Editors pico (aus E-Mail-Paket PINE)
+      \item Aufruf mit:\\
+        \co{\$ nano dateiname}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Tastaturkommandos von Nano}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Dateien}
+        \begin{tabular}{ll}
+          \taste{Strg}+ \taste{o}      & Datei öffnen\\
+          \taste{Strg}+ \taste{r}      & Datei einlesen\\
+          \taste{Strg}+ \taste{t}      & Dateibrowser\\
+        \end{tabular}
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Sonstiges}
+        \begin{tabular}{ll}
+          \taste{Strg}+ \taste{x}      & Nano beenden\\
+          \taste{Strg}+ \taste{w}      & Text suchen\\
+          \taste{Strg}+ \taste{g}      & Onlinehilfe\\
+        \end{tabular}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \begin{block}{Dateien bearbeiten}
+  \begin{tabular}{ll}
+    \taste{Entf}, \taste{$\leftarrow$}  & Löschen \\
+    \taste{Strg}+ \taste{k}      & Zeile ausschneiden und in Puffer verschieben\\
+    \taste{Strg}+ \taste{u}      & Pufferinhalt an Cursorposition  einfügen\\
+    \taste{Strg}+ \taste{\^}     & Markieren starten (alt. \taste{Strg}+ \taste{a})\\
+  \end{tabular}
+  \end{block}
+  
+\end{frame}
+
+\begin{frame}{Aufgaben}
+  \begin{itemize}
+    \item Anmelden auf der Konsole
+    \item Was ist der Unterschied zwischen einem falsch eingegebenen Passwort und einem falschen Nutzernamen?
+    \item Graphische Anmeldung am System
+    \item Wie wird das Passwort bei der Eingabe dargestellt?
+    \item Vertrautmachen mit der graphischen Oberfläche
+    \item Um welche handelt es sich? (ggf. mehrere Ausprobieren)
+    \item Web-Browser und Terminal finden und ausprobieren
+    \item Textdateibearbeitung mit nano
+    \begin{itemize}
+      \item nano starten
+      \item einfachen Text eingeben
+      \item Text als "`testtext.txt"' speichern
+      \item Bearbeiten ausprobieren
+    \end{itemize}
+
+  \end{itemize}
+
+\end{frame}
+
+
+\section{Exkurs vi}
+\subsection{Einf\"uhrung}
+\begin{frame} 
+        \begin{block}{} 
+        \begin{center}
+        Sure, vi is user friendly. It's just particular about who it makes friends with.
+        \end{center}
+        \end{block}
+
+        \begin{exampleblock}{} 
+        \begin{center}  
+        Vi has two modes. The one in which it beeps and the one in which it doesn't.
+        \end{center}
+        \end{exampleblock}
+        \begin{alertblock}{} 
+        \begin{center}  
+        ...and the number of the beast is vivivi...
+        \end{center}
+        \end{alertblock}        
+\end{frame}
+
+\subsection{Modi}
+\begin{frame} 
+\begin{columns}
+        \begin{column}{0.5\textwidth}
+          
+          \begin{block}{Kommando ­Modus} 
+            \begin{itemize}
+            \item Standart Modus
+            \item Alle Tasten sind Kommandos wie Rückgängig, Einfügen, Bewegen
+            \end{itemize}
+          \end{block}
+          
+          \begin{block}{Kommandozeilen­ Modus} 
+            \begin{itemize}
+            \item Mit \taste{:} aktivieren
+            \item Aufgaben wie Suchen, Ersetzen, Speicher, Laden, ...
+            \item Verlassen mit \taste{esc}
+            \end{itemize}
+          \end{block}
+          
+         \end{column} 
+        \begin{column}{0.5\textwidth}
+
+          \begin{block}{Einfüge­ Modus} 
+            \begin{itemize}
+            \item Mit \taste{i} aktivieren (u.a.)
+            \item \textit{Normales} schreiben von Text
+            \item Verlassen mit \taste{esc}
+            \end{itemize}
+          \end{block}
+          
+          \begin{block}{Visueller Modus} 
+            \begin{itemize}
+            \item Mit \taste{v} aktivieren
+            \item Text markieren an dem Operationen vorgenommen werden sollen
+            \item Verlassen mit \taste{esc}
+            \end{itemize}
+          \end{block}
+        
+        \end{column} 
+\end{columns}
+\end{frame}
+
+\subsection{Navigation}
+\begin{frame} 
+\begin{columns}
+        \begin{column}{.5\textwidth}
+        \begin{exampleblock}{Navigation} 
+        \taste{h} links \taste{j} unten\\
+        \taste{k} oben (klettern) \taste{l} rechts\\
+        \taste{+} Zum ersten Zeichen der folgenden Zeile\\
+        \taste{–} der vorangegangenen Zeile\\
+        \taste{e}\taste{E} An das Wortende (ohne/mit .!?)\\
+        \taste{w}\taste{W} Wortweise vorwärts (ohne/mit .!?)\\
+        \taste{b}\taste{B} Wortweise rückwärts (ohne/mit .!?)\\
+
+        \end{exampleblock}
+        \end{column} 
+        
+        \begin{column}{.5\textwidth} 
+        \begin{exampleblock}{} 
+        \taste{0} An den Zeilenanfang\\
+        \taste{\$} An das Zeilenende\\
+        \taste{G} Zur letzten Zeile\\
+        \taste{H} Zur ersten Zeile (Fenster) \\
+        \taste{L} Zur letzten Zeile (Fenster)\\
+        \taste{Strg}\taste{b}  Bildschirmseite auf\\
+        \taste{Strg­}\taste{f}  Bildschirmseite ab
+                \end{exampleblock}
+        \end{column} 
+\end{columns}
+\end{frame}
+
+\subsection{Editieren}
+\begin{frame} 
+\begin{exampleblock}{Editierbefehle} 
+\begin{table}[htdp]
+\begin{center}
+\begin{tabular}{c|l|l|l}
+  Ziel & Ändern & Ausschneiden & Kopieren \\\hline
+  1 Wort & \textcolor{blue}{\taste{c}}\taste{w}&\textcolor{red}{\taste{d}}\taste{w}&\textcolor{green!50!black}{\taste{y}}\taste{w}\\
+  2 Wörter (ohne .!?) & \textcolor{blue}{\taste{c}}\taste{2}\taste{w}&\textcolor{red}{\taste{d}}\taste{2}\taste{w}&\textcolor{green!50!black}{\taste{y}}\taste{2}\taste{w}\\
+  3 Wörter rückwärts & \textcolor{blue}{\taste{c}}\taste{3}\taste{b}&\textcolor{red}{\taste{d}}\taste{3}\taste{b}&\textcolor{green!50!black}{\taste{y}}\taste{3}\taste{b}\\
+  1 Zeile & \textcolor{blue}{\taste{c}}\taste{c}&\textcolor{red}{\taste{d}}\taste{d}&\textcolor{green!50!black}{\taste{y}}\taste{y}\\
+  Bis Zeilenanfang & \textcolor{blue}{\taste{c}}\taste{0}&\textcolor{red}{\taste{d}}\taste{0}&\textcolor{green!50!black}{\taste{y}}\taste{0}\\
+  Bis Zeilenende & \textcolor{blue}{\taste{c}}\taste{\$}&\textcolor{red}{\taste{d}}\taste{\$}&\textcolor{green!50!black}{\taste{y}}\taste{\$}\\
+  1 Zeichen & \taste{r}&\taste{x}&\textcolor{green!50!black}{\taste{y}}\taste{l}\\
+  5 Zeichen & \taste{5}\taste{s}&\taste{5}\taste{x}&\textcolor{green!50!black}{\taste{y}}\taste{5}\taste{l}\\
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}%
+\vspace{-0.5cm}
+\begin{itemize}
+\item \taste{p} Einfügen unter dem Cursor (dahinter)
+\item \taste{P} Einfügen über dem Cursor (davor)
+\end{itemize}
+
+\end{exampleblock}
+
+\end{frame}
+\begin{frame} 
+\begin{exampleblock}{Editierbefehle II} 
+\begin{table}[htdp]
+\begin{center}
+\vspace{-0.2cm}
+\begin{tabular}{p{0.8\textwidth}|c}
+  Aufgabe& Taste\\\hline
+  Text an der aktuellen Position einfügen&\taste{i}\\
+  Text am Zeilenanfang einfügen&\taste{I}\\
+  Text an der aktuellen Position anfügen&\taste{a}\\
+  Text am Zeilenende anfügen&\taste{A}\\
+  Unterhalb des Cursors eine neue Zeile einfügen&\taste{o}\\
+  Oberhalb des Cursors eine neue Zeile einfügen&\taste{O}\\
+  Zeile löschen und Text ersetzen&\taste{S}\\
+  Vorhandene Zeichen mit neuem Text überschreiben&\taste{R}\\
+  Aktuelle und folgende Zeile zusammenführen&\taste{J}\\
+  %Groß­/Kleinschreibung umsetzen&\taste{$\sim$}\\
+  Letzte Aktion wiederholen&\taste{.}\\
+  Letzte Änderung zurücknehmen&\taste{u}\\
+  letzte bearbeite Zeile in ihren ursprünglichen Zustand zurückversetzen&\taste{U}\\
+
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}%
+\end{exampleblock} 
+\end{frame}
+
+\begin{frame} 
+\begin{columns}
+        \begin{column}{0.32\textwidth}
+          \begin{exampleblock}{Suchen} 
+            \textcolor{gray}{\taste{:}}\taste{/}  Textabwärts suchen\\
+            \textcolor{gray}{\taste{:}}\taste{?}  Textaufwärts suchen\\
+            \taste{n} Textabwärts fortsetzten\\
+            \taste{N} Textaufwärts fortsetzen
+          \end{exampleblock}
+        \end{column}
+        \begin{column}{0.75\textwidth} 
+          \begin{exampleblock}{Ersetzen} 
+            \co{:[Start,Ende]s/reg.~Ausdr/Ersetzung[/g]}\\
+            \co{:5,\$s/schwarz/blau} Nur das erste Vorkommen\\
+            \co{:5,\$s/schwarz/blau/g/i} Alle Vorkommen pro Zeile\\
+            \co{:\%s/Zebra/\&fink} An Funde anhängen
+          \end{exampleblock}
+        \end{column} 
+\end{columns}
+\begin{columns}
+        \begin{column}{0.7\textwidth}
+        \begin{exampleblock}{Markieren} 
+        \taste{m}\taste{$x$} setzt Marke $x$\\
+        \taste{'}\taste{$x$}  zurück zu Marke $x$\\
+        \taste{'}\taste{'} zurück zur letzten Stelle vom Sprung\\
+        \taste{'} zur letzten Zeile (Anfang) vom Sprung\\
+        \taste{:}\co{marks} alle Marken auflisten
+        \end{exampleblock}
+        \end{column} 
+        \begin{column}{0.3\textwidth} 
+        \begin{exampleblock}{Marken} 
+        \co{a-z} Lokale Marken\\
+        \co{A-Z} Globale Marken\\
+        \co{0-9} Bleibende globale Marken\\
+        \end{exampleblock}              
+        \end{column} 
+\end{columns}
+\end{frame}
+
+\begin{frame} 
+\begin{exampleblock}{ex Kommandos} 
+% \hspace{-2em}
+% \begin{table}[htdp]
+% \begin{center}
+\begin{tabular}{l|p{0.6\textwidth}}
+\taste{:}\taste{w}\co{Datei}&schreibt den kompletten Pufferinhalt in \co{Datei}\\
+\taste{:}\taste{w}\taste{!}\co{Datei}&schreibt auch in schreibgeschützte \co{Datei}\\
+\taste{:}\taste{e}\co{Datei}& liest die angegebene \co{Datei} in den Puffer\\
+\taste{:}\taste{e}\taste{\#}& liest die letzte \co{Datei} in den Puffer\\
+\taste{:}\taste{r}\co{Datei}& fügt den Inhalt von \co{Datei} hinter aktueller Zeile ein\\
+\taste{:}\taste{!}\co{Kommando}& führt das \co{Kommando} aus und kehrt zu vi zurück\\
+\taste{:}\taste{r}\taste{!}\co{Kommando}& fügt Ausgabe von \co{Kommando} hinter aktueller Zeile ein\\
+\taste{:}\taste{q}& beendet vi \\
+\taste{:}\taste{q}\taste{!}& beendet vi ohne Rückfragen\\
+\taste{:}\taste{x} oder & sichert und beendet vi\\
+\taste{:}\taste{w}\taste{q} \\
+\end{tabular}
+% \end{center}
+% \end{table}%
+\end{exampleblock}      
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% next time...
+\begin{frame}[plain]
+  \begin{alertblock}{Nächste Vorlesung}
+    \textbf{Termin:} Donnerstag, den 25.04.2013 18:30-20:00 Uhr\\
+    \textbf{Thema:} Kapitel 3 - Die Shell \\
+    \textbf{Vorbereitung:} 
+    \begin{itemize}
+      \item LXES 4 Computer, Software und Betriebssysteme
+      \item LXES 5 Linux und freie Software
+    \end{itemize}
+  \end{alertblock}
+\end{frame}
+
+
+
+\materialframe
+
+\end{document}

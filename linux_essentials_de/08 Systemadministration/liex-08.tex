@@ -1,0 +1,415 @@
+\documentclass[aspectratio=43]{beamer}
+\usepackage{../../resources/agdsncourse} 
+
+\title[Linux Essentials  - Kapitel 8 - Systemadministration]{Linux Essentials}
+\subtitle{Kapitel 8 - Systemadministration}
+\author{Alexander Köhler}
+\date{24. Oktober 2015}
+\setbeamertemplate{navigation symbols}{} 
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% Start Folie
+\logoframe
+
+%Title
+\frame{\titlepage}
+
+%Gliederung
+\setcounter{tocdepth}{1}
+\section[Gliederung]{}
+\frame{\tableofcontents}
+
+
+%%%%%%%%%%%%%%% der Inhalt
+\section{Einstieg in die Systemadministration}
+\subsection{Grundlagen}
+\begin{frame}{}
+  \begin{block}{Der \co{root}-Nutzer}
+    \begin{itemize}
+      \item Administratorkonto unter Linux
+      \item von Rechteprüfungen ausgenommen
+      $\rightarrow$ \textbf{darf alles}
+      \item Mit großer Macht kommt große Verantwortung!
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Arbeiten als \co{root}}
+    \begin{itemize}
+      \item Menschenverstand nutzen
+      \item Graphische Anmeldung möglichst vermeiden
+      \item Keine normalen Programme unnötig nutzen (Mail, Browser)
+    \end{itemize}
+  \end{block}
+    \begin{alertblock}{Zu \co{root} werden}
+    \begin{itemize}
+      \item \co{su~-} wechselt nach Kennwortaufforderung in  \co{root}-Shell
+      \item \co{sudo befehl} führt "`\co{befehl}"' mit \co{root}-Rechten aus
+    \end{itemize}
+  \end{alertblock}
+\end{frame}
+
+\subsection{Systemkonfiguration}
+% \begin{frame}{}
+%   \begin{block}{}
+%     \begin{itemize}
+%       \item 
+%     \end{itemize}
+%   \end{block}
+% \end{frame}
+
+\begin{frame}{Konfiguration in Textdateien}
+  \begin{block}{}
+    Systemweite Konfiguration findet in versch. Dateien in \co{/etc} statt
+    \begin{itemize}
+      \small
+      \item Benutzerdaten in \co{/etc/passwd} ändern
+      \item Festplatten einbinden in \co{/etc/fstab}
+    \end{itemize}
+  \end{block}
+  \begin{block}{Vorteile}
+    \begin{itemize}
+      \item Fehler in einer Datei legen nicht das ganze System lahm
+      \item Kommentare (\co{\#}) erlaubt $\rightarrow$ Dokumentation von Änderungen
+      \item Verwaltung durch Revisionskontrollsystem möglich
+      \item bequeme Konfiguration ganzer Rechnernetze z.B. durch Schablonen
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+\subsection{Prozesse unter Linux}
+\begin{frame}{Prozesse}
+  \begin{block}{Was ist ein Prozess?}
+    \begin{itemize}
+      \item Programm, dass vom Betriebssystem ausgeführt wird
+      \item besitzt Daten im Arbeitsspeicher, Verwaltungsinformationen, Berechtigungen,
+            Prozessumgebung (Umgebungsvariablen), \textbf{eine eindeutige Prozessnummer (PID)}
+    \end{itemize}
+  \end{block}
+  \begin{exampleblock}{Der erste Prozess}
+    \dots ist \co{/sbin/init} mit der PID 1
+  \end{exampleblock}
+\end{frame}
+\begin{frame}{Prozesse mit \co{ps} auflisten}
+  \begin{block}{Befehl \co{ps}}
+    \begin{itemize}
+      \item listet Prozesse des Nutzers auf bzw. den mit der PID
+      \item mehr Informationen mit z.B. \co{ps l}
+    \end{itemize}
+  \end{block}
+  \begin{block}{Prozesszustand}
+    \begin{description}
+      \item[Lauffähig (R):]     läuft normal
+      \item[Schlafend (S):]     warten auf Eingabe, Ausgabe, \dots
+      \item[Im Tiefschlaf (D):] wartet auf Ereignis und kann nicht unterbrochen werden
+      \item[Gestoppt (T):]      vom Eigentümer angehalten
+      \item[Zombie (Z):]        Rückgabewerte müssen noch gelesen werden
+    \end{description}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Speicherauslastung mit \co{free} anzeigen}
+  \begin{block}{Befehl \co{free}}
+    \begin{itemize}
+      \item Ausgabe der aktuellen Speicherbelegung
+      \item \co{Mem} entspricht RAM
+      \item \co{-/+} entspricht RAM korrigiert um Puffer und Cache
+      \item \co{Swap} entspricht der Auslagerungspartition \\
+            $\rightarrow$ Linux nutzt eine seperate Partition dafür
+            (vgl.~Auslagerungsdatei~oder~Pagefile)
+    \end{itemize}
+  \end{block}
+  \begin{exampleblock}{Beispiel}
+      \co{\$~free \\}
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{top}
+  \begin{block}{Befehl \co{top}}
+    \begin{itemize}
+      \item Interaktive und kontinuierliche Auflistung der vorhandenen Prozesse
+      \item Auslastung der einzelnen CPU-Kerne
+      \item Signale an Prozesse senden (z.B. Beenden, Stoppen, ...)
+      \item Laufzeitparameter ändern (Nice-Level / Priorität)
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Das \co{/proc}-Verzeichnis}
+  \begin{block}{Dateien}
+    \begin{description}
+      \item["`ZAHL"'] Verzeichnis mit Daten zum Prozess mit PID "`ZAHL"'
+      \item[cpuinfo] Typ und Taktfrequenz der CPU
+      \item[devices] aktuell unterstützte Geräte
+      \item[interrupts] Hardwareinterrupts
+      \item[kcore]   Direktzugriff auf den Arbeitsspeicher!!!
+  %     \item[dma]     
+      \item[loadavg] Auslastung der CPU in den letzten 1, 5 und 15min
+      \item[meminfo] Speicherauslastung $\rightarrow$ \co{free}
+      \item[mounts]  aktuell eingehängte Dateisysteme
+      \item[version] Version und Übersetzungsdatum des Kernels
+    \end{description}
+  \end{block}
+\end{frame}
+
+\subsection{Paketverwaltung der verfügaren Programme}
+\begin{frame}{Paketverwaltung}
+  \begin{block}{Was sind Pakete?}
+    \begin{itemize}
+      \item Enthalten Dateien und Befehle zur Installation 
+      \item Aufteilungen in "`Laufzeitpakete"', Entwicklungspakete, Dokumentation (u. feiner möglich)
+      \item unterschliedliche Versionen
+      \item Systemweit (de)installierbar 
+    \end{itemize}
+  \end{block}
+  \begin{block}{Paketverwaltungssysteme}
+    \begin{itemize}
+      \item "`Paketdatenbank"': Informationen zu installierten Paketen\\ $\rightarrow$ \co{/var/lib/\{rpm,dpkg\}}
+      \item "`Repositorities"':  enthalten Daten zu verfügbaren Paketen
+%       \item Programme: \co{rpm} und \co{dpkg}
+    \end{itemize}
+  \end{block}
+\end{frame}
+\begin{frame}{Zwei Geschmacksrichtungen von Paketen}
+  \begin{columns}
+    \begin{column}{0.52\textwidth}
+      \begin{block}{RPM - \textbf{R}ed Hat \textbf{P}ackage \textbf{M}anager}
+        \begin{itemize}
+          \item von Red Hat entwickelt
+          \item \co{rpm}
+          \item auflisten mit \co{rpm~--query~--all}
+          \item Komfortabler: \co{yum} bzw. \co{zypper} 
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{deb}
+        \begin{itemize}
+          \item von Debian GNU/Linux
+          \item \co{dpkg}
+          \item auflisten mit \co{dpkg~--list}
+          \item Komfortabler: Synaptic, Aptitude
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+\section{Benutzerverwaltung -- Teil I}
+\subsection{Grundlagen}
+\begin{frame}{Grundlagen}
+  \begin{block}{Warum verschiedene Benutzer?}
+    \begin{itemize}
+      \item gerechtes Aufteilen von Ressourcen (Speicherplatz, \dots)
+      \item "`Privatssphäre"': Nicht jeder sollte alles lesen können
+      \item keine unauthorisierten Eingriffe ins System
+    \end{itemize}
+  \end{block}
+  \begin{block}{Benutzerkonten}
+    \begin{itemize}
+      \item Wichtigstes Konto: root \\$\rightarrow$ Administratorkonto (UID=0)
+      \item normale Nutzer haben nur vollen Zugriff auf eigene Dateien
+      \item Eindeutige Nutzernummer (\textbf{UID}) mit dazugehörigen \textbf{Benutzernamen}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Gruppen}
+  \begin{block}{Was sind Gruppen}
+    \begin{itemize}
+      \item eindeutige Unterscheidung durch Gruppen-ID (GID)
+      \item Jeder Nutzer hat eine primäre Gruppe
+            und kann in weiteren sekundären (zusätzlichen) Gruppen Mitglied sein
+      \item Nichtmitglieder ggf. durch Gruppenpasswort authentifiziert
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Pseudobenutzer und Natürliche Personen}
+  \begin{block}{Über UIDs}
+    \begin{itemize}
+      \item \co{root}-Rechte verknüpft an die UID=0
+      \item Nutzer für spezielle Systemaufgaben (z.B. apache, mail, \dots)
+      \item Normale Nutzer bekommen UIDs ab $1000$
+      \item Nutzer nutzt Nutzername
+      \item System nutzt UID
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Nützliche Programme für Nutzerinformationen}
+  
+  \begin{block}{\co{id} -- Gruppen und IDs}
+    \begin{itemize}
+      \item \co{\$~id~Nutzer}
+      \item Ausgabe von Nutzer, primäre Gruppe und sek. Gruppen (ID und Name)
+    \end{itemize}
+  \end{block}
+    \begin{block}{\co{last} -- Die letzte Anmeldung}
+    \begin{itemize}
+      \item \co{\$~last~Nutzer}
+      \item gibt die Anmeldedaten von Nutzern aus
+      \item Daten aus \co{/var/log/wtmp}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+\subsection{Dateien der Benutzer- und Gruppenverwaltung}
+
+\begin{frame}{\co{/etc/passwd}}
+  \begin{center}
+    \colorbox{yellow}{\co{Name:Kennwort:UID:GID:GECOS:Heimatverzeichnis:Shell}}
+  \end{center}
+  \begin{block}{}
+    \begin{description}
+      \item[Name]        Textueller Nutzername, Login
+      \item[Kennwort]    Passwort-Hash 
+      \item[UID]         Numerische Kennung des  Nutzers
+      \item[GID]         Numerische Gruppenkennung der primären Gruppe
+      \item[GECOS]       Kommentarfeld
+      \item[Heimatverzeichnis] Nutzerverzeichnis
+      \item[Shell]       Login-Shell
+    \end{description}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Details von \co{/etc/passwd} I}
+  \begin{block}{Name}
+    \begin{itemize}
+      \item Umlaute, Satzzeichen und reine Zahlen problematisch
+    \end{itemize}
+  \end{block}
+  \begin{block}{Kennwort}
+    \begin{itemize}
+      \item gehashtes Kennwort
+      \item "`x"' Passwort in Schattendatei
+      \item "`!"' Anmeldung gesperrt
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Details von \co{/etc/passwd} II}
+  \begin{block}{GECOS}
+    \begin{itemize}
+      \item \emph{General Electric Comprehensive Operating System}
+      \item Informationen wie vollständiger Name, Zimmer- oder Telefonnummer
+      \item eher informativen Charakter
+    \end{itemize}
+  \end{block}
+  \begin{block}{Heimatverzeichnis}
+    \begin{itemize}
+      \item Verzeichnis für Nutzerdateien
+      \item normalerweise in \co{/home/Nutzername}
+      \item aktuelles Verzeichnis nach der Anmeldung
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Schattenkennwörter}
+  \begin{alertblock}{Problem}
+    \co{/etc/passwd} muss für alle lesbar sein, 
+    damit die Zuordnung von UID$\leftrightarrow$Nutzername funktioniert
+  \end{alertblock}
+
+  \begin{exampleblock}{Lösung}
+%     \begin{itemize}
+%       \item 
+      Verschlüsselte Kennwörter als "`Schattenkennwörter"' in einer Datei
+        mit Lesezugriff nur für privilegierte Prozesse und \co{root}\\
+        $\rightarrow$ \co{/etc/shadow}
+%     \end{itemize}
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{\co{/etc/shadow}}
+  \vspace{-2em}
+  \begin{center}
+  \hspace{-1.4em}\colorbox{yellow}{\co{Name:Kennwort:Änderung:Min:Max:Warn:Frist:Sperre:Reserve}}
+  \end{center}
+  \begin{block}{}
+    \begin{description}
+      \item[Name]        Textueller Nutzername, Login
+      \item[Kennwort]    verschlüsseltes Passwort
+      \item[Änderung]    Datum des letzten Passwortwechsels
+      \item[Min]	 Mindestalter für ein Passwort
+      \item[Max]	 Höchstalter für ein Passwort
+      \item[Warn]	 Tage vor Max für eine Warnung
+      \item[Frist]	Tage nach Max, für eine mögliche Anmeldung
+      \item[Sperre]	Datum, ab dem der Zugang gesperrt wird
+      \item[Reserve]	\dots
+    \end{description}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \Huge Fortsetzung folgt!
+  \end{center}
+\end{frame}
+
+
+% \begin{frame}{\co{/etc/group}}
+%   \begin{center}
+%     \colorbox{yellow}{\co{Gruppenname:Kennwort:GID:Mitglieder}}
+%   \end{center}
+%   \begin{block}{}
+%     \begin{description}
+%       \item[Gruppenname] Textueller Name der Gruppe
+%       \item[Kennwort]    Wird beim Wechseln der Gruppe mit \co{newgrp} abgefragt, \co{*} und \co{x} wie bei \co{passwd} 
+%       \item[GID]         Numerische Gruppenkennung
+%       \item[Mitglieder]  Durch Komma getrennte Liste der Mitglieder (Sekundäre Gruppenmitglieder)
+%     \end{description}
+%   \end{block}
+%     Kennwort und Mitglieder sind optional
+% \end{frame}
+% \begin{frame}{\co{/etc/gshadow}}
+% %   \co{}
+%   \begin{block}{Gruppenpasswörter}
+%     \begin{itemize}
+%       \item werden im Allgemeinen nicht verwendet
+%       \item \co{/etc/gshadow}
+%     \end{itemize}
+%   \end{block}
+% \end{frame}
+
+% % TODO anpassen
+% \begin{frame}{Prüfungsziele}
+%   \begin{alertblock}{3.3 Befehle in ein Skript umwandeln}
+%     \begin{description}
+%       \item[Gewicht]  4
+%       \item[Beschreibung] Wiederkehrende Befehle in einfachen Skripte umwandeln
+%     \end{description}
+%        Wissensgebiete\\ 
+%         \begin{itemize}
+%           \item Grundlagen der Textverarbeitung und von Shell-Skripten
+% %           \item einfaches Globbing und Quoting
+%           \item \co{/bin/sh}
+%           \item Variablen und Argumente
+%           \item Rückgabewerte
+%           \item \co{for}-Schleifen (und \co{while}-Schleifen)
+%           \item \co{echo}
+% %           \item 
+%         \end{itemize}
+%   \end{alertblock}
+% \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%% next time...
+\begin{frame}[plain]
+  \begin{alertblock}{Nächste Vorlesung}
+    \textbf{Termin:} Donnerstag, den 20.06.2013 18:30-20:00 Uhr\\
+    \textbf{Thema:} Kapitel 9 - Benutzerverwaltung \\
+    \textbf{Vorbereitung:} 
+    \begin{itemize}
+      \item LXES 13 Benutzerverwaltung
+      \item LXES 14 Zugriffsrechte
+    \end{itemize}
+  \end{alertblock}
+\end{frame}
+
+
+
+\materialframe
+
+\end{document}

@@ -1,0 +1,612 @@
+\documentclass[aspectratio=43]{beamer}
+\usepackage{../../resources/agdsncourse} 
+
+
+
+\title[Linux Essentials  - Kapitel 6 - Mehr Shell]{Linux Essentials}
+\subtitle{Kapitel 6 - Shell}
+\author{Alexander Köhler}
+\date{18. Oktober 2015}
+\setbeamertemplate{navigation symbols}{} 
+\begin{document}
+
+% Start Folie
+\logoframe
+
+%Title
+\frame{\titlepage}
+
+%Gliederung
+\setcounter{tocdepth}{1}
+\section[Gliederung]{}
+\frame{\tableofcontents}
+
+
+%%%%%%%%%%%%%%% der Inhalt
+\section{Mehr Spaß mit der Shell}
+\subsection{Internes und Externes der Shell}
+\begin{frame}{Mehr über Kommandos herausfinden}
+%   \begin{columns}
+%     \begin{column}{0.5\textwidth}
+      \begin{block}{Allgemeiner Ablauf zum Ausführen eines Befehls}
+%         \begin{enumerate}
+%           \item
+          Eingabe des Kommandos:
+          \begin{enumerate}
+            \item interner Befehl $\rightarrow$ Shell\\
+              feststellbar mit \co{type}
+            \item externer Befehl 
+              $\rightarrow$ Alle Verzeichnisse in \co{\$PATH} werden nacheinander
+              durchsucht
+          \end{enumerate}
+%         \end{enumerate}
+      \end{block}
+%     \end{column}
+%     \begin{column}{0.5\textwidth}
+  \begin{columns}
+    \begin{column}{0.3\textwidth}
+      \begin{block}{Typ feststellen}
+            \co{type kommando} \\$\rightarrow$  Befehlstyp (intern/extern)
+      \end{block}
+    \end{column}
+    \begin{column}{0.75\textwidth}
+      \begin{block}{Externe Befehle}
+            \begin{itemize}
+              \item \co{which} $\rightarrow$ gibt exakten Kommandopfad aus
+              \item \co{whereis} liefert weitere interessante Dateipfade (Konfiguration, Manual-Seiten)
+            \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Variablen}
+  \begin{columns}
+    \begin{column}{0.435\textwidth}
+      \begin{block}{Shell-Variablen}
+        \begin{itemize}
+%           \item Geldsack im eigenen Zimmer
+          \item stehen nur der aktuellen Shell zur Verfügung
+          \item explizite Weitergabe an Kindsprozess nötig
+          \item erstellen: \co{variable=wert}
+          \item alle anzeigen: \co{set}
+          \item komplett löschen: \co{unset~variable}
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.65\textwidth}
+       \begin{block}{Umgebungsvariablen}
+            \begin{itemize}
+%             \item Geschirr in der WG-Küche
+              \item stehen der aktuellen Shell sowie ihren Kindsprozessen zur Verfügung
+              \item sind Shell-Variablen der aktuellen Shell
+              \item von Shell- zur Umgebungsvariablen: \co{export~variable=wert}
+              \item anzeigen aller Variablen: \co{export} (oder \co{env})
+              \item entfernen: \co{export~-n~variable} (verbleibt als reine Shell-Variable)
+            \end{itemize}
+        \end{block}
+    \end{column}
+  \end{columns}
+  $\rightarrow$ Inhalt einer Variable wird mit vorangestellten "`\$"' referenziert
+\end{frame}
+    
+\begin{frame}{Einige wichtige Variablennamen}
+  \begin{tabular}{cp{0.8\textwidth}}
+    Variable         & Bedeutung\\
+    \hline
+    \co{PWD}         & Aktuelles Arbeitsverzeichnis\\
+    \co{PS1}         & Angaben zum Prompt (Text vor dem \$ der Shell)\\
+    \co{UID}         & Benutzerkennung (ID)\\
+    \co{HOME}        & Pfad des Heimatsverzeichnis\\
+    \co{PATH}        & \textbf{Suchpfade für Befehle}, Trenner der Pfade ist "`:"'\\
+    \co{LOGNAME}     & Benutzername\\
+    \co{TZ}          & manuell gesetzte Zeitzone \\
+  \end{tabular}
+\end{frame}
+
+
+\subsection{Kontrollstrukturen für die Shell-Programmierung}
+\begin{frame}{Rückgabewerte}
+  \begin{columns}
+    \begin{column}{0.4\textwidth}
+      \begin{block}{Arten der Rückgabewerte}
+        \begin{itemize}
+          \item Jedes Kommando liefert nach dem Aufruf einen Rückgabewert zurück
+          \item Letzter Rückgabewert steht in \co{\$?}
+          \item Erfolg: "`0"'
+          \item Misserfolg: alles andere\\
+               (Es gibt nur eine Art des Erfolgs!)
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.7\textwidth}
+       \begin{block}{Einfache Verknüpfungen von Kommandos}
+            \begin{itemize}
+              \item Kommandotrenner: \co{;}
+              \item Und-Verknüpfung: \co{\&\&}\\
+                    $\rightarrow$ zweites Kommando wird nur ausgeführt, wenn das erste Kommando
+                    erfolgreich war
+              \item Oder-Verknüpfung: \co{||}\\
+                    $\rightarrow$ zweites Kommando wird nur ausgeführt, wenn das erste Kommando
+                    nicht erfolgreich war
+              \item Rückgabewert der Verknüpfung ist die log. Verknüpfung der beiden Kommandos
+            \end{itemize}
+        \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Fallunterscheidungen}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Testen mit \co{test}}
+        \begin{itemize}
+          \item Überprüft Argument(e) auf versch. Eigenschaften
+          \item z.B. Vergleiche der Zahlenwerte bzw. Zeichenketten, Dateieigenschaften
+          \item Kurzform: \co{[ Arg1 \dots~]}
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.55\textwidth}
+       \begin{block}{Komplexere Fallunterscheidungen}
+            \begin{itemize}
+              \item bequeme und leserliche Abfrage von verschiedenen Fällen
+%               \item wie bei anderen Programmiersprachen auch
+            \end{itemize}
+            \co{\textbf{if} [ Bedingung1 ]\\
+                \textbf{then}\\
+                ~~echo erste Wahl\\
+                \textbf{elif} [ Bedingung2 ]\\
+                ~~echo zweite Wahl\\
+                \textbf{else}\\
+                ~~echo nichts passt\\
+                \textbf{fi}}
+        \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Zweimal Schleifen}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{\co{for}-Schleife}
+        \begin{itemize}
+          \item Abarbeiten einer Liste
+        \end{itemize}
+        \co{\$ for i in \{a..e\} \\
+            > do \\
+            > ~~echo i = \$i\\
+            > done}
+      \end{block}
+    \end{column}
+    \begin{column}{0.6\textwidth}
+       \begin{block}{\co{while}-Schleife}
+            \begin{itemize}
+              \item läuft solange eine Bedingung erfüllt ist
+            \end{itemize}
+        \co{\$ while testbedingung \\
+            >~do \\
+            >~~~echo~Bedingung~noch~erfüllt.\\
+            >~done}
+        \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% 
+% \begin{frame}{}
+%   \begin{columns}
+%     \begin{column}{0.5\textwidth}
+%       \begin{block}{}
+%         \begin{itemize}
+%           \item 
+%         \end{itemize}
+%       \end{block}
+%     \end{column}
+%     \begin{column}{0.5\textwidth}
+%        \begin{block}{}
+%             \begin{itemize}
+%               \item 
+%             \end{itemize}
+%         \end{block}
+%     \end{column}
+%   \end{columns}
+% \end{frame}
+
+\subsection{Nützliche Befehle für die Shell}
+\begin{frame}{}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Die Shell schlafen schicken}
+        \begin{itemize}
+          \item \co{\$~sleep~3} $\rightarrow$ Shell schläft für 3 Sekunden
+          \item während \co{sleep} aktiv ist, wird kein anderer Befehl ausgeführt
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+       \begin{block}{Wenn die Shell antwortet -- echo}
+            \begin{itemize}
+              \item \co{\$ echo Irgend ein Text}
+              \item nützlich zur Ausgabe von Variableninhalte, z.B. \co{echo~\$PATH}
+              \item \co{-n} unterdrückt Zeilenumbruch
+            \end{itemize}
+        \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+\begin{frame}{Datum in der Shell}
+\begin{columns}
+        \begin{column}{0.5\textwidth}
+        \begin{block}{\co{date}} 
+        \begin{itemize}
+        \item wichtiges Tool wenn es um Zeit geht
+        \item kann die Softwareuhr setzen (root)
+        \item unterschiedlichste Layouts
+        \item Zeitzonen\\ $\rightarrow$ \co{/usr/share/zoneinfo}
+        \end{itemize}
+        \end{block}
+        \end{column} 
+        
+        \begin{column}{0.5\textwidth} 
+        \begin{exampleblock}{Beispiele} 
+        \begin{itemize}
+        \item \co{date}
+        \item \co{export TZ=Europe/London}
+        \item \co{export TZ=America/Vancouver}
+        \item \co{date +'\%d. \%B \%Y'}
+        \item \co{date +'Tag Nr. \%j'}
+        \item \co{date +'KW Nr. \%V'}
+        \end{itemize}
+        \end{exampleblock}
+        \end{column} 
+\end{columns}
+\end{frame}
+
+\begin{frame}{Kommandos aus der Datei}
+  \begin{block}{Befehle in einer Datei ausführen}
+    \begin{itemize}
+      \item \co{\$~bash~shellscript}
+      \item Befehle werden in Sub-Shell (Kindsprozess) ausgeführt
+      \item Variablenzuweisungen werden nicht an Elternshell weitergegeben!
+      \item Alternative: \co{\$~./shellscript}\\
+          $\rightarrow$ Shebang (\co{\#!~/bin/bash}) und ausführbar (\co{chmod})
+    \end{itemize}
+  \end{block}
+  \begin{block}{Inhalt von Dateien einlesen}
+    \begin{itemize}
+      \item \co{\$~source datei} bzw. \co{\$~. datei}
+      \item Befehle und Variablenzuweisungen werden in aktueller Shell ausgeführt!
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Weitere Hilfen in der Shell}
+  \begin{itemize}
+    \item \taste{Tab}: Autovervollständigung
+    \item \taste{Tab}\taste{Tab}: Auflisten aller Eingabemöglichkeiten
+    \item \taste{$\uparrow$} und \taste{$\downarrow$}: führere Befehle durchblättern
+    \item \taste{Strg}+ \taste{r}: frühere Befehle durchsuchen
+    \item \co{\$~history}: listet zuvor eingegebene Befehle auf
+    \item \taste{Strg}+ \taste{c}: bricht Eingabe/laufenden Befehl ab
+    \item \taste{Strg}+ \taste{d}: Eingabe beenden/Abmelden aus der Shell
+%     \item 
+  \end{itemize}
+
+\end{frame}
+
+
+
+\section{Das Dateisystem}
+\subsection{Verschiedene Dateitypen}
+\begin{frame}{Dateitypen I}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Normale Dateien}
+        \begin{itemize}
+          \item Textdateien, \dots
+          \item div. Programme zum Anlegen
+        \end{itemize}
+      \end{block}
+      \begin{block}{Symbolische Links}
+        \begin{itemize}
+	  \item  Verweise auf andere Dateien (vgl. Kapitel 4)
+	  \item ls-Kennung: \co{l} oder \co{@}
+          \item  \co{ln~-s}
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+       \begin{block}{Verzeichnisse}
+            \begin{itemize}
+	      \item  Tabelle mit Einträgen für Dateinamen $\leftrightarrow$ Inode-Nr.
+	      \item ls-Kennung: \co{d} oder \co{/}
+              \item  \co{mkdir}
+            \end{itemize}
+        \end{block}
+       \begin{block}{Gerätedateien}
+            \begin{itemize}
+	      \item entspricht einem Gerät bzw. einem Treiber
+	      \item ls-Kennung: \co{c} bzw. \co{b}
+              \item \co{mknod}
+            \end{itemize}
+        \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+% \begin{frame}{Dateitypen II}
+%   \begin{columns}
+%     \begin{column}{0.5\textwidth}
+%     \end{column}
+%     \begin{column}{0.5\textwidth}
+%     \end{column}
+%   \end{columns}
+% \end{frame}
+\begin{frame}{Dateitypen II}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{FIFOs -- Named pipes}
+        \begin{itemize}
+	  \item unidirektionale Verbindung von Prozessen
+          \item vgl. Pipes (\textbar)
+          \item ls-Kennung: \co{p} oder \co{\textbar}
+          \item \co{mkfifo}
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+       \begin{block}{Unix-Domain-Sockets}
+            \begin{itemize}
+              \item bidirektionelle Kommunikation von Prozessen
+	      \item ls-Kennung: \co{s} oder \co{=}
+              \item kein Programm zum Erstellen
+            \end{itemize}
+        \end{block}
+    \end{column}
+  \end{columns}
+  \begin{exampleblock}{Dateien genauer untersuchen}
+    \co{\$~file~dateiname}\\
+    $\rightarrow$ Informationen zum Dateityp und Inhalt (normale Dateien)
+  \end{exampleblock}
+
+\end{frame}
+
+\subsection{Der Linux-Verzeichnisbaum}
+\begin{frame}{}
+  \begin{exampleblock}{Idee des Filesystem Hierarchy Standard (FHS)}
+    \begin{itemize}
+     \item Verzeichnisse in der ersten Hierarchie-Ebene und unter \co{/usr/} werden beschrieben
+     \item Unterteilung:
+      \begin{itemize}
+       \item lokal $\leftrightarrow$ entfernt (übers Netz bezogen)
+       \item statisch $\leftrightarrow$ dynamisch (Änderungen vorgesehen)
+      \end{itemize}
+
+    \end{itemize}
+
+  \end{exampleblock}
+  \begin{alertblock}{Problem}
+    Nicht jede Distribution muss sich daran halten
+  \end{alertblock}
+
+\end{frame}
+
+\begin{frame}{Alles für dem Systemstart}
+  \begin{block}{\co{/boot}}
+%     \begin{itemize}
+        Kernel (Betriebssystemkern),
+       Dateien für Bootloader (z.B. GRUB)
+%     \end{itemize}
+  \end{block}
+  \begin{block}{\co{/bin}}
+    Systemprogramme, die zum Systemstart wichtig sind oder ständig gebraucht werden
+    (\co{grep}, \co{ln}, \co{date})
+  \end{block}
+  \begin{block}{\co{/sbin}}
+    wie \co{/bin}, aber Systemkonfigurationswerkzeuge, die nur root ausführen soll
+  \end{block}
+  \begin{block}{\co{/lib} --  shared libaries}
+%     \begin{itemize}
+%       \item 
+      Bibliotheken der Programme aus \co{/bin} und \co{/sbin}
+      Kernelmodule (\co{/lib/modules}; Gerätetreiber, Netzwerkprotokolle, \dots)
+%     \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{\co{/dev} -- Gerätedateien}
+  \begin{block}{Allgemeines}
+    \begin{itemize}
+     \item Jedes Gerät mit Treiber im System entspricht einer Datei
+     \item blockorientiert (Block-Devices): Lesen und Schreiben blockweise
+     \item zeichenorientiert (Character-Devices): Lesen und Schreiben einzelne Bytes
+    \end{itemize}
+  \end{block}
+  \begin{block}{Pseudogeräte}
+    \begin{description}
+      \item[\co{/dev/null}] "`Mülleimer"' für Bytes
+      \item[\co{/dev/(u)random}] liefert zufällig generierte Bytes
+      \item[\co{/dev/zero}] gibt beliebig viele Nullbytes aus
+    \end{description}
+  \end{block}
+\end{frame}
+
+\begin{frame}{\co{/etc} -- Konfigurationsdateien}
+%   \begin{block}{}
+%     
+%   \end{block}
+  \begin{block}{Wichtige Dateien}
+    \begin{description}
+      \item[\co{/dev/fstab}] Zuordnung bekannter Datenträger mit Einhängepunkten
+      \item[\co{/dev/mtab}] Aktuell eingebundene Datenträger
+      \item[\co{/dev/inittab}] Systemstart
+      \item[\co{/dev/init.d/}] Skripte für den Systemstart
+      \item[\co{/dev/hosts}] Zuordnung von Rechner und Namen im kleinen Netzen
+      \item[\co{/dev/passwd}] Benutzerdaten (Namen, Gruppen, \dots)
+      \item[\co{/dev/issue}] Text, der vor einer Anmeldung angezeigt wird
+      \item[\co{/dev/motd}] Nachrichtentext nach der Ameldung
+    \end{description}
+  \end{block}
+\end{frame}
+
+\begin{frame}{\co{/usr} -- Die Unveränderlichen (Dateien)}
+  \begin{block}{Idee}
+    Enthält alle Dateien, die nicht während Laufzeit geändert werden müssen
+  \end{block}
+  \begin{block}{Inhalt}
+    \begin{description}
+     \item[\co{/usr/share/}] Architektur-unabhängige Daten %(Manualseiten, Dokumentationen)
+     \item[\co{/usr/share/\{man,info,doc\}}] Dokumentationen, Manualseiten, Hilfeseiten 
+     \item[\co{/usr/\{bin,sbin,lib\}/}] Programme und Bibliotheken, die nicht 
+					zum Systemstart benötigt werden
+     \item[\co{/usr/local/}] Programme, die vom lokalen Admin manuell installiert wurden
+     \item[\co{/usr/src/}] enthält ggf. Quellcode von Programmen
+    \end{description}
+  \end{block}
+\end{frame}
+
+\begin{frame}{\co{/var} und \co{/tmp} -- Veränderliche und temporäre Dateien }
+  \begin{block}{Idee}
+    Enthält alle Dateien, die vom System geändert werden bzw. nur temporär benötigt werden
+  \end{block}
+  \begin{block}{Inhalt}
+    \begin{description}
+     \item[\co{/tmp/}] Inhalt sollte bei einem Systemstart gelöscht werden
+     \item[\co{/var/}] Dateien, die häufig geändert werden (Drucker-, E-Mailwarteschlangen,\dots)
+     \item[\co{/var/log/}] Protokolldateien des Systems (von Syslogd, Klogd, dmesg)
+    \end{description}
+  \end{block}
+\end{frame}
+
+\begin{frame}{\co{/proc} und \co{/sys} -- Pseudodateisysteme}
+  $\rightarrow$ nehmen keinen Speicherplatz ein
+  \begin{block}{Prozessdateien in \co{/proc}}
+    Informationen über alle Prozesse, teilweise auch noch über die Hardware\\
+    $\rightarrow$ Details über genaue Dateien nächste Vorlesung
+%     \begin{description}
+%      \item[\co{/proc/}]
+%     \end{description}
+  \end{block}
+  \begin{block}{Hardwaredateien in \co{/sys}}
+    Konsistente Sicht auf die verfügbare Hardware sowie deren Konfiguration 
+    (ab Kernel 2.6.)
+  \end{block}
+\end{frame}
+
+\begin{frame}{Weitere Verzeichnisse}
+  \begin{block}{Heimatverzeichnisse}
+    \begin{description}
+     \item[\co{/home/}] enthält die Heimatverzeichnisse aller normalen Nutzer
+     \item[\co{/root/}] Heimatverzeichnis des Systemadministrators (root)
+    \end{description}
+  \end{block}
+  \begin{block}{}
+    \begin{description}
+     \item[\co{/lost+found/}] Daten, 
+     \item[\co{/opt/}] Installationsort von Programmen Drittanbieter
+     \item[\co{/srv/}] Webseiten, FTP-Dateien 
+     \item[\co{/media/}] Einhängeorte für Datenträger
+     \item[\co{/mnt/}] kurzfristiger Einghängeort für Datenträger
+    \end{description}
+  \end{block}
+\end{frame}
+
+\subsection{Aufteilung auf der Festplatte -- Partitionierung}
+\begin{frame}{Letzte Punkte zum Umgang mit Partitionen}
+  \begin{block}{Partitionierung}
+ \begin{itemize}
+  \item grundsätzlich nur eine Partition nötig
+  \item Aufteilung auf versch. Partitionen vorteilhaft
+    \begin{itemize}
+     \item Bsp. home: Neuinstallation einfacher
+     \item Bsp. \co{/var} bzw. \co{/tmp}: Protokolldateien haben immer Platz
+    \end{itemize}
+ \end{itemize}
+  \end{block}
+  \begin{block}{Einhängen von Datenträgern/Partitionen}
+    \begin{itemize}
+     \item \co{/etc/fstab} enthält Einhängepunkte der Systemteile
+     \item manuelles Einhängen mit:\\
+      \co{\$~mount /dev/sda3 /mountpoint}
+     \item manuelles Aushängen mit:\\
+      \co{\$~umount /dev/sda3} bzw. \co{\$~umount /mountpoint}
+    \end{itemize}
+
+  \end{block}
+
+\end{frame}
+
+
+\begin{frame}{Prüfungsziele I}
+  \begin{alertblock}{2.1 Erste Schritte auf der Kommandozeile}
+    \begin{description}
+      \item[Gewicht]  2
+      \item[Beschreibung] Grundkenntnisse zur Benutzung der Linux-Kommandozeile
+    \end{description}
+       Wissensgebiete\\ 
+        \begin{itemize}
+          \item Shell-Grundkenntnisse
+          \item Kommandos eingeben und strukturieren
+          \item Mit Optionen arbeiten
+          \item Variablen, Globbing, Suchmuster, Quoting
+          \item \co{echo}, \co{history}, \co{which}
+%           \item  \co{which}
+          \item Umgebungsvariable \co{PATH}
+          \item Steuerungsoperatoren \co{\&\&}, \co{\textbar\textbar} und \co{;}
+        \end{itemize}
+  \end{alertblock}
+\end{frame}
+
+% TODO anpassen
+\begin{frame}{Prüfungsziele II}
+  \begin{alertblock}{3.3 Befehle in ein Skript umwandeln}
+    \begin{description}
+      \item[Gewicht]  4
+      \item[Beschreibung] Wiederkehrende Befehle in einfachen Skripte umwandeln
+    \end{description}
+       Wissensgebiete\\ 
+        \begin{itemize}
+          \item Grundlagen der Textverarbeitung und von Shell-Skripten
+%           \item einfaches Globbing und Quoting
+          \item \co{/bin/sh}
+          \item Variablen und Argumente
+          \item Rückgabewerte
+          \item \co{for}-Schleifen (und \co{while}-Schleifen)
+          \item \co{echo}
+%           \item 
+        \end{itemize}
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{Prüfungsziele III}
+  \begin{alertblock}{4.3 Datenspeicherung}
+    \begin{description}
+      \item[Gewicht]  3
+      \item[Beschreibung] Wo verschiedene Arten von Informationen in einem Linux-System gespeichert werden
+    \end{description}
+       Wissensgebiete\\ 
+        \begin{itemize}
+          \item Kernel, Prozesse (\co{/proc})
+          \item \co{/lib}, \co{/usr/lib}, \co{/etc}, \co{/var/log}
+          \item  syslog, klog, dmesg
+          \item Orte der Systemkonfiguration (\co{/etc/})
+        \end{itemize}
+  \end{alertblock}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%% next time...
+\begin{frame}[plain]
+  \begin{alertblock}{Nächste Vorlesung}
+    \textbf{Termin:} Donnerstag, den 06.06.2013 18:30-20:00 Uhr\\
+    \textbf{Thema:} Kapitel 7 - \\
+    \textbf{Vorbereitung:} 
+    \begin{itemize}
+      \item LXES 11 Dateien archivieren und komprimieren
+      \item LXES 12 Einstieg in die Systemadministration
+    \end{itemize}
+  \end{alertblock}
+\end{frame}
+
+
+\materialframe
+
+\end{document}
