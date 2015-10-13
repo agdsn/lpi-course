@@ -4,7 +4,7 @@
 \title[Linux Essentials  - Kapitel 3 - Die Shell]{Linux Essentials}
 \subtitle{Kapitel 3 - Die Shell}
 \author{Hagen Eckert}
-\date{25. April 2013}
+\date{17. Oktober 2015}
 
 
 \begin{document}
@@ -28,9 +28,9 @@
 \begin{frame} 
 	\begin{block}{shell} 
 	\begin{itemize}
-	\item Oberfläche des (Linux)-Computers
-	\item durch Texteingaben werden Aktionen ausgelöst und deren Ergebnisse angezeigt
-	\item an sich Programm wie viele andere
+	\item Eine Schnittstelle zum Computer/Linux
+	\item Durch Texteingaben werden Aktionen ausgelöst und deren Ergebnisse angezeigt
+	\item An sich ein Programm wie viele andere
 	\end{itemize}
 	\end{block}
 
@@ -41,13 +41,17 @@
 
 \begin{frame} 
 
-	\begin{exampleblock}{Beispiele} 
+	\begin{exampleblock}{Shell Beispiele} 
 	\begin{itemize}
 	\item \co{sh} für die klassische Bourne-\textbf{Sh}ell (\co{sh} eigentlich \co{dash})
 	\item \co{bash} für die \textbf{B}ourne-\textbf{A}gain-\textbf{Sh}ell 
 	\item \co{ksh} für die \textbf{K}orn-\textbf{Sh}ell
 	\item \co{csh} für die \textbf{C}-\textbf{Sh}ell (\co{csh} oft \co{tcsh})
 	\item \co{tcsh} für die \textbf{T}enex-\textbf{C}-\textbf{Sh}ell, eine weiterentwickelte C-Shell
+	\end{itemize}
+	\end{exampleblock}
+	\begin{exampleblock}{}
+	\begin{itemize}
 	\item \co{exit} verlässt die aktuelle Shell
 	\item \co{echo \$0} liefert die aktuelle Shell zurück
 	\item \co{echo \$0 --version} liefert die Version der Shell zurück
@@ -64,7 +68,7 @@
   \begin{block}{Kommandos} 
   \begin{itemize}
   \item Shell interpretiert die Eingabe nach Wörter getrennt
-  \item erstes Wort in der Regel \textit{Kommando}
+  \item Erstes Wort in der Regel \textit{Kommando}
   \item Wörter mit führendem \co{-} \textit{Optionen}
   \item Wörter ohne führendem \co{-} \textit{Argumente}
   \end{itemize}
@@ -72,8 +76,8 @@
 
   \begin{block}{Optionen}
   \begin{itemize}
-  \item \co{-v -l -t} wirken in der Regel wie Schalter die eine Option aktivieren
-  \item \co{--verbose --long --tree} sind die Langformen zur besseren Verständlichkeit  bei sehr vielen Optionen
+  \item \co{-v -l -t} wirken in der Regel wie Schalter
+  \item Häufig existieren Langformen: \co{--verbose --long --tree} 
   \end{itemize}
   \end{block}
 
@@ -99,16 +103,17 @@
 	\begin{itemize}
 	\item Interne Kommandos
 	\begin{itemize}
-		\item um die 30 Befehle
-		\item beeinflussen oft die Shell selbst
-		\item sehr schnell
-		\item z.B. \co{echo}, \co{kill}, ... 
+		\item Um die 70 Befehle
+		\item Beeinflussen oft die Shell selbst
+		\item Sehr schnell
+		\item z.B. \co{echo}, \co{kill}, \co{time}, \co{cd}, ... 
 	\end{itemize}
 	
 	\item Externe Kommandos
 	\begin{itemize}
-		\item werden durch ausführbare Dateien zur Verfügung gestellt
+		\item Werden durch ausführbare Dateien zur Verfügung gestellt
 		\item z.B. in \co{/bin}, \co{/sbin}, ...
+		\item Festgelegt in Umgebungsvariable \co{\$PATH}
 	\end{itemize}
 	
 	\end{itemize}
@@ -147,7 +152,8 @@
 \begin{itemize}
 \item Shellvariablen sind nur innerhalb der Shell vorhanden 
 \item um auch für Programme verfügbar zu sein muss exportiert werden (\co{export bla})
-\item \co{set}  zeigt alle - \co{env} oder \co{export} nur exportierte
+\item \co{set}  zeigt alle Variablen
+\item  \co{env} oder \co{export} nur exportierte
 \end{itemize}
 
 \end{block}
@@ -162,7 +168,7 @@
 	\item \co{echo \$bla}
 	\item \co{echo \$PS1}
 	\item \co{unset bla}
-	\item \co{echo \$RANDOM}
+	\item \co{echo \$RANDOM \$SECONDS \$SHLVL \$OLDPWD \$MACHTYPE}
 	\item \co{declare}
 	\item \co{shopt}
 	\end{itemize}
@@ -178,9 +184,9 @@
 
 	\begin{block}{\co{date}} 
 	\begin{itemize}
-	\item wichtiges Tool wenn es um Zeit geht
-	\item kann die Softwareuhr setzen (root)
-	\item unterschiedlichste Layouts
+	\item Wichtiges Tool wenn es um Zeit geht
+	\item Kann die Softwareuhr setzen (root)
+	\item Unterschiedlichste Layouts
 	\item Zeitzonen 
 	\end{itemize}
 	\end{block}
@@ -195,9 +201,9 @@
 	\item \co{date}
 	\item \co{export TZ=Europe/London}
 	\item \co{tzselect}
-	\item \co{date +'\%d. \%B \%Y'}
-	\item \co{date +'Tag Nr. \%j'}
-	\item \co{date +'KW Nr. \%V'}
+	\item \co{date +\'\%d. \%B \%Y\'}
+	\item \co{date +\'Tag Nr. \%j\'}
+	\item \co{date +\'KW Nr. \%V\'}
 	\end{itemize}
 	\end{exampleblock}
 
@@ -266,9 +272,9 @@
 
 	\begin{exampleblock}{Beispiele} 
 	\begin{itemize}
-	\item \co{echo 'Heute ist der ' ; date +\%d.\%m.\%Y}
-       \item \co{echo 'Heute ist der ' \&\& date +\%d.\%m.\%Y}
-       \item \co{echo 'Heute ist der ' || date +\%d.\%m.\%Y}
+	\item \co{echo \'Heute ist der \' ; date +\%d.\%m.\%Y}
+       \item \co{echo \'Heute ist der \' \&\& date +\%d.\%m.\%Y}
+       \item \co{echo \'Heute ist der \' || date +\%d.\%m.\%Y}
 	\end{itemize}
 	\end{exampleblock}
 
@@ -355,12 +361,12 @@
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[plain]
 \begin{alertblock}{Nächste Vorlesung}
-\textbf{Termin:} Donnerstag, den 02.05.2013 18:30-20:00 Uhr\\
+\textbf{Termin:} Morgen, 18.10.2015 9:20 Uhr\\
 \textbf{Thema:} Kapitel 4 - Dateien \\
-\textbf{Vorbereitung:} 
+\textbf{Kapitel:} 
 \begin{itemize}
 \item LXES 6 Datein: Aufzucht und Pflege
 \end{itemize}

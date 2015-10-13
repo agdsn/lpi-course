@@ -38,8 +38,8 @@
 	
 	\begin{block}{Vorlesende} 
 	\begin{itemize}
-	\item Alexander Köhler
-	\item Hagen Eckert
+	\item Alexander Köhler (HZDR)
+	\item Hagen Eckert (TUD)
 	\end{itemize}
 	\end{block}
 
@@ -51,71 +51,74 @@
 	\begin{block}{LPI} 
 	\begin{itemize}
 	\item LPI $\rightarrow$ \textbf{L}inux \textbf{P}rofessional \textbf{I}nstitute
-	\item Weltweit größtes Zertifizierungsprogramm der Linux-Gemeinschaft
-	\item Distributionsunabhängig
+	\item Gemeinnützige Organisation aus Kanada
+	\item Betreibt das weltweit erfolgreichste Zertifizierungsprogramm der Linux-Gemeinschaft
+	\item Distributionsunabhängig / International
 	\end{itemize}
 	\end{block}
 	
 	\begin{block}{LPI AAP} 
 	\begin{itemize}
 	\item Die AG DSN ist \textbf{A}pproved \textbf{A}cadamic \textbf{P}artner
-	\item Bald auch privates Prüfungscenter
+	\item Eingetragenes Prüfungscenter für das Essential-Level
 	\end{itemize}
 	\end{block}
 \end{frame}
 
-\subsection{Vorlesung}
+\subsection{Veranstaltung}
 \begin{frame} 
-	\begin{block}{Vorlesung} 
+	\begin{block}{Aufbau} 
 	\begin{itemize}
-	\item immer Donnerstag
-	\item Uhrzeit entweder 18:30 - 20:00 Uhr (jetzt)
-	\newline oder 16:40 - 18:10 Uhr
-	\item 10x Vorlesung
-	\item Wiederholung + Prüfung
+	\item 2 Wochenenden mit je 5 Themen + 1 Hands-On
+	\item Konsultation + Prüfung
+	\end{itemize}
+	\end{block}
+	
+	\begin{block}{Zertifikat} 
+	\begin{itemize}
+	\item Computer basierte Prüfung mit sofortige Rückmeldung
+	\item Kosten für die Zertifizierung sind 50 EUR (AG DSN 20 EUR)
 	\end{itemize}
 	\end{block}
 	
 	\begin{block}{Prüfung} 
 	\begin{itemize}
-	\item Computer basierte Prüfung 
-	\item Sofortige Rückmeldung zum Ergebnis 
-	\item Kosten für die Zertifizierung sind 50 EUR
-	\item Aktive AG DSN Mitglieder werden mit 30 EUR subventioniert
+	\item Alternativ kostenlose schriftliche Prüfung
+	\item Ähnlicher Aufbau und Schwierigkeit wie die Zertifikatsprüfung
 	\end{itemize}
 	\end{block}
 \end{frame}
 
-\subsection{Lehrstuhl}
+\subsection{Partner}
 
 \begin{frame}
-	\begin{block}{Lehrstuhl} 
+	\begin{block}{Helmholtz-Zentrum Dresden-Rossendorf} 
 	\begin{itemize}
-	\item Materialwissenschaft und Nanotechnik  
-	\item Prof. Cuniberti
-	\item Fokus: Konzepte, quantitative Methoden und Experimente um Phänomene im Nanometerbereich zu verstehen und zu beherrschen
-	\item Für die Lösung vieler Fragen werden Hochleistungsrechner eingesetzt  $\rightarrow$ 94\% der Hochleistungsrechner laufen unter Linux
+	\item Institut für Strahlenphysik  
+	\item Prof. Dr. Ulrich Schramm
+	\item Grundlagenforschung auf dem Gebiet der Beschleuniger-, Kern-, Hadronen- und Laserphysik
 	\end{itemize}
 	\end{block}
 	
 \end{frame}
 
 \begin{frame}
-	\begin{block}{Lehrstuhl} 
+	\begin{block}{IfWW, TU Dresden} 
 	\begin{itemize}
-	\item Institut für Strahlenphysik, Abteilung~Laser-Teilchenbeschleunigung, Helmholtz-Zentrum Dresden - Rossendorf  
-	\item Prof. Schramm
-	\item Mehrere Gruppen:
-	\begin{itemize}
-	 \item Laser-Elektronenbeschleunigung und Thomsonstreuung
-	 \item Computergestützte Strahlenphysik \\ $\rightarrow$ GPU-Programmierung PIConGPU zu 100\% unter Linux
-	 \item \dots
-	\end{itemize}
-% 	\item Hochleistungsrechner eingesetzt  $\rightarrow$  Hochleistungsrechner laufen unter Linux
+	\item Lehrstuhl für Materialwissenschaft und Nanotechnik 
+	\item Prof. Dr. Cuniberti
+	\item Konzepte, quantitative Methoden und Experimente um Phänomene im Nanometerbereich zu verstehen und zu beherrschen
 	\end{itemize}
 	\end{block}
-	
+		\begin{block}{} 
+	\begin{itemize}
+	\item Für die Lösung vieler Fragen werden Hochleistungsrechner eingesetzt  $\rightarrow$ 488 der Top 500 Hochleistungsrechner laufen unter Linux (Juni 2015, 10 Unix, 1 Windows) 
+	% top500.org
+	\end{itemize}
+	\end{block}
 \end{frame}
+
+
 
 %%%%%%%%%%%%%%%%%
 \section{Der Computer}
@@ -191,20 +194,17 @@
 	\item Dauerhafter Datenspeicher
 	\item Für hohe Kapazität immer noch Festplatten am wichtigsten
 	\item Durch die mechanischen Teile jedoch einige Nachteile
-	\item Solid State Disk werden immer wichtiger, insbesondere wenn schnelle Obertragungs - und Zugriffsgeschwindigkeiten nötig sind
-	\item Denoch um Größenordungen langsamer als der RAM 
+	\item Solid State Disk werden immer wichtiger, insbesondere wenn schnelle Übertragungs - und Zugriffsgeschwindigkeiten nötig sind
+	\item Dennoch um Größenordnungen langsamer als der RAM 
 	\begin{itemize}
-	 \item[RAM] 6$\cdot10^{-8}$ s
-	\item[SSD] 2,5$\cdot10^{-4}$ s
-	\item[HD] $10^{-2}$ s
+	 \item[RAM] $6.0\cdot10^{-8}$ s
+	\item[SSD] $2.5 \cdot10^{-4}$ s
+	\item[HD] $1.0\cdot10^{-2}$ s
 	\end{itemize}
-
-	
 	\end{itemize}
 	\end{block}
 
 \end{frame}
-
 
 \begin{frame} 
 
@@ -212,7 +212,7 @@
 	\begin{itemize}
 	\item CD, DVD, Blu-ray
 	\item Daten werden mit Laser gelesen $\rightarrow$ optisch
-	\item verlieren stark an Bedeutung durch USB-Sticks und Breitband Internet
+	\item Verlieren stark an Bedeutung durch USB-Sticks und \\Breitband Internet
 	\end{itemize}
 	\end{block}
 
@@ -220,7 +220,7 @@
 	\begin{itemize}
 	\item Verschiedene Schnittstellen möglich
 	\item Von 10BASE BNC bis 10Gbit/s Glasfaser möglich
-	\item Meistens ist Gigabit-Ethernet über Kupfer oder verschiedene WLAN-Varianten anzutreffen
+	\item Meistens ist Gigabit-Ethernet über Kupferadern oder verschiedene WLAN-Varianten anzutreffen
 	\item Glasfaser meist nur für Backbones und Server verwendet
 	\end{itemize}
 	\end{block}
@@ -228,22 +228,28 @@
 
 \subsection{Betriebssysteme}
 
+% Source for market share StatCounter
+% http://www.statista.com/statistics/268237/global-market-share-held-by-operating-systems-since-2009/
 
 \begin{frame} 
 
-	\begin{block}{Windows} 
+	\begin{block}{Windows  78,93\% \footnote{Prozente von July 2015 StatCounter (17,2 Milliarden Seitenaufrufe)} }
 	\begin{itemize}
-	\item Marktanteil um 82 \% (Internet)
 	\item 1985 als grafischer Aufsatz für MS-DOS gestartet
-	\item Seit Windows NT eigenständiges Betriebssysteme
+	\item Seit Windows NT (1993) eigenständiges Betriebssysteme
+	\item Mit XP (2001) auch im \textit{privaten} Bereich
+	\item Seit 2010 auch mobiles System auf NT-Basis
+	
+	
 	\end{itemize}
 	\end{block}
 	
-	\begin{block}{OS X} 
+	\begin{block}{OS X 7,79\% (iOS 6,03\%)} 
 	\begin{itemize}
-	\item Von Grundsystem näher an Linux
-	\item Vor allem durch GNU Programme
-	\item Abstammung ebenfalls von UNIX durch  BSD 
+	\item Auf Darwin basierende Distribution (XNU $\rightarrow$ hybrider Kernel)
+	\item Integration von GNU Programmen (GNU/XNU)
+	\item Unix $\rightarrow$ BSD $\rightarrow$ NeXTStep $\rightarrow$ Darwin
+	\item Seit 10.5 echtes UNIX (Open Group)
 	\end{itemize}
 	\end{block}
 
@@ -251,14 +257,14 @@
 
 \begin{frame} 
 
-	\begin{block}{Linux} 
+	\begin{block}{Linux 1,62\% (Android 1,62\%)} 
 	\begin{itemize}
-	\item Linux stellt genau genommen nur ein Betriebssystems Kern dar
-	\item Es wird dennoch als Sammelbegriff für das gesamte System genutzt
-	\newline Nur selten wird GNU/Linux im allgemeinen Sprachgebrauch genutzt
+	\item Linux stellt eigentlich nur ein Betriebssystems Kern dar
+	\item Dient häufig als Sammelbegriff für das gesamte System
+	\newline Besser wäre: GNU/Linux
 	\item Entwicklung geht auf Linus Torvalds zurück
 	\item 1991 als Hobby Projekt begonnen
-	\item Nachbildung des Minix Systems
+	\item Unix $\rightarrow$ Minix $\rightarrow$ Linux
 	\item Kombiniert mit den GNU Programmen entstand ein komplettes Betriebssystem 
 	\end{itemize}
 	\end{block}
@@ -269,11 +275,12 @@
 
 	\begin{block}{Linux} 
 	\begin{itemize}
-	\item Linux 2.0 war sehr wichtig da Mehrkernprozessoren und das dynamische Laden von Modulen erlaubt
+	\item Linux 2.0 wichtiger Meilstein
+	\newline $\rightarrow$  Mehrkernprozessoren, dynamisches Laden von Modulen
 	\item Ständige Weiterentwicklung bis heute
 	\item Portiert auf fast alles was \textit{rechnen} kann
 	\item Im allgemeinem PC Markt nie besonders erfolgreich
-	\newline Erfolge eher im Bereich Embedded Systeme, Mobile Anwendungen, Server, Wissenschaftliche Anwendung
+	\newline Erfolge eher im Bereich Embedded Systeme, Mobile Anwendungen, Server, wissenschaftliche Anwendung
 	\end{itemize}
 	\end{block}
 
@@ -287,7 +294,8 @@
 	\begin{itemize}
 	\item Stellen komplette Softwareumgebungen bereit
 	\item Kommandozeilenwerkzeuge, Arbeitsumgebung, Officeprogramme, Spiele, ...
-	\item Viele verschiedene, angepasst an unterschiedliche Bedürfnisse und Philosophien 
+	\item Große Vielfalt
+	\newline $\rightarrow$ unterschiedliche Bedürfnisse und Philosophien 
 	\end{itemize}
 	\end{block}
 
@@ -319,9 +327,9 @@
 	\begin{block}{Debian} 
 	\begin{itemize}
 	\item Ohne Firma im Hintergrund
-	\item Begonnen 1993
+	\item Begonnen 1993 mittlerweile  über 43000 Pakete
 	\item Strenge Regeln was freie Software ist
-	\item Dient häufig als Grundlage anderer Projekte
+	\item Dient häufig als Grundlage anderer Projekte (>50 direkt + Ubuntu) 
 	\end{itemize}
 	\end{block}
 
@@ -362,7 +370,7 @@
 	\item LibreOffice
 	\begin{itemize}
 	 \item Abspaltung von OpenOffice
-	 \item Gilt als Innovativer und Aufgeräumter
+	 \item Gilt als innovativer und aufgeräumter Nachfolger
 	\end{itemize}
 
 
@@ -430,7 +438,7 @@
 	\begin{itemize}
 	\item Allein durch die GNU-Compiler sind viele Programmiersprachen möglich
 	\newline C, C++, Objective C, JAve, Fortran, Ada
-	\item Sogut wie alle Skriptsprachen sind verfügbar:
+	\item So gut wie alle Skriptsprachen sind verfügbar:
 	\newline Python, Perl, Ruby, Lua, PHP, ...
 	\item Verschieden Entwicklungsstiele möglich
 	\newline Von Eclipse bis vi
@@ -446,9 +454,9 @@
 
 \begin{frame}[plain]
 \begin{alertblock}{Nächste Vorlesung}
-\textbf{Termin:} Donnerstag, den 18.04.2013 18:30-20:00 Uhr\\
+\textbf{Termin:} in 15 min\\
 \textbf{Thema:} Kapitel 2 - Erste Schritte mit Linux \\
-\textbf{Vorbereitung:} 
+\textbf{Kapitel:} 
 \begin{itemize}
 \item LXES 1 Computer, Software und Betriebssysteme
 \item LXES 2 Linux und freie Software
