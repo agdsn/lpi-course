@@ -4,7 +4,7 @@
 \title[Linux Essentials  - Kapitel 5 - Suchen und Finden]{Linux Essentials}
 \subtitle{Kapitel 5 - Suchen und Finden}
 \author{Hagen Eckert}
-\date{16. Mai 2013}
+\date{18. Oktober 2015}
 
 
 \begin{document}
@@ -48,7 +48,7 @@
 \subsection{grep}
 \begin{frame} 
 	\begin{exampleblock}{Beispiel I}
-	\co{egrep '\textbackslash$<$[0-­9]\{5\}\textbackslash$>$'}
+	\co{egrep \'\textbackslash$<$[0-­9]\{5\}\textbackslash$>$\'}
 	\end{exampleblock}
 
 	\begin{block}{Postleitzahlen finden} 
@@ -61,12 +61,12 @@ Die Wortgrenzen \co{\textbackslash$<$} und \co{\textbackslash$>$} sorgen schlie�
 
 \begin{frame} 
 	\begin{exampleblock}{Beispiel II}
-	\co{egrep '[$\hat{\;}$\textbackslash b]\textbackslash @[$\hat{\;}$\textbackslash b]'}
+	\co{egrep \'[$\hat{\;}$\textbackslash b]\textbackslash @[$\hat{\;}$\textbackslash b]\'}
 	\end{exampleblock}
 
 	\begin{block}{E­-Mail­-Adressen finden} 
 Ausdruck zum Aufspüren von E­-Mail­-Adressen. \\
-\textbackslash b bedeutet Wortanfang oder ­-ende. \\
+\co{\textbackslash b} bedeutet Wortanfang oder ­-ende. \\
 Durch das $\hat{\;}$ zu Beginn der eckigen Klammern wird es verneint. 
 \\So wird von obigem Ausdruck alles gefunden, was aus einem @ besteht, das links und rechts von mindestens einem Wortzeichen umrahmt wird. 
 	\end{block}	
@@ -74,18 +74,18 @@ Durch das $\hat{\;}$ zu Beginn der eckigen Klammern wird es verneint.
 
 \begin{frame} 
 	\begin{exampleblock}{Beispiel III}
-	\co{egrep '([0-­9]\{3\}\textbackslash .)\{3\}[0­-9]\{3\}'}
+	\co{egrep \'([0-­9]\{3\}\textbackslash .)\{3\}[0­-9]\{3\}\'}
 	\end{exampleblock}
 
 	\begin{block}{IP­-Adressen finden} 
 Ausdruck für einen einfachen IP-­Adressen-­Finder.\\
-Es wird nach vier dreistelligen Zahlen die durch Punkte getrennt sind.
+Es wird nach vier dreistelligen Zahlen die durch Punkte getrennt sind gesucht.
 	\end{block}	
 \end{frame}
 
 \begin{frame} 
 	\begin{exampleblock}{Beispiel IV}
-	\co{egrep} \tiny\co{'\textbackslash$<$((([01]?[0­-9]\{1,2\})|(2[0­-4][0­-9])|(25[0-­5]))\textbackslash.)\{3\}(([01]?[0-­9]\{1,2\})|(2[0-­4][0-­9])|(25[0­-5]))\textbackslash$>$'}
+	{\fontsize{5.5}{5.5} \selectfont\co{egrep \'\textbackslash$<$((([01]?[0­-9]\{1,2\})|(2[0­-4][0­-9])|(25[0-­5]))\textbackslash.)\{3\}(([01]?[0-­9]\{1,2\})|(2[0-­4][0-­9])|(25[0­-5]))\textbackslash$>$\'}}
 	\end{exampleblock}
 
 	\begin{block}{IP­-Adressen finden (jetzt echt)} 
@@ -95,7 +95,7 @@ Die Optimierung: Es wurden\textbackslash$<$und \textbackslash$>$ ergänzt, damit
 
 \begin{frame} 
 	\begin{exampleblock}{Beispiel V}
-	\co{egrep -i '\textbackslash b([a-z]+) +\textbackslash 1\textbackslash b'}\\
+	\co{egrep -i \'\textbackslash b([a-z]+) +\textbackslash 1\textbackslash b\'}\\
 	\end{exampleblock}
 
 	\begin{block}{Doppelte Worte finden} 
@@ -173,22 +173,22 @@ Nach der Klammer kommt  mindestens ein Leerzeichen ( +) und dann die Metasequenz
 	\begin{exampleblock}{Optionen} 
 	\begin{itemize}
 	\item \co{ -s, --separator=ZEICHENKETTE}  
-	\newline ZEICHENKETTE als Trennzeichen statt Zeilenumbruch benutzen
+	\newline \co{ZEICHENKETTE} als Trennzeichen statt Zeilenumbruch benutzen
 	\end{itemize}
 	\end{exampleblock}
 \end{frame}
 
 \begin{frame} 
 	\begin{block}{\co{head}} 
-        den ersten Teil von Dateien ausgeben
+        Den ersten Teil von Dateien ausgeben
 	\end{block}
 	\begin{block}{USAGE} 
         \co{head [OPTION] [DATEI]...}
 	\end{block}
 	\begin{exampleblock}{Optionen} 
 	\begin{itemize}
-	\item \co{-c, --bytes=[-]N} die ersten \co{N} Bytes jeder Datei ausgeben; mit führendem Minus, alle außer den letzten \co{N} Bytes jeder Datei	
-	\item \co{-n, --lines=[-]N} wie \co{-c} nur mit Zeilenanzahl \co{N}
+	\item \co{-c, --bytes=[-]N} \newline Die ersten \co{N} Bytes jeder Datei ausgeben; mit führendem Minus, alle außer den letzten \co{N} Bytes jeder Datei	
+	\item \co{-n, --lines=[-]N}\newline Wie \co{-c} nur mit Zeilenanzahl \co{N}
 	\end{itemize}
 	
 	\end{exampleblock}
@@ -196,15 +196,15 @@ Nach der Klammer kommt  mindestens ein Leerzeichen ( +) und dann die Metasequenz
 
 \begin{frame} 
 	\begin{block}{\co{tail}} 
-        den letzten Teil von Dateien ausgeben
+        Den letzten Teil von Dateien ausgeben
 	\end{block}
 	\begin{block}{USAGE} 
         \co{tail [OPTION] [DATEI]...}
 	\end{block}
 	\begin{exampleblock}{Optionen} 
 	\begin{itemize}
-	\item \co{ -f, --follow[=\{name\}]}  Angefügte Daten ausgeben,  wahrend  die  Datei  wächst	
-	\item \co{--retry}  Weiterhin  versuchen, eine Datei zu öffnen, selbst wenn sie beim
+	\item \co{ -f, --follow[=\{name\}]} \newline Angefügte Daten ausgeben,  wahrend  die  Datei  wächst	
+	\item \co{--retry}\newline  Weiterhin  versuchen, eine Datei zu öffnen, selbst wenn sie beim
               Start oder später nicht verfügbar ist
 	\end{itemize}
 	
@@ -246,8 +246,8 @@ Nach der Klammer kommt  mindestens ein Leerzeichen ( +) und dann die Metasequenz
 	\end{block}
 	\begin{exampleblock}{Optionen} 
 	\begin{itemize}
-	\item \co{-d, --delete} Zeichen aus \co{MENGE1} loschen, nicht umwandeln
-	\item \co{-s, --squeeze-repeats} Jede Eingabe-Sequenz mit sich wiederholenden Zeichen aus  \text{MENGE1}
+	\item \co{-d, --delete} \newline Zeichen aus \co{MENGE1} loschen, nicht umwandeln
+	\item \co{-s, --squeeze-repeats} \newline Jede Eingabe-Sequenz mit sich wiederholenden Zeichen aus  \text{MENGE1}
               durch ein einziges Vorkommen dieses Zeichens ersetzen
 	\end{itemize}
 	
@@ -263,9 +263,9 @@ Nach der Klammer kommt  mindestens ein Leerzeichen ( +) und dann die Metasequenz
 	\end{block}
 	\begin{exampleblock}{Optionen} 
 	\begin{itemize}
-		\item \co{-t, --tabs=ZAHL} Tabulatoren entsprechen \co{ZAHL} Zeichen, nicht 8
-	\item \co{-t, --tabs=LISTE} Durch  Komma  getrennte LISTE von expliziten Tabulatorpositionen verwenden
-	\item \co{-i, --initial} Tabulatoren nicht nach  Nicht-Freiraumzeichen umwandeln
+		\item \co{-t, --tabs=ZAHL} \newline Tabulatoren entsprechen \co{ZAHL} Zeichen, nicht 8
+	\item \co{-t, --tabs=LISTE} \newline Durch  Komma  getrennte LISTE von expliziten Tabulatorpositionen verwenden
+	\item \co{-i, --initial} \newline Tabulatoren nicht nach  Nicht-Freiraumzeichen umwandeln
 	\end{itemize}
 	
 	\end{exampleblock}
@@ -280,10 +280,10 @@ Nach der Klammer kommt  mindestens ein Leerzeichen ( +) und dann die Metasequenz
 	\end{block}
 	\begin{exampleblock}{Optionen} 
 	\begin{itemize}
-	\item \co{-a, --all} Alle Leerzeichen umwandeln, statt nur der führenden
-	\item \co{--first-only} Nur führende Leerzeichen umwandeln (überschreibt -a)
-	\item \co{-t, --tabs=N} Tabulatoren haben einzeln \co{N} Zeichen, statt 8 (schaltet -a ein).
-	\item \co{-t, --tabs=LISTE} Durch Kommata getrennte Liste von Tabulatorpositionen  verwenden (schaltet -a ein).
+	\item \co{-a, --all} \newline Alle Leerzeichen umwandeln, statt nur der führenden
+	\item \co{--first-only} \newline Nur führende Leerzeichen umwandeln (überschreibt -a)
+	\item \co{-t, --tabs=N} \newline Tabulatoren haben \co{N} Zeichen, statt 8 (schaltet -a ein).
+	\item \co{-t, --tabs=LISTE} \newline Liste von Tabulatorpositionen  verwenden (schaltet -a ein).
 	\end{itemize}
 	
 	\end{exampleblock}
@@ -291,15 +291,15 @@ Nach der Klammer kommt  mindestens ein Leerzeichen ( +) und dann die Metasequenz
 
 \begin{frame} 
 	\begin{block}{\co{fmt}} 
-        einfacher optimaler Textformatierer
+         Einfacher optimaler Textformatierer
 	\end{block}
 	\begin{block}{USAGE} 
-        \co{fmt [-BREITE] [OPTION]... [DATEI]...}
+          \co{fmt [-BREITE] [OPTION]... [DATEI]...}
 	\end{block}
 	\begin{exampleblock}{Optionen} 
 	\begin{itemize}
-	\item \co{-u, --uniform-spacing} Ein Leerzeichen zwischen Wörtern, zwei nach Sätzen
-	\item \co{-s, --split-only} Lange Zeilen aufteilen, aber nicht auffüllen
+	\item \co{-u, --uniform-spacing} \newline Ein Leerzeichen zwischen Wörtern, zwei nach Sätzen
+	\item \co{-s, --split-only} \newline Lange Zeilen aufteilen, aber nicht auffüllen
 	\end{itemize}
 	
 	\end{exampleblock}
@@ -314,9 +314,9 @@ Nach der Klammer kommt  mindestens ein Leerzeichen ( +) und dann die Metasequenz
 	\end{block}
 	\begin{exampleblock}{Optionen} 
 	\begin{itemize}
-	\item \co{-h --header=KOPF}   \co{KOPF}   als   zentrierten  Seitenkopf  anstelle  des  Dateinamens   benutzen. 
-	\item \co{-l, --length=SEITENLAENGE} Seitenlange auf \co{SEITENLAENGE}  (66)  Zeilen  setzen  
-	\item \co{-o, --indent=MARGIN} Versetzt  jede  Zeile  um  \co{MARGIN}  (0) Leerzeichen
+	\item \co{-h --header=KOPF} \newline   \co{KOPF}   als   zentrierten  Seitenkopf  anstelle  des  Dateinamens   benutzen. 
+	\item \co{-l, --length=SEITENLAENGE} \newline Seitenlange auf \co{SEITENLAENGE}  (66)  Zeilen  setzen  
+	\item \co{-o, --indent=MARGIN} \newline Versetzt  jede  Zeile  um  \co{MARGIN}  (0) Leerzeichen
 	\end{itemize}
 	
 	\end{exampleblock}
@@ -331,11 +331,11 @@ Nach der Klammer kommt  mindestens ein Leerzeichen ( +) und dann die Metasequenz
 	\end{block}
 	\begin{exampleblock}{Optionen} 
 	\begin{itemize}
-	\item \co{-h / -b / -f} Setzten von Header / Body / Footer-Stil auf \co{a, t} oder \co{n}
+	\item \co{-h / -b / -f} \newline Setzten von Header/Body/Footer auf \co{a, t} oder \co{n}
 	\item \co{a} Nummeriere alle Zeilen
 	\item \co{t} Nummeriere nur nicht-leere Zeilen
 	\item \co{n} Nummeriere nicht
-	\item \co{-w, --number-width=ANZAHL  ANZAHL} Spalten für Zeilennummern benutzen
+	\item \co{-w, --number-width=ANZAHL\newline   ANZAHL} Spalten für Zeilennummern benutzen
 	
 	\end{itemize}
 	
@@ -344,14 +344,14 @@ Nach der Klammer kommt  mindestens ein Leerzeichen ( +) und dann die Metasequenz
 
 \begin{frame} 
 	\begin{block}{\co{wc}} 
-         Anzahl der Zeilen, Wörter und Byte für jede Datei ausgeben
+         Anzahl der Zeilen, Wörter und Bytes für jede Datei ausgeben
 	\end{block}
 	\begin{block}{USAGE} 
         \co{wc [OPTION]... [DATEI]...}
 	\end{block}
 	\begin{exampleblock}{Optionen} 
 	\begin{itemize}
-	\item \co{-c, --bytes}  Anzahl der Byte ausgeben
+	\item \co{-c, --bytes}  Anzahl der Bytes ausgeben
 	\item \co{-m, --chars} Anzahl der Zeichen ausgeben
 	\item \co{-l, --lines} Anzahl der Zeilen ausgeben
 	
@@ -370,18 +370,18 @@ Nach der Klammer kommt  mindestens ein Leerzeichen ( +) und dann die Metasequenz
 	\end{block}
 	\begin{exampleblock}{Optionen} 
 	\begin{itemize}
-	\item \co{-b, --ignore-leading-blanks} Führende Leerzeichen ignorieren
+	\item \co{-b, --ignore-leading-blanks} \newline Führende Leerzeichen ignorieren
 	\item \co{-f, --ignore-case} Klein- als Großbuchstaben behandeln
-	\item \co{-i, --ignore-nonprinting} Nur druckbare Zeichen berücksichtigen
+	\item \co{-i, --ignore-nonprinting} \newline Nur druckbare Zeichen berücksichtigen
 	\item \co{-r, --reverse} Das Ergebnis der Vergleiche umkehren
-	\item \co{-n, --numeric-sort} Numerischen Werts der Zeichenkette vergleichen
+	\item \co{-n, --numeric-sort} \newline Numerischen Werts der Zeichenkette vergleichen
 	\end{itemize}
 	\end{exampleblock}
 \end{frame}
 
 \begin{frame} 
 	\begin{block}{\co{uniq}} 
-        doppelte aufeinanderfolgende Zeilen berichten oder entfernen
+         Doppelte aufeinanderfolgende Zeilen berichten oder entfernen
 	\end{block}
 	\begin{block}{USAGE} 
         \co{uniq [OPTION]... [EINGABE [AUSGABE]]}
@@ -389,7 +389,7 @@ Nach der Klammer kommt  mindestens ein Leerzeichen ( +) und dann die Metasequenz
 	\begin{exampleblock}{Optionen} 
 	\vspace{-0.3cm}
 	\begin{itemize}
-	\item \co{-c, --count} Den Zeilen die Häufigkeit des Vorkommens voranstellen
+	\item \co{-c, --count} \newline Den Zeilen die Häufigkeit des Vorkommens voranstellen
 	\item \co{-s, --skip-chars=N}   Die ersten \co{N} Zeichen nicht vergleichen
 	\item \co{-i, --ignore-case} Klein- als Großbuchstaben behandeln
 	\item \co{-f, --skip-fields=N} Die ersten \co{N} Felder nicht vergleichen
@@ -401,7 +401,7 @@ Nach der Klammer kommt  mindestens ein Leerzeichen ( +) und dann die Metasequenz
 
 \begin{frame} 
 	\begin{block}{\co{cut}} 
-       Teile jeder Zeile aus Dateien ausgeben
+         Teile jeder Zeile aus Dateien ausgeben
 	\end{block}
 	\begin{block}{USAGE} 
         \co{cut OPTION... [DATEI]...}
@@ -410,7 +410,7 @@ Nach der Klammer kommt  mindestens ein Leerzeichen ( +) und dann die Metasequenz
 	\begin{itemize}
 	\item \co{-b, --bytes=LISTE} Nur diese Bytes auswählen
 	\item \co{-c, --characters=LISTE} Nur diese Zeichen auswählen
-	\item \co{-d, --delimiter=TRENNER} \co{TRENNER} anstelle des Tabulators als Feldtrennzeichen benutzen
+	\item \co{-d, --delimiter=TRENNER}\newline  \co{TRENNER} anstelle des Tabulators  benutzen
 	\item \co{-f, --fields=LISTE} Nur  diese  Felder  auswählen; außerdem jede Zeile ausgeben, die kein Trennzeichen enthält,  es  sei  denn,  die  Option  \co{-s}  ist angegeben
 	\end{itemize}
 	\end{exampleblock}
@@ -427,23 +427,23 @@ Nach der Klammer kommt  mindestens ein Leerzeichen ( +) und dann die Metasequenz
 	\begin{itemize}
 	\item \co{-j1 FELDNUM} Verknüpft die Dateien nach \co{FELDNUM} in \co{DATEI1}
 	\item \co{-j2 FELDNUM} Verknüpft die Dateien nach \co{FELDNUM} in \co{DATEI2}
-	\item \co{-j FELDNUM} Verknüpft die Dateien nach \co{FELDNUM}, in beiden Dateien vorhanden
-	\item \co{-t ZEICHEN}  \co{ZEICHEN} als Trennzeichen für Ein- und Ausgabefelder nehmen
+	\item \co{-j FELDNUM} \newline Verknüpft die Dateien nach \co{FELDNUM} in beiden Dateien
+	\item \co{-t ZEICHEN}  \newline \co{ZEICHEN} als Trennzeichen für Ein- und Ausgabefelder nehmen
 	\end{itemize}
 	\end{exampleblock}
 \end{frame}
 
 \begin{frame} 
 	\begin{block}{\co{paste}} 
-        Zeilen von Dateien zusammenfugen
+        Zeilen von Dateien zusammenfügen
 	\end{block}
 	\begin{block}{USAGE} 
         \co{paste [OPTION]... [DATEI]..}
 	\end{block}
 	\begin{exampleblock}{Optionen} 
 	\begin{itemize}
-	\item \co{-d, --delimiters=LISTE} Zeichen aus \co{LISTE} statt Tabulatoren benutzen
-	\item \co{-s, --serial} Eine Datei nach der anderen statt parallel ausgeben
+	\item \co{-d, --delimiters=LISTE} \newline Zeichen aus \co{LISTE} statt Tabulatoren benutzen
+	\item \co{-s, --serial} \newline Eine Datei nach der anderen statt parallel ausgeben
 	\end{itemize}
 	\end{exampleblock}
 \end{frame}
@@ -451,12 +451,8 @@ Nach der Klammer kommt  mindestens ein Leerzeichen ( +) und dann die Metasequenz
 
 \begin{frame}[plain]
 \begin{alertblock}{Nächste Vorlesung}
-\textbf{Termin:} Donnerstag, den 02.05.2013 18:30-20:00 Uhr\\
-\textbf{Thema:} Kapitel 6 - Mehr Shell \\
-\textbf{Vorbereitung:} 
-\begin{itemize}
-\item LXES 9 Mehr über die Shell
-\end{itemize}
+\textbf{Termin:} nach der Mittagspause\\
+\textbf{Thema:} Hands-On\\
 \end{alertblock}
 \end{frame}
 
