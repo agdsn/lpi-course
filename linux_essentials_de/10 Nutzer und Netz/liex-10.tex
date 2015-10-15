@@ -91,7 +91,7 @@
     \begin{description}
       \item[-c Kommentar] Eintrag im GECOS-Feld
       \item[-d Heimatverzeichnis] sonst wird \co{/home/Nutzername} verwendet
-      \item[-e Datum] Sperrdatum, Format: "`JJJJ-MM-DD"'
+      \item[-e Datum] Sperrdatum, Format: ``JJJJ-MM-DD''
       \item[-g Gruppe] Primäre Gruppe
       \item[-G Gruppe,\dots] Sekundäre Gruppen
       \item[-s Shell] Login-Shell
@@ -114,7 +114,7 @@
             $\rightarrow$ ggf. eigenes Shellskript für umfangreichere Konfiguration
       \item Distributionseigene Varianten!
       \item Neues Konto noch ohne gültiges Passwort / Login
-      \item Ohne Option "`-m"' auch kein existierentes Heimatverzeichnis
+      \item Ohne Option ``-m'' auch kein existierentes Heimatverzeichnis
     \end{itemize}
   \end{block}
 \end{frame}
@@ -194,7 +194,7 @@
 \begin{frame}{Hinzufügen, Bearbeiten, Löschen}
   \begin{block}{Gruppe hinzufügen}
     \co{\#~groupadd~Gruppenname}\\
-    $\rightarrow$ Option "`-g GID"' legt GID fest 
+    $\rightarrow$ Option ``-g GID'' legt GID fest 
 %     (System: 0\dots99, Normale Gruppen: 100\dots)
   \end{block}
   \begin{block}{Gruppe bearbeiten}
@@ -224,7 +224,7 @@
     $\rightarrow$ Problem: Datei nicht gesperrt und Änderungen können überschrieben werden
     \item \co{vipw} bzw. \co{vigr} öffnen und sperren \co{/etc/\{passwd,group\}} \\
     $\rightarrow$ Geschützt vor einem Überschreiben
-    \item Mit "`-s"' werden die entsprechenden Schattenpasswort-Dateien genutzt
+    \item Mit ``-s'' werden die entsprechenden Schattenpasswort-Dateien genutzt
     \item Editor meistens \co{vi}, einstellbar über Umgebungsvariablen \co{VISUAL} bzw. \co{EDITOR}
   \end{itemize}
 \end{frame}
@@ -257,7 +257,7 @@
   \end{block}
   \begin{block}{DNS Einstellungen in \co{/etc/resolv.conf}}
     \begin{description}
-      \item[search~server.com ] Std.-Erweiterung bei Namen ohne "`."'
+      \item[search~server.com ] Std.-Erweiterung bei Namen ohne ``.''
       \item[nameserver~IP-Addr] DNS-Server Adresse (1\dots 3)
     \end{description}
     $\rightarrow$ Datei kann von anderen Programmen überschrieben werden!
@@ -290,7 +290,7 @@
     \begin{itemize}
       \item \co{dig~www.tu-dresden.de}
       \item \co{dig~-x~8.8.8.8}
-      \item Option "`+trace"': Gesamten Suchkette ausgeben
+      \item Option ``+trace'': Gesamten Suchkette ausgeben
     \end{itemize}
   \end{block}
 \end{frame}
@@ -306,10 +306,10 @@
   \end{block}
   \begin{block}{Weitere Anzeigeoptionen}
     \begin{itemize}
-      \item Statistikinformationen: "`-s"'
-      \item Routen: "`-r"'
-      \item Netzwerkschnittstellen: "`-i"'
-      \item Aktualisierte Anzeige: "`-c"'
+      \item Statistikinformationen: ``-s''
+      \item Routen: ``-r''
+      \item Netzwerkschnittstellen: ``-i''
+      \item Aktualisierte Anzeige: ``-c''
     \end{itemize}
   \end{block}
 \end{frame}

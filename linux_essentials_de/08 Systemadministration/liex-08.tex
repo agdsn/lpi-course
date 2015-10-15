@@ -44,7 +44,7 @@
     \begin{alertblock}{Zu \co{root} werden}
     \begin{itemize}
       \item \co{su~-} wechselt nach Kennwortaufforderung in  \co{root}-Shell
-      \item \co{sudo befehl} führt "`\co{befehl}"' mit \co{root}-Rechten aus
+      \item \co{sudo befehl} führt ``\co{befehl}'' mit \co{root}-Rechten aus
     \end{itemize}
   \end{alertblock}
 \end{frame}
@@ -139,7 +139,7 @@
 \begin{frame}{Das \co{/proc}-Verzeichnis}
   \begin{block}{Dateien}
     \begin{description}
-      \item["`ZAHL"'] Verzeichnis mit Daten zum Prozess mit PID "`ZAHL"'
+      \item[``ZAHL''] Verzeichnis mit Daten zum Prozess mit PID ``ZAHL''
       \item[cpuinfo] Typ und Taktfrequenz der CPU
       \item[devices] aktuell unterstützte Geräte
       \item[interrupts] Hardwareinterrupts
@@ -158,15 +158,15 @@
   \begin{block}{Was sind Pakete?}
     \begin{itemize}
       \item Enthalten Dateien und Befehle zur Installation 
-      \item Aufteilungen in "`Laufzeitpakete"', Entwicklungspakete, Dokumentation (u. feiner möglich)
+      \item Aufteilungen in ``Laufzeitpakete'', Entwicklungspakete, Dokumentation (u. feiner möglich)
       \item unterschliedliche Versionen
       \item Systemweit (de)installierbar 
     \end{itemize}
   \end{block}
   \begin{block}{Paketverwaltungssysteme}
     \begin{itemize}
-      \item "`Paketdatenbank"': Informationen zu installierten Paketen\\ $\rightarrow$ \co{/var/lib/\{rpm,dpkg\}}
-      \item "`Repositorities"':  enthalten Daten zu verfügbaren Paketen
+      \item ``Paketdatenbank'': Informationen zu installierten Paketen\\ $\rightarrow$ \co{/var/lib/\{rpm,dpkg\}}
+      \item ``Repositorities'':  enthalten Daten zu verfügbaren Paketen
 %       \item Programme: \co{rpm} und \co{dpkg}
     \end{itemize}
   \end{block}
@@ -203,7 +203,7 @@
   \begin{block}{Warum verschiedene Benutzer?}
     \begin{itemize}
       \item gerechtes Aufteilen von Ressourcen (Speicherplatz, \dots)
-      \item "`Privatssphäre"': Nicht jeder sollte alles lesen können
+      \item ``Privatssphäre'': Nicht jeder sollte alles lesen können
       \item keine unauthorisierten Eingriffe ins System
     \end{itemize}
   \end{block}
@@ -285,8 +285,8 @@
   \begin{block}{Kennwort}
     \begin{itemize}
       \item gehashtes Kennwort
-      \item "`x"' Passwort in Schattendatei
-      \item "`!"' Anmeldung gesperrt
+      \item ``x'' Passwort in Schattendatei
+      \item ``!'' Anmeldung gesperrt
     \end{itemize}
   \end{block}
 \end{frame}
@@ -317,7 +317,7 @@
   \begin{exampleblock}{Lösung}
 %     \begin{itemize}
 %       \item 
-      Verschlüsselte Kennwörter als "`Schattenkennwörter"' in einer Datei
+      Verschlüsselte Kennwörter als ``Schattenkennwörter'' in einer Datei
         mit Lesezugriff nur für privilegierte Prozesse und \co{root}\\
         $\rightarrow$ \co{/etc/shadow}
 %     \end{itemize}

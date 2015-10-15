@@ -32,16 +32,16 @@
       \item jede Datei besitzt eine eindeutige Nummer für ihr Dateisystem (Inode-Nr.)
       \item Zeichen in Dateinamen:
       \begin{itemize}
-        \item Alles erlaubt, außer "`/"' und Nullbyte (ASCII-Wert 0)\\
-          $\rightarrow$"`/"' ist Trenner in Pfadnamen
+        \item Alles erlaubt, außer ``/'' und Nullbyte (ASCII-Wert 0)\\
+          $\rightarrow$``/'' ist Trenner in Pfadnamen
         \item Unterscheidung zwischen Groß-/Kleinschreibung
-        \item Sonderzeichen (\$, \textasteriskcentered, Umlaute, Leerzeichen) durch "`\textbackslash"'oder 
+        \item Sonderzeichen (\$, \textasteriskcentered, Umlaute, Leerzeichen) durch ``\textbackslash''oder 
         Anführungszeichen vor der Shell verstecken
         \item Umlaute hängen vom System ab (s. \co{convmv})
         \item Typische Obergrenze: 255 Zeichen
       \item Endungen (z.B. \co{.txt}) sind fakultativ
       \end{itemize}
-      \item Versteckte Dateien beginnen mit "`."'
+      \item Versteckte Dateien beginnen mit ``.''
     \end{itemize}
 %   \end{block}
 \end{frame}
@@ -55,7 +55,7 @@
     \item Können andere Verzeichnisse enthalten \\
       $\rightarrow$ Verzeichnisbaum
     \item Wurzel des Verzeichnisbaums ist das Wurzelverzeichnis (root~directory)
-          und wird mit "`/"' bezeichnet
+          und wird mit ``/'' bezeichnet
   \end{itemize}
   \end{block}
   \begin{block}{Konvention der Verzeichnishierarchie}
@@ -70,7 +70,7 @@
     \begin{column}{0.5\textwidth}
       \begin{block}{Absolute Pfadangaben}
         \begin{itemize}
-          \item Beginnen mit "`/"' und 
+          \item Beginnen mit ``/'' und 
           \item Beschreiben Weg zur Datei ausgehend vom Wurzelverzeichnis
         \end{itemize}
       \end{block}
@@ -78,7 +78,7 @@
     \begin{column}{0.5\textwidth}
       \begin{block}{Relative Pfadangaben}
         \begin{itemize}
-          \item Beginnen nicht mit "`/"'
+          \item Beginnen nicht mit ``/''
           \item Beschreiben einen Weg, der im aktuellen Verzeichnis beginnt
         \end{itemize}    
       \end{block}
@@ -86,9 +86,9 @@
   \end{columns}
   \begin{block}{Wichtige Namen für Spezialverzeichnisse}
   \begin{description}
-    \item["`.."'] Übergeordnetes Verzeichnis
-    \item["`."'] Aktuelles Verzeichnis (Nützlich für \co{./prog})
-    \item["`\textasciitilde"'] Heimatverzeichnis des aktuellen Nutzers
+    \item[``..''] Übergeordnetes Verzeichnis
+    \item[``.''] Aktuelles Verzeichnis (Nützlich für \co{./prog})
+    \item[``\textasciitilde''] Heimatverzeichnis des aktuellen Nutzers
   \end{description}
   \end{block}
 \end{frame}
@@ -167,14 +167,14 @@
 \begin{frame}{Verzeichnisse erstellen und löschen}
   \begin{block}{Verzeichnisse anlegen mit \co{mkdir}}
     \begin{itemize}
-      \item "`make directory"': \co{mkdir}
+      \item ``make directory'': \co{mkdir}
       \item \co{\$ mkdir Verzeichnis}
       \item Option \co{-p}: übergeordnete Verzeichnisse mit erzeugen
     \end{itemize}
   \end{block}
   \begin{block}{Verzeichnisse löschen mit \co{rmdir}}
     \begin{itemize}
-      \item "`remove directory"': \co{rmdir}
+      \item ``remove directory'': \co{rmdir}
       \item Option \co{-p}: übergeordnete Verzeichnisse löschen
       \item Verzeichnisse dürfen keine Dateien enthalten
     \end{itemize}
@@ -188,7 +188,7 @@
     \begin{itemize}
       \item \emph{Expansion ist eine Leistung der Shell}
       \item erlauben ein einfaches Auswählen von vielen ähnlichen Dateien ohne explizite Eingabe
-      \item Frage: Was geschieht, wenn eine Datei mit einem Minus "`\co{-}"' beginnt?
+      \item Frage: Was geschieht, wenn eine Datei mit einem Minus ``\co{-}'' beginnt?
       \item Wenn die Expansion fehl schlägt: Ausdruck unverändert an das Programm übergeben
       \item \co{*}: Passt auf beliebig viele Zeichen (auch kein Zeichen)
       \item \co{?}: Passt auf genau ein beliebiges Zeichen
@@ -239,7 +239,7 @@
 \section{Arbeiten mit Dateien}
 \subsection{Kopieren, Verschieben, Löschen}
 \begin{frame}{Kopieren, Verschieben, Löschen}
-  \begin{block}{Kopieren ("`copy"')}
+  \begin{block}{Kopieren (``copy'')}
     \begin{itemize}
       \item Erzeugen einer neuen Datei als Kopie einer alten Datei
       \item \co{\$ cp original kopie} \\ 
@@ -253,7 +253,7 @@
 \end{frame}
 
 \begin{frame}{}
-  \begin{block}{Verschieben und Umbenennen ("`move"')}
+  \begin{block}{Verschieben und Umbenennen (``move'')}
     \begin{itemize}
       \item Befehl \co{mv} analog wie \co{cp}
       \item Verschieben einer Datei von einem Ort zu einem anderen
@@ -261,10 +261,10 @@
       \item Datei wird nur in neues Verzeichnis eingeordnet 
     \end{itemize}
   \end{block}
-  \begin{block}{Löschen ("`remove"')}
+  \begin{block}{Löschen (``remove'')}
     \begin{itemize}
       \item \co{\$ rm datei}
-        $\rightarrow$ löscht die Datei "`datei"'
+        $\rightarrow$ löscht die Datei ``datei''
       \item \emph{Löschen ist endgültig!}
       \item Verzeichnis und Unterverzeichnisse mit Dateien löschen: \co{-rf}
       \item Frage: Was macht \co{rm -rf /}  ?
@@ -312,9 +312,9 @@
   \begin{block}{Harte Verknüpfungen}
     \begin{itemize}
       \item \co{\$ ln datei hardlink}\\
-        $\rightarrow$ "`datei"' und "`hardlink"' verweisen auf die gleiche Datei
+        $\rightarrow$ ``datei'' und ``hardlink'' verweisen auf die gleiche Datei
         \item Verweisen auf die Inode-Nr. (Vgl. \co{ls -i})
-        \item "`datei"' und "`hardlink"' sind ein und der selbe Name für die gleiche Datei
+        \item ``datei'' und ``hardlink'' sind ein und der selbe Name für die gleiche Datei
         \item Zweite Spalte von \co{ls -l} gibt Anzahl der Referenzen ($\ge 1$) an
         \item Beide Namen sind gleichwertig und ununterscheidbar
         \item Verknüpfung nur auf Dateien im selben Dateisystem möglich
