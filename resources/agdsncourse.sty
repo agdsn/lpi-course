@@ -92,6 +92,22 @@
 \end{frame}
 }
 
+\newcommand*\versionframe{
+  \begin{frame}[plain]
+  \IfFileExists{../../resources/version}{
+  \input{../../resources/version}
+  }{
+  \begin{block}{Version} 
+    Wenn diese PDF durch das Python-Script \co{build\_all.py} im Hauptverzeichnis 
+    erzeugt wird, werden an dieser Stelle Informationen über die genutzte Version 
+    aus den git Repository eingebunden.
+  \end{block}
+  }
+    
+\end{frame}
+}
+
+
 \def\hi{Hello, I help with the agdsn courses}
 \let\myDate\date
 \newcommand\GoodBye[1][\bfseries]{{#1Done}}

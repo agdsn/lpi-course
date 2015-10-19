@@ -7,3 +7,4 @@
 *.nav
 liex-*.pdf
 *.tex.backup
+resources/version
