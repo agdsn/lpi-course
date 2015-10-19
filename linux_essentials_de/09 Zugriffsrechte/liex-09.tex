@@ -174,11 +174,73 @@ o & 4 & 0 & 0  \cr
 	\item 4 Oktette 255.255.255.255
 	\item Die IP muss nicht konstant bleiben und ein Gerät hat in der Regel mehrere gleichzeitig 
 	\item Spezielle Bereiche wie 10.0.0.0/8
-	\item Vergabe früher direkt in Blöcken (9.0.0.0/8 IBM) heute über lokale Ausgabestellen
+	\item Vergabe früher direkt in Blöcken (/8 16777241 Adressen)
 	\end{itemize}
 	\end{block}
 	
 \end{frame}
+
+\begin{frame} 
+	\begin{exampleblock}{\co{whois 3.0.0.0}}
+	NetRange:       3.0.0.0 - 3.255.255.255\\
+	CIDR:           3.0.0.0/8\\
+	NetName:        GE-INTERNET\\
+	NetHandle:      NET-3-0-0-0-1\\
+	Parent:          ()\\
+	NetType:        Direct Assignment\\
+	Organization:   General Electric Company (GENERA-9)\\
+	RegDate:        1988-02-23\\
+	Updated:        2008-03-28\\
+	Ref:            http://whois.arin.net/rest/net/NET-3-0-0-0-1\\
+
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{exampleblock}{\co{whois 9.0.0.0}}
+	NetRange:       9.0.0.0 - 9.255.255.255\\
+	CIDR:           9.0.0.0/8\\
+	NetName:        IBM\\
+	NetHandle:      NET-9-0-0-0-1\\
+	Parent:          ()\\
+	NetType:        Direct Assignment\\
+	Organization:   IBM (IBM-1)\\
+	RegDate:        1988-12-16\\
+	Updated:        2011-09-06\\
+	Ref:            http://whois.arin.net/rest/net/NET-9-0-0-0-1
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{exampleblock}{\co{whois 11.0.0.0 / 21.0.0.0 / 22.0.0.0 / 30.0.0.0 / ...}}
+	NetRange:       30.0.0.0 - 30.255.255.255\\
+	CIDR:           30.0.0.0/8\\
+	NetName:        DNIC-NET-030\\
+	NetHandle:      NET-30-0-0-0-1\\
+	Parent:          ()\\
+	NetType:        Direct Allocation\\
+	Organization:   DoD Network Information Center (DNIC)\\
+	RegDate:        1991-07-01\\
+	Updated:        2009-06-19\\
+	Ref:            http://whois.arin.net/rest/net/NET-30-0-0-0-1\\
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame} 
+	\begin{exampleblock}{\co{whois}}
+	\begin{itemize}
+	\item 12.0.0.0/8 $\rightarrow$ AT\&T
+	\item 13.0.0.0/8 $\rightarrow$ Xerox
+	\item 15.0.0.0/8 $\rightarrow$ Hewlett-Packard
+	\item 16.0.0.0/8 $\rightarrow$ Hewlett-Packard
+	\item 17.0.0.0/8 $\rightarrow$ Apple
+	\item 18.0.0.0/8 $\rightarrow$ Massachusetts Institute of Technology
+	\item 19.0.0.0/8 $\rightarrow$ Ford Motor Company
+	\item 20.0.0.0/8 $\rightarrow$ Computer Sciences Corporation
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
 
 \begin{frame} 
 
