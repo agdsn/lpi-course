@@ -7,7 +7,6 @@
 \subtitle{Kapitel 6 - Shell}
 \author{Alexander Köhler}
 \date{24. Oktober 2015}
-\setbeamertemplate{navigation symbols}{} 
 \begin{document}
 
 % Start Folie
@@ -254,9 +253,9 @@
         \item \co{date}
         \item \co{export TZ=Europe/London}
         \item \co{export TZ=America/Vancouver}
-        \item \co{date +'\%d. \%B \%Y'}
-        \item \co{date +'Tag Nr. \%j'}
-        \item \co{date +'KW Nr. \%V'}
+        \item \co{date +\tsq\%d.\,\%B \%Y\tsq}
+        \item \co{date +\tsq{}Tag Nr.\,\%j\tsq}
+        \item \co{date +\tsq{}KW Nr.\,\%V\tsq}
         \end{itemize}
         \end{exampleblock}
         \end{column} 
@@ -275,7 +274,7 @@
   \end{block}
   \begin{block}{Inhalt von Dateien einlesen}
     \begin{itemize}
-      \item \co{\$~source datei} bzw. \co{\$~. datei}
+      \item \co{\$~source datei} bzw. \co{\$~.~datei}
       \item Befehle und Variablenzuweisungen werden in aktueller Shell ausgeführt!
     \end{itemize}
   \end{block}

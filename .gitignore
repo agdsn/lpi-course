@@ -8,3 +8,4 @@
 liex-*.pdf
 *.tex.backup
 resources/version
+*.gz(busy)
